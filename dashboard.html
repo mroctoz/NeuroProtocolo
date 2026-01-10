@@ -38,11 +38,14 @@
             </div>
 
             <nav class="nav-menu">
-                <a href="#" class="nav-item active"><i class="fas fa-columns"></i> Dashboard</a>
-                <a href="#" class="nav-item disabled"><i class="fas fa-book"></i> Biblioteca (Em breve)</a>
-                <a href="#" class="nav-item disabled"><i class="fas fa-chart-line"></i> Estatísticas</a>
-                <a href="#" class="nav-item disabled"><i class="fas fa-cog"></i> Configurações</a>
-            </nav>
+            <!-- No dashboard.html, a classe 'active' fica no primeiro link -->
+            <a href="dashboard.html" class="nav-item active"><i class="fas fa-columns"></i> Dashboard</a>
+            
+            <!-- Links ativados apontando para os arquivos corretos -->
+            <a href="library.html" class="nav-item"><i class="fas fa-book"></i> Biblioteca</a>
+            <a href="stats.html" class="nav-item"><i class="fas fa-chart-line"></i> Estatísticas</a>
+            <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Configurações</a>
+        </nav>
 
             <button class="btn-logout" onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i> Sair
