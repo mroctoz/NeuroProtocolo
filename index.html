@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroProtocolo | Acesso</title>
+    
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="neural-bg"></div>
+        
+        <div class="auth-card fade-in">
+            <div class="logo-area">
+                <i class="fas fa-brain logo-icon"></i>
+                <h1 class="auth-title">NeuroProtocolo</h1>
+                <p class="auth-subtitle">Engenharia Emocional & Neuroplasticidade</p>
+            </div>
+
+            <!-- Formulário de Registro (Só aparece se não houver usuário) -->
+            <div id="registerForm">
+                <div class="form-group">
+                    <label>Como devemos chamar você?</label>
+                    <input type="text" id="usernameInput" class="form-input" placeholder="Seu nome..." autocomplete="off">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="handleRegister()">
+                    <i class="fas fa-fingerprint"></i> Iniciar Protocolo
+                </button>
+            </div>
+
+            <!-- Loading (para transição) -->
+            <div id="loader" class="hidden">
+                <p>Configurando redes neurais...</p>
+                <!-- Adicionaremos um spinner CSS depois -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/database.js"></script>
+    <script>
+        // Lógica simples inline para redirecionamento
+        const userInput = document.getElementById('usernameInput');
+
+        // Verifica se já existe usuário
+        window.onload = () => {
+            const user = db.getUser();
+            if (user) {
+                // Se já existe, vai direto pro dashboard
+                window.location.href = 'dashboard.html';
+            }
+        };
+
+        function handleRegister() {
+            const name = userInput.value.trim();
+            if (name.length > 2) {
+                db.registerUser(name);
+                document.getElementById('registerForm').classList.add('hidden');
+                document.getElementById('loader').classList.remove('hidden');
+                
+                // Pequeno delay para efeito dramático
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                alert("Por favor, insira um nome válido para iniciar.");
+            }
+        }
+    </script>
+</body>
+</html>
