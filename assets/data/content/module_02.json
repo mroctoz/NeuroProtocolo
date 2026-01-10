@@ -1,0 +1,245 @@
+{
+  "days": {
+    "8": {
+      "title": "A Engenharia da Dopamina",
+      "summary": "Entenda a diferença entre 'Querer' (Dopamina) e 'Gostar' (Opioides).",
+      "booklet": {
+        "title": "O Mito do Prazer",
+        "read_time": "14 min",
+        "content": "<h3>O Erro de Interpretação</h3><p>Durante anos, a ciência popular vendeu a dopamina como a 'molécula do prazer'. Isso está errado. A dopamina é a molécula da <strong>antecipação</strong> e da <strong>motivação</strong>. Ela é o que faz você buscar o bolo, não o que faz você gostar do bolo.</p><h3>O Circuito da Busca</h3><p>A Área Tegmentar Ventral (ATV) inunda o Núcleo Accumbens quando detecta uma possibilidade de recompensa. Isso gera um estado de agitação e foco estreito. É o 'craving' (fissura).</p><p>O problema moderno é que redes sociais, pornografia e açúcar hiperestimulam esse sistema, criando uma tolerância. O cérebro reduz os receptores de dopamina para se proteger do excesso. O resultado? O mundo real (ler um livro, conversar) parece cinza e sem graça em comparação à tela brilhante. Hoje começamos o processo de ressensibilização.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d8_t1",
+          "type": "reading",
+          "category": "Neurociência",
+          "title": "Leitura: O Circuito da Busca",
+          "xp": 50
+        },
+        {
+          "id": "d8_t2",
+          "type": "action",
+          "category": "Detox",
+          "title": "O Modo Monocromático",
+          "instruction": "Configure a tela do seu celular para 'Escala de Cinza' (Grayscale). As cores vibrantes são gatilhos supranormais de dopamina. Remova a cor e observe como seu interesse pelo aparelho diminui instantaneamente.",
+          "xp": 150
+        },
+        {
+          "id": "d8_t3",
+          "type": "journaling",
+          "category": "Análise",
+          "title": "Identificando o Loop",
+          "instruction": "Identifique um vício de comportamento (scroll infinito, doce após almoço). Descreva o 'Gatilho' (o que acontece antes) e a 'Recompensa' (o que você sente logo depois).",
+          "xp": 100
+        }
+      ]
+    },
+    "9": {
+      "title": "A Habênula: O Anti-Prazer",
+      "summary": "O centro neural da decepção e como ele mata sua motivação.",
+      "booklet": {
+        "title": "Por que desistimos?",
+        "read_time": "16 min",
+        "content": "<h3>A Anatomia da Frustração</h3><p>Acima do tálamo existe uma pequena estrutura chamada <strong>Habênula Lateral</strong>. Ela é o freio de mão da motivação. Quando você espera uma recompensa e não a recebe (ex: postou uma foto e não teve likes, estudou e foi mal na prova), a Habênula dispara.</p><h3>O Apagão da Dopamina</h3><p>Quando a Habênula ativa, ela envia um sinal inibitório para a ATV, cortando a produção de dopamina. Você sente uma queda física de energia. É o cérebro dizendo: 'Não faça isso de novo, gasta energia e não dá retorno'.</p><p>Pessoas com depressão têm uma Habênula hiperativa. Elas interpretam neutro como negativo. Para ter alta performance, você precisa treinar sua Habênula para tolerar o erro sem desligar o motor. Isso se chama <strong>Resiliência Neural</strong>.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d9_t1",
+          "type": "reading",
+          "category": "Neurociência",
+          "title": "Leitura: A Habênula Lateral",
+          "xp": 50
+        },
+        {
+          "id": "d9_t2",
+          "type": "action",
+          "category": "Exposição",
+          "title": "Fracasso Deliberado",
+          "instruction": "Tente fazer algo hoje que você sabe que é difícil ou que vai falhar (ex: desenhar algo complexo em 2 min, aprender 10 palavras em mandarim). Sinta a frustração surgir. Não pare. Continue por 5 minutos APÓS a frustração. Diga ao seu cérebro que a frustração não é sinal de pare.",
+          "xp": 200
+        },
+        {
+          "id": "d9_t3",
+          "type": "meditation",
+          "category": "Regulação",
+          "title": "Visualização do Obstáculo",
+          "instruction": "Visualize seu objetivo principal. Agora visualize tudo dando errado no caminho. Sinta o aperto no peito. Respire e visualize-se continuando apesar disso. (Estoicismo: Premeditatio Malorum).",
+          "timer": 300,
+          "xp": 120
+        }
+      ]
+    },
+    "10": {
+      "title": "O Eixo do Estresse (HPA)",
+      "summary": "Cortisol, Adrenalina e a biologia da ansiedade.",
+      "booklet": {
+        "title": "A Toxicidade Lenta",
+        "read_time": "15 min",
+        "content": "<h3>O Eixo HPA</h3><p>Hipotálamo -> Pituitária -> Adrenal. Essa é a cascata que libera Cortisol no seu sangue. Em doses agudas (fugir de um leão), o cortisol salva vidas: libera glicose, aumenta a pressão. Em doses crônicas (trânsito, boletos), ele é neurotóxico.</p><h3>Dano Hipocampal</h3><p>O excesso de cortisol mata neurônios no Hipocampo (memória e contexto). É por isso que pessoas estressadas esquecem coisas e perdem a capacidade de ver o contexto ('tudo é horrível').</p><p>Você não pode eliminar o estresse da vida, mas pode completar o ciclo do estresse. O corpo precisa de um sinal físico de que 'o leão morreu' para baixar o cortisol. Ficar sentado no sofá preocupado mantém o ciclo aberto.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d10_t1",
+          "type": "reading",
+          "category": "Fisiologia",
+          "title": "Leitura: O Eixo HPA",
+          "xp": 50
+        },
+        {
+          "id": "d10_t2",
+          "type": "physical",
+          "category": "Metabolismo",
+          "title": "Queima de Cortisol",
+          "instruction": "O cortisol é energia mobilizada não usada. Faça 15 minutos de exercício intenso (HIIT, corrida, polichinelos) para 'gastar' esse combustível de estresse acumulado.",
+          "xp": 150
+        },
+        {
+          "id": "d10_t3",
+          "type": "action",
+          "category": "Sono",
+          "title": "Protocolo de Escuridão",
+          "instruction": "A luz azul suprime a melatonina e mantém o eixo HPA alerta. Hoje, 1 hora antes de dormir, desligue TODAS as telas e luzes brancas. Use luz amarela fraca ou velas.",
+          "xp": 100
+        }
+      ]
+    },
+    "11": {
+      "title": "Otimismo Aprendido",
+      "summary": "Reconfigurando o estilo explicativo do cérebro.",
+      "booklet": {
+        "title": "A Ciência da Esperança",
+        "read_time": "13 min",
+        "content": "<h3>Estilo Explicativo</h3><p>Martin Seligman descobriu que a diferença entre quem desiste e quem persiste é como eles explicam os eventos ruins para si mesmos (o diálogo interno).</p><ul><li><strong>Pessimista (3 Ps):</strong> Pessoal ('É culpa minha'), Permanente ('Sempre será assim'), Penetrante ('Minha vida toda é ruim').</li><li><strong>Otimista:</strong> Circunstancial ('Foi o trânsito'), Temporário ('Amanhã melhora'), Específico ('Só essa área foi afetada').</li></ul><p>Otimismo não é positividade tóxica. É uma estratégia de alocação de recursos cognitivos. O pessimista gasta energia se culpando; o otimista gasta energia resolvendo.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d11_t1",
+          "type": "reading",
+          "category": "Psicologia",
+          "title": "Leitura: Os 3 Ps do Pessimismo",
+          "xp": 50
+        },
+        {
+          "id": "d11_t2",
+          "type": "journaling",
+          "category": "Reengenharia",
+          "title": "Disputa Cognitiva",
+          "instruction": "Escreva um pensamento negativo recorrente (ex: 'Nunca vou conseguir emagrecer'). Agora, aja como um advogado de defesa e escreva 3 evidências REAIS que contradizem essa afirmação.",
+          "xp": 120
+        },
+        {
+          "id": "d11_t3",
+          "type": "action",
+          "category": "Social",
+          "title": "Feedback Positivo",
+          "instruction": "O cérebro tem um viés de negatividade. Force o viés oposto: Elogie sinceramente 3 pessoas hoje por comportamentos específicos. Observe como isso muda seu próprio estado.",
+          "xp": 100
+        }
+      ]
+    },
+    "12": {
+      "title": "Estado de Fluxo (Flow)",
+      "summary": "A química da alta performance e foco extremo.",
+      "booklet": {
+        "title": "A Zona",
+        "read_time": "15 min",
+        "content": "<h3>Hipofrontalidade Transitória</h3><p>No estado de Flow, o Córtex Pré-Frontal (sua voz crítica interior) se desativa temporariamente. O cérebro libera um coquetel de Norepinefrina, Dopamina, Anandamida e Endorfina.</p><h3>Gatilhos do Flow</h3><p>Para entrar nesse estado, você precisa de: <ol><li>Risco (físico ou social).</li><li>Complexidade.</li><li>Feedback imediato.</li><li>Equilíbrio entre desafio e habilidade.</li></ol> A maioria das pessoas vive no tédio (desafio baixo, habilidade alta) ou na ansiedade (desafio alto, habilidade baixa). O Flow está no meio.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d12_t1",
+          "type": "reading",
+          "category": "Performance",
+          "title": "Leitura: A Química do Flow",
+          "xp": 50
+        },
+        {
+          "id": "d12_t2",
+          "type": "timer",
+          "category": "Foco",
+          "title": "Bloco de Trabalho Profundo",
+          "instruction": "Selecione uma tarefa difícil. Elimine TODAS as distrações. Trabalhe por 50 minutos ininterruptos. Se a mente vagar, traga de volta imediatamente. Busque o limiar onde é difícil, mas possível.",
+          "timer": 3000,
+          "xp": 250
+        },
+        {
+          "id": "d12_t3",
+          "type": "journaling",
+          "category": "Análise",
+          "title": "Registro de Flow",
+          "instruction": "Você conseguiu entrar em foco? Em que minuto a resistência sumiu? Se não conseguiu, o que te distraiu? (Interno ou Externo).",
+          "xp": 80
+        }
+      ]
+    },
+    "13": {
+      "title": "A Biologia da Vontade",
+      "summary": "Glicose, fadiga de decisão e conservação de energia.",
+      "booklet": {
+        "title": "O Tanque de Combustível",
+        "read_time": "12 min",
+        "content": "<h3>A Vontade é Finita</h3><p>Roy Baumeister demonstrou que a força de vontade é um recurso esgotável, ligado aos níveis de glicose no lobo frontal. Se você gasta vontade resistindo a comer um doce de manhã, terá menos vontade para trabalhar à tarde.</p><h3>Estratégia de Conservação</h3><p>Não use força de vontade para coisas triviais. Automatize decisões (roupas, comida). Steve Jobs usava a mesma roupa não por estilo, mas para economizar processamento pré-frontal para decisões da Apple. Crie rotinas para que a 'vontade' seja usada apenas no que importa.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d13_t1",
+          "type": "reading",
+          "category": "Neurociência",
+          "title": "Leitura: Depleção do Ego",
+          "xp": 50
+        },
+        {
+          "id": "d13_t2",
+          "type": "planning",
+          "category": "Estratégia",
+          "title": "Eliminação de Decisões",
+          "instruction": "Identifique 3 decisões triviais que você toma todo dia (o que comer, que roupa usar, que caminho fazer). Defina um padrão fixo para elas para a próxima semana. Escreva esse padrão.",
+          "xp": 100
+        },
+        {
+          "id": "d13_t3",
+          "type": "action",
+          "category": "Físico",
+          "title": "Sono Reparador (Nível 2)",
+          "instruction": "A privação de sono reduz a absorção de glicose no cérebro em 40%. Hoje, seu objetivo é dormir 8 horas. Configure o alarme para DORMIR, não para acordar.",
+          "xp": 150
+        }
+      ]
+    },
+    "14": {
+      "title": "Consolidação Módulo 02",
+      "summary": "Revisão prática da Engenharia Química.",
+      "booklet": {
+        "title": "O Novo Normal",
+        "read_time": "10 min",
+        "content": "<h3>Homeostase</h3><p>Você completou duas semanas. Seu cérebro está lutando para voltar ao estado anterior (homeostase). A sensação de 'isso está difícil' ou 'não está funcionando' é a Habênula tentando te proteger do gasto energético. Ignore-a. Você está reescrevendo o código base do seu comportamento.</p><p>Hoje faremos uma revisão prática de todos os sistemas: Dopamina, Cortisol e Foco.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d14_t1",
+          "type": "reading",
+          "category": "Revisão",
+          "title": "Leitura: A Luta pela Homeostase",
+          "xp": 50
+        },
+        {
+          "id": "d14_t2",
+          "type": "timer",
+          "category": "Desafio Final",
+          "title": "O Teste de Resistência",
+          "instruction": "Meditação de Foco Aberto. Sente-se. Não foque em nada específico, mas esteja atento a tudo (sons, sensações). Não se prenda a nenhum pensamento. É o exercício mais difícil para o lobo frontal.",
+          "timer": 900,
+          "xp": 300
+        },
+        {
+          "id": "d14_t3",
+          "type": "quiz",
+          "category": "Validação",
+          "title": "Checklist de Prontidão - Módulo 3",
+          "instruction": "Você sente que tem mais controle sobre seus impulsos digitais e alimentares do que há 14 dias? Se sim, você está pronto para conectar esse novo cérebro a outras pessoas.",
+          "xp": 100
+        }
+      ]
+    }
+  }
+}
