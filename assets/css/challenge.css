@@ -1,0 +1,119 @@
+/* Container principal do desafio */
+.challenge-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+/* Ícone do tipo de desafio */
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 2.5rem;
+    color: var(--accent);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo para o Texto de Instrução */
+.instruction-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Card de Revisão de Leitura (O Livreto dentro do Desafio) */
+.booklet-review-card {
+    background: rgba(26, 29, 45, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: left; /* Texto alinhado à esquerda para leitura */
+    margin: 2rem 0;
+    border-left: 4px solid var(--primary);
+    max-height: 400px; /* Scroll se for muito longo */
+    overflow-y: auto;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+.booklet-review-card h3 { 
+    color: var(--primary); 
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.booklet-snippet { 
+    font-family: 'Merriweather', serif; 
+    line-height: 1.8; 
+    color: #e0e0e0; 
+    font-size: 1rem;
+}
+
+/* Estilos de conteúdo dentro do snippet */
+.booklet-snippet h3 { 
+    font-family: 'Inter', sans-serif;
+    color: white; 
+    margin-top: 1.5rem; 
+}
+
+.booklet-snippet p {
+    margin-bottom: 1rem;
+}
+
+/* Timer */
+.timer-display {
+    font-size: 5rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    margin: 2rem 0;
+    color: var(--primary);
+    text-shadow: 0 0 30px var(--primary-glow);
+}
+
+/* Input de Journaling */
+.journal-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: white;
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    min-height: 200px;
+    resize: vertical;
+    margin: 2rem 0;
+    transition: var(--transition);
+}
+
+.journal-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 2px rgba(0, 206, 201, 0.2);
+}
+
+/* Link de Voltar */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    transition: var(--transition);
+    align-self: flex-start;
+}
+
+.back-link:hover {
+    color: white;
+    transform: translateX(-5px);
+}
