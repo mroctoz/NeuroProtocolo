@@ -1,14 +1,14 @@
 const DB_NAME = 'NeuroProtocol_v1';
+const DEV_MODE_ENABLED = true; // Mude para false para desativar em produção
 
 class Database {
     constructor() {
         this.state = this.loadState();
         this.modulesCache = null;
-        this.currentContentCache = null;
+        this.contentCache = {}; // Cache para conteúdos carregados
+        this.initDevListener();
     }
 
-    // --- Core Methods ---
-    
     loadState() {
         const stored = localStorage.getItem(DB_NAME);
         if (!stored) {
@@ -17,12 +17,18 @@ class Database {
                 progress: {
                     currentDay: 1,
                     unlockedDays: 1,
-                    completedTasks: [], // Array de IDs de tarefas
-                    journalEntries: {}, // Map de diaId -> texto
+                    completedTasks: [], 
+                    journalEntries: {},
                     xp: 0,
-                    level: 1
+                    level: 1,
+                    stats: { // Novo: Para estatísticas
+                        focus: 0,
+                        resilience: 0,
+                        social: 0,
+                        awareness: 0
+                    }
                 },
-                settings: { theme: 'dark' }
+                settings: { theme: 'dark', notifications: true }
             };
             localStorage.setItem(DB_NAME, JSON.stringify(initialState));
             return initialState;
@@ -34,61 +40,81 @@ class Database {
         localStorage.setItem(DB_NAME, JSON.stringify(this.state));
     }
 
-    // --- Data Fetching (Simulando API local) ---
+    // --- Dev Tools (God Mode) ---
+    initDevListener() {
+        if (!DEV_MODE_ENABLED) return;
+        
+        let keys = {};
+        document.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            // Shift + X + Z
+            if (keys['Shift'] && (keys['X'] || keys['x']) && (keys['Z'] || keys['z'])) {
+                this.activateGodMode();
+                keys = {}; // Reset
+            }
+        });
 
+        document.addEventListener('keyup', (e) => {
+            delete keys[e.key];
+        });
+    }
+
+    activateGodMode() {
+        if (confirm("⚠️ MODEV DEV: Desbloquear todo o conteúdo?")) {
+            this.state.progress.unlockedDays = 28;
+            this.state.progress.level = 10;
+            this.state.progress.xp = 5000;
+            this.saveState();
+            alert("Protocolo 100% Desbloqueado. Recarregando...");
+            window.location.reload();
+        }
+    }
+
+    // --- Data Fetching ---
     async getModules() {
         if (this.modulesCache) return this.modulesCache;
-        try {
-            const response = await fetch('assets/data/modules.json');
-            this.modulesCache = await response.json();
-            return this.modulesCache;
-        } catch (e) {
-            console.error("Erro ao carregar módulos:", e);
-            return [];
-        }
+        const res = await fetch('assets/data/modules.json');
+        this.modulesCache = await res.json();
+        return this.modulesCache;
     }
 
     async getDayContent(moduleId) {
-        // Carrega o JSON do módulo específico
-        try {
-            const response = await fetch(`assets/data/content/${moduleId}.json`);
-            const data = await response.json();
-            return data;
-        } catch (e) {
-            console.error(`Erro ao carregar conteúdo de ${moduleId}:`, e);
-            return null;
-        }
+        if (this.contentCache[moduleId]) return this.contentCache[moduleId];
+        const res = await fetch(`assets/data/content/${moduleId}.json`);
+        const data = await res.json();
+        this.contentCache[moduleId] = data;
+        return data;
     }
 
-    // --- User & Progress Logic ---
-
+    // --- Logic ---
     registerUser(name) {
-        this.state.user = {
-            name: name,
-            startDate: new Date().toISOString()
-        };
+        this.state.user = { name, startDate: new Date().toISOString() };
         this.saveState();
     }
 
     getUser() { return this.state.user; }
-
-    getUnlockStatus() {
-        return {
-            currentDay: this.state.progress.currentDay,
-            unlockedDays: this.state.progress.unlockedDays,
-            xp: this.state.progress.xp,
-            level: this.state.progress.level
-        };
-    }
+    
+    getUnlockStatus() { return this.state.progress; }
 
     isTaskCompleted(taskId) {
         return this.state.progress.completedTasks.includes(taskId);
     }
 
-    completeTask(taskId, xpReward) {
+    completeTask(taskId, xpReward, category = 'awareness') {
         if (!this.isTaskCompleted(taskId)) {
             this.state.progress.completedTasks.push(taskId);
             this.state.progress.xp += xpReward;
+            
+            // Atualiza estatísticas por categoria
+            const catMap = {
+                'Neurociência': 'awareness', 'Cognitivo': 'awareness',
+                'Físico': 'resilience', 'Metabolismo': 'resilience',
+                'Social': 'social', 'Comunicação': 'social',
+                'Foco': 'focus', 'Produtividade': 'focus'
+            };
+            const statKey = catMap[category] || 'awareness';
+            this.state.progress.stats[statKey] = (this.state.progress.stats[statKey] || 0) + 1;
+
             this.updateLevel();
             this.saveState();
             return true;
@@ -96,39 +122,20 @@ class Database {
         return false;
     }
 
-    saveJournalEntry(dayId, text) {
-        this.state.progress.journalEntries[dayId] = text;
+    saveJournalEntry(taskId, text) {
+        this.state.progress.journalEntries[taskId] = text;
         this.saveState();
     }
 
-    getJournalEntry(dayId) {
-        return this.state.progress.journalEntries[dayId] || "";
-    }
-
-    // Verifica se todas as tarefas de um dia foram completadas para liberar o próximo
-    async checkDayCompletion(dayId, moduleId, totalTasksInDay) {
-        // Lógica simples: conta quantas tarefas desse dia estão no array de completas
-        // Nota: Isso requer que os IDs das tarefas contenham o ID do dia (ex: d1_t1)
-        const completedCount = this.state.progress.completedTasks.filter(t => t.startsWith(`d${dayId}_`)).length;
-        
-        if (completedCount >= totalTasksInDay) {
-            if (this.state.progress.unlockedDays === dayId) {
-                this.state.progress.unlockedDays++;
-                this.state.progress.currentDay++; // Avança o foco
-                this.saveState();
-                return { dayCompleted: true };
-            }
-        }
-        return { dayCompleted: false, progress: completedCount / totalTasksInDay };
-    }
-
     updateLevel() {
-        // Nível sobe a cada 1000 XP (exponencial simplificado)
         const newLevel = Math.floor(this.state.progress.xp / 1000) + 1;
-        if (newLevel > this.state.progress.level) {
-            this.state.progress.level = newLevel;
-            // Aqui poderia disparar um alerta visual
-        }
+        if (newLevel > this.state.progress.level) this.state.progress.level = newLevel;
+    }
+
+    // Helper para resetar dados (Configurações)
+    resetData() {
+        localStorage.removeItem(DB_NAME);
+        window.location.href = 'index.html';
     }
 }
 
