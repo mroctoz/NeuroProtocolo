@@ -1,94 +1,134 @@
-const DB_NAME = 'NeuroProtocol_DB';
+const DB_NAME = 'NeuroProtocol_v1';
 
 class Database {
     constructor() {
-        this.init();
+        this.state = this.loadState();
+        this.modulesCache = null;
+        this.currentContentCache = null;
     }
 
-    init() {
-        if (!localStorage.getItem(DB_NAME)) {
-            // Inicialização do "Banco de Dados" no primeiro acesso
+    // --- Core Methods ---
+    
+    loadState() {
+        const stored = localStorage.getItem(DB_NAME);
+        if (!stored) {
             const initialState = {
-                user: null, // { name, startDate, level }
+                user: null,
                 progress: {
                     currentDay: 1,
-                    completedChallenges: [], // IDs dos desafios
+                    unlockedDays: 1,
+                    completedTasks: [], // Array de IDs de tarefas
+                    journalEntries: {}, // Map de diaId -> texto
                     xp: 0,
-                    level: 1,
-                    unlockedModules: ['modulo_01']
+                    level: 1
                 },
-                settings: {
-                    theme: 'dark'
-                }
+                settings: { theme: 'dark' }
             };
-            this.saveState(initialState);
-            console.log('Database initialized.');
+            localStorage.setItem(DB_NAME, JSON.stringify(initialState));
+            return initialState;
+        }
+        return JSON.parse(stored);
+    }
+
+    saveState() {
+        localStorage.setItem(DB_NAME, JSON.stringify(this.state));
+    }
+
+    // --- Data Fetching (Simulando API local) ---
+
+    async getModules() {
+        if (this.modulesCache) return this.modulesCache;
+        try {
+            const response = await fetch('assets/data/modules.json');
+            this.modulesCache = await response.json();
+            return this.modulesCache;
+        } catch (e) {
+            console.error("Erro ao carregar módulos:", e);
+            return [];
         }
     }
 
-    getState() {
-        return JSON.parse(localStorage.getItem(DB_NAME));
+    async getDayContent(moduleId) {
+        // Carrega o JSON do módulo específico
+        try {
+            const response = await fetch(`assets/data/content/${moduleId}.json`);
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(`Erro ao carregar conteúdo de ${moduleId}:`, e);
+            return null;
+        }
     }
 
-    saveState(state) {
-        localStorage.setItem(DB_NAME, JSON.stringify(state));
-    }
+    // --- User & Progress Logic ---
 
-    // Métodos de Usuário
     registerUser(name) {
-        const state = this.getState();
-        state.user = {
+        this.state.user = {
             name: name,
             startDate: new Date().toISOString()
         };
-        this.saveState(state);
-        return state.user;
+        this.saveState();
     }
 
-    getUser() {
-        return this.getState().user;
+    getUser() { return this.state.user; }
+
+    getUnlockStatus() {
+        return {
+            currentDay: this.state.progress.currentDay,
+            unlockedDays: this.state.progress.unlockedDays,
+            xp: this.state.progress.xp,
+            level: this.state.progress.level
+        };
     }
 
-    // Métodos de Progresso
-    getProgress() {
-        return this.getState().progress;
+    isTaskCompleted(taskId) {
+        return this.state.progress.completedTasks.includes(taskId);
     }
 
-    completeChallenge(challengeId, xpReward) {
-        const state = this.getState();
-        if (!state.progress.completedChallenges.includes(challengeId)) {
-            state.progress.completedChallenges.push(challengeId);
-            state.progress.xp += xpReward;
-            
-            // Lógica simples de Level Up (a cada 500xp)
-            const newLevel = Math.floor(state.progress.xp / 500) + 1;
-            if (newLevel > state.progress.level) {
-                state.progress.level = newLevel;
-                // Lógica futura: Desbloquear módulos baseados no nível
+    completeTask(taskId, xpReward) {
+        if (!this.isTaskCompleted(taskId)) {
+            this.state.progress.completedTasks.push(taskId);
+            this.state.progress.xp += xpReward;
+            this.updateLevel();
+            this.saveState();
+            return true;
+        }
+        return false;
+    }
+
+    saveJournalEntry(dayId, text) {
+        this.state.progress.journalEntries[dayId] = text;
+        this.saveState();
+    }
+
+    getJournalEntry(dayId) {
+        return this.state.progress.journalEntries[dayId] || "";
+    }
+
+    // Verifica se todas as tarefas de um dia foram completadas para liberar o próximo
+    async checkDayCompletion(dayId, moduleId, totalTasksInDay) {
+        // Lógica simples: conta quantas tarefas desse dia estão no array de completas
+        // Nota: Isso requer que os IDs das tarefas contenham o ID do dia (ex: d1_t1)
+        const completedCount = this.state.progress.completedTasks.filter(t => t.startsWith(`d${dayId}_`)).length;
+        
+        if (completedCount >= totalTasksInDay) {
+            if (this.state.progress.unlockedDays === dayId) {
+                this.state.progress.unlockedDays++;
+                this.state.progress.currentDay++; // Avança o foco
+                this.saveState();
+                return { dayCompleted: true };
             }
-            
-            this.saveState(state);
-            return { success: true, newXp: state.progress.xp, level: state.progress.level };
         }
-        return { success: false, message: 'Já completado' };
+        return { dayCompleted: false, progress: completedCount / totalTasksInDay };
     }
 
-    checkDayUpdate() {
-        const state = this.getState();
-        const start = new Date(state.user.startDate);
-        const now = new Date();
-        
-        // Calcula a diferença em dias
-        const diffTime = Math.abs(now - start);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-        
-        // Se o cálculo de dias reais for maior que o dia atual registrado, avança
-        // (Nota: Em um app real, faríamos validações mais rígidas)
-        if (diffDays > state.progress.currentDay) {
-            state.progress.currentDay = diffDays;
-            this.saveState(state);
+    updateLevel() {
+        // Nível sobe a cada 1000 XP (exponencial simplificado)
+        const newLevel = Math.floor(this.state.progress.xp / 1000) + 1;
+        if (newLevel > this.state.progress.level) {
+            this.state.progress.level = newLevel;
+            // Aqui poderia disparar um alerta visual
         }
-        return state.progress.currentDay;
     }
 }
 
