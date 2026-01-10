@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroProtocolo | Imersão</title>
+    
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/protocol.css">
+</head>
+<body>
+
+    <div class="protocol-layout">
+        <!-- Navegação Superior -->
+        <nav class="top-nav">
+            <a href="dashboard.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao Comando</a>
+            <div class="day-indicator">Dia <span id="dayNumber">1</span></div>
+            <div class="progress-indicator">
+                <span id="taskProgress">0/3 Tarefas</span>
+                <div class="mini-progress-bar"><div id="miniBar" style="width: 0%"></div></div>
+            </div>
+        </nav>
+
+        <div class="content-split">
+            <!-- Área de Leitura (Livreto) -->
+            <section class="reading-area fade-in">
+                <div class="booklet-header">
+                    <span class="read-time"><i class="far fa-clock"></i> <span id="readTime">10 min</span></span>
+                    <h1 id="bookletTitle">Carregando Conhecimento...</h1>
+                </div>
+                
+                <article class="booklet-content" id="bookletContent">
+                    <!-- Conteúdo HTML injetado via JS -->
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </article>
+
+                <div class="reading-footer">
+                    <p class="citation">Fonte: <span id="bookletSource">NeuroProtocolo</span></p>
+                </div>
+            </section>
+
+            <!-- Área de Ação (Lista de Desafios) -->
+            <aside class="action-sidebar fade-in" style="animation-delay: 0.2s">
+                <div class="sidebar-header">
+                    <h2>Protocolo do Dia</h2>
+                    <p>Complete para neuroplasticidade.</p>
+                </div>
+
+                <div class="task-list" id="taskList">
+                    <!-- Injetado via JS -->
+                </div>
+
+                <button id="completeDayBtn" class="btn btn-primary btn-block hidden" onclick="finishDay()">
+                    <i class="fas fa-check-double"></i> Finalizar Dia
+                </button>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/database.js"></script>
+    <script src="assets/js/protocol.js"></script>
+</body>
+</html>
