@@ -100,4 +100,20 @@ function finishDay() {
     window.location.href = 'dashboard.html';
 }
 
+.booklet-review-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: left;
+    margin: 2rem 0;
+    border-left: 4px solid var(--primary);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.booklet-review-card h3 { color: var(--accent); margin-bottom: 1rem; }
+.booklet-snippet { font-family: 'Merriweather', serif; line-height: 1.8; color: #ddd; }
+.booklet-snippet h3 { font-size: 1.2rem; color: white; margin-top: 1.5rem; }
+.instruction-text { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2rem; }
+
 initProtocol();
