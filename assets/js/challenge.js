@@ -124,5 +124,84 @@ function startTimer(duration, id, xp) {
     }, 1000);
 }
 
+// ... (código anterior de imports)
+
+async function initChallenge() {
+    const moduleId = getModuleIdForDay(currentDay);
+    const moduleData = await db.getDayContent(moduleId);
+    const dayData = moduleData.days[currentDay];
+    
+    // Busca a tarefa
+    const task = dayData.challenges.find(t => t.id === taskId);
+
+    if (!task) { alert("Tarefa não encontrada."); history.back(); return; }
+
+    // CORREÇÃO: Se for tarefa de leitura, e não tiver descrição,
+    // injetamos o conteúdo do livreto do dia ou uma descrição padrão.
+    if (task.type === 'reading') {
+        renderReadingUI(task, dayData.booklet);
+    } else {
+        renderChallengeUI(task);
+    }
+}
+
+// Nova UI específica para Leitura dentro do desafio
+function renderReadingUI(task, booklet) {
+    const container = document.getElementById('challengeContent');
+    
+    container.innerHTML = `
+        <div class="icon-circle"><i class="fas fa-book-reader"></i></div>
+        <h1>${task.title}</h1>
+        
+        <div class="booklet-review-card">
+            <h3>Material de Referência: ${booklet.title}</h3>
+            <div class="booklet-snippet">
+                ${booklet.content} 
+            </div>
+        </div>
+
+        <p class="instruction-text">Você leu e compreendeu o material acima? A neuroplasticidade exige atenção plena, não apenas 'scrolling'.</p>
+        
+        <button class="btn btn-primary" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category}')">
+            <i class="fas fa-check-circle"></i> Confirmar Leitura Profunda
+        </button>
+    `;
+}
+
+function renderChallengeUI(task) {
+    const container = document.getElementById('challengeContent');
+    let interactionHTML = '';
+
+    // Lógica existente de Journaling/Timer...
+    // ... (Mantenha a lógica anterior de inputs/timer)
+    
+    // Pequena correção na chamada do completeGeneric para incluir categoria
+    if (task.type !== 'journaling' && task.type !== 'timer' && task.type !== 'meditation') {
+        interactionHTML = `
+            <button class="btn btn-primary" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category}')">
+                <i class="fas fa-check"></i> Marcar como Concluído
+            </button>
+        `;
+    }
+    
+    // Renderização padrão...
+    container.innerHTML = `
+        <div class="icon-circle"><i class="fas ${getIconForType(task.type)}"></i></div>
+        <h1>${task.title}</h1>
+        <p class="instruction-text">${task.instruction || task.desc}</p>
+        <div class="interaction-area">${interactionHTML}</div>
+    `;
+    
+    // Se for timer, inicializar lógica...
+}
+
+// Atualize a função completeGeneric para aceitar categoria
+function completeGeneric(id, xp, category) {
+    db.completeTask(id, xp, category);
+    window.location.href = `protocol.html?day=${currentDay}`;
+}
+
+// ... (Resto das funções auxiliares mantidas)
+
 // Inicia
 initChallenge();
