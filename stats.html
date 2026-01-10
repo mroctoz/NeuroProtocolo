@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroProtocolo | Estatísticas</title>
+    <!-- ... Head padrão ... -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+        .stat-card { background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
+        .big-number { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 1rem 0; }
+        .stat-label { color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        
+        /* Gráfico de Barras CSS */
+        .chart-container { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem; }
+        .chart-row { display: flex; align-items: center; gap: 1rem; }
+        .chart-label { width: 100px; font-size: 0.9rem; color: var(--text-muted); }
+        .chart-bar-bg { flex: 1; height: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; }
+        .chart-bar-fill { height: 100%; border-radius: 5px; width: 0%; transition: width 1s ease-out; }
+        
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand"><i class="fas fa-brain brand-icon"></i><span>NeuroProtocolo</span></div>
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-columns"></i> Dashboard</a>
+                <a href="library.html" class="nav-item"><i class="fas fa-book"></i> Biblioteca</a>
+                <a href="stats.html" class="nav-item active"><i class="fas fa-chart-line"></i> Estatísticas</a>
+                <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header><h1>Performance Neural</h1></header>
+
+            <div class="stats-grid">
+                <!-- Overview -->
+                <div class="stat-card">
+                    <span class="stat-label">Nível de Neuroplasticidade</span>
+                    <div class="big-number" id="levelDisplay">0</div>
+                    <p style="color: var(--text-muted)">Total de XP Acumulado: <span id="xpDisplay" style="color:white">0</span></p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Desafios Superados</span>
+                    <div class="big-number" id="tasksDisplay" style="color: var(--accent)">0</div>
+                    <p style="color: var(--text-muted)">Consistência é a chave da mielinização.</p>
+                </div>
+
+                <!-- Radar Chart (Simulado com Barras) -->
+                <div class="stat-card" style="grid-column: 1 / -1;">
+                    <span class="stat-label">Equilíbrio de Competências</span>
+                    <div class="chart-container">
+                        <div class="chart-row">
+                            <span class="chart-label">Autoconsciência</span>
+                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barAwareness" style="background: #FF6B6B"></div></div>
+                            <span id="valAwareness">0</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="chart-label">Resiliência</span>
+                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barResilience" style="background: #4ECDC4"></div></div>
+                            <span id="valResilience">0</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="chart-label">Social</span>
+                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barSocial" style="background: #FFE66D"></div></div>
+                            <span id="valSocial">0</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="chart-label">Foco</span>
+                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barFocus" style="background: #A78BFA"></div></div>
+                            <span id="valFocus">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/database.js"></script>
+    <script>
+        const progress = db.getUnlockStatus();
+        const stats = progress.stats;
+
+        // Renderiza Números
+        document.getElementById('levelDisplay').innerText = progress.level;
+        document.getElementById('xpDisplay').innerText = progress.xp;
+        document.getElementById('tasksDisplay').innerText = progress.completedTasks.length;
+
+        // Renderiza Gráfico
+        // Calcula o máximo para normalizar a barra (ex: se o maior valor for 10, 10 = 100%)
+        const maxVal = Math.max(stats.awareness, stats.resilience, stats.social, stats.focus, 1); // Evita divisão por 0
+
+        function setBar(id, valId, value) {
+            const percent = (value / maxVal) * 100;
+            document.getElementById(id).style.width = `${percent}%`;
+            document.getElementById(valId).innerText = value;
+        }
+
+        setTimeout(() => {
+            setBar('barAwareness', 'valAwareness', stats.awareness);
+            setBar('barResilience', 'valResilience', stats.resilience);
+            setBar('barSocial', 'valSocial', stats.social);
+            setBar('barFocus', 'valFocus', stats.focus);
+        }, 300); // Delay para animação
+    </script>
+</body>
+</html>
