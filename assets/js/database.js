@@ -1,11 +1,11 @@
 const DB_NAME = 'NeuroProtocol_v1';
-const DEV_MODE_ENABLED = true; // Permite o atalho Shift+X+Z
+const DEV_MODE_ENABLED = true; 
 
 class Database {
     constructor() {
         this.state = this.loadState();
         this.modulesCache = null;
-        this.contentCache = {}; // Cache para evitar múltiplos fetchs
+        this.contentCache = {}; 
         this.initDevListener();
     }
 
@@ -23,7 +23,7 @@ class Database {
                     journalEntries: {},
                     xp: 0,
                     level: 1,
-                    stats: { // Estatísticas para o gráfico
+                    stats: { 
                         focus: 0,
                         resilience: 0,
                         social: 0,
@@ -42,53 +42,44 @@ class Database {
         localStorage.setItem(DB_NAME, JSON.stringify(this.state));
     }
 
-    // --- Dev Tools (God Mode) ---
+    // --- Dev Tools ---
     initDevListener() {
         if (!DEV_MODE_ENABLED) return;
-        
         let keys = {};
         document.addEventListener('keydown', (e) => {
             keys[e.key] = true;
-            // Atalho: Shift + X + Z
-            if (keys['Shift'] && (keys['x'] || keys['X']) && (keys['z'] || keys['Z'])) {
+            if (keys['Shift'] && (keys['X'] || keys['x']) && (keys['Z'] || keys['z'])) {
                 this.activateGodMode();
                 keys = {}; 
             }
         });
-
-        document.addEventListener('keyup', (e) => {
-            delete keys[e.key];
-        });
+        document.addEventListener('keyup', (e) => { delete keys[e.key]; });
     }
 
     activateGodMode() {
-        if (confirm("⚠️ MODO DESENVOLVEDOR:\nDeseja desbloquear todos os dias e aumentar o nível?")) {
+        if (confirm("⚠️ MODO DESENVOLVEDOR:\nDesbloquear tudo?")) {
             this.state.progress.unlockedDays = 28;
-            this.state.progress.level = 5;
-            this.state.progress.xp += 2000;
-            
-            // Popula stats fake para teste
-            this.state.progress.stats.awareness = 10;
-            this.state.progress.stats.resilience = 8;
-            this.state.progress.stats.social = 5;
-            this.state.progress.stats.focus = 12;
-
+            this.state.progress.level = 10;
+            this.state.progress.xp += 5000;
+            // Popula stats para o gráfico não ficar vazio
+            this.state.progress.stats = { awareness: 10, resilience: 8, social: 5, focus: 12 };
             this.saveState();
-            alert("Sistema desbloqueado. Recarregando...");
             window.location.reload();
         }
     }
 
-    // --- Data Fetching ---
+    // --- Data Fetching (CORRIGIDO) ---
 
     async getModules() {
         if (this.modulesCache) return this.modulesCache;
         try {
             const res = await fetch('assets/data/modules.json');
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             this.modulesCache = await res.json();
             return this.modulesCache;
         } catch (e) {
-            console.error("Erro ao carregar modules.json", e);
+            console.error("Erro crítico ao carregar modules.json:", e);
+            alert("Erro ao carregar estrutura. Verifique o console.");
             return [];
         }
     }
@@ -96,17 +87,26 @@ class Database {
     async getDayContent(moduleId) {
         if (this.contentCache[moduleId]) return this.contentCache[moduleId];
         try {
-            const res = await fetch(`assets/data/content/${moduleId}.json`);
+            // Caminho corrigido para garantir leitura correta
+            const path = `assets/data/content/${moduleId}.json`;
+            const res = await fetch(path);
+            
+            if (!res.ok) {
+                console.error(`Arquivo não encontrado: ${path}`);
+                throw new Error(`Arquivo não encontrado: ${moduleId}`);
+            }
+            
             const data = await res.json();
             this.contentCache[moduleId] = data;
             return data;
         } catch (e) {
-            console.error(`Erro ao carregar ${moduleId}.json`, e);
-            return null;
+            console.error(`Erro ao carregar conteúdo de ${moduleId}:`, e);
+            // Retorna estrutura vazia para não quebrar a UI
+            return { days: {} };
         }
     }
 
-    // --- Métodos de Usuário e Progresso ---
+    // --- Logic ---
 
     registerUser(name) {
         this.state.user = { name, startDate: new Date().toISOString() };
@@ -114,7 +114,6 @@ class Database {
     }
 
     getUser() { return this.state.user; }
-    
     getUnlockStatus() { return this.state.progress; }
 
     isTaskCompleted(taskId) {
@@ -126,27 +125,13 @@ class Database {
             this.state.progress.completedTasks.push(taskId);
             this.state.progress.xp += xpReward;
             
-            // Mapeamento de categorias do JSON para categorias das Estatísticas
             const catMap = {
-                'Neurociência': 'awareness', 
-                'Cognitivo': 'awareness',
-                'Introspecção': 'awareness',
-                'Físico': 'resilience', 
-                'Metabolismo': 'resilience',
-                'Ação': 'resilience',
-                'Social': 'social', 
-                'Comunicação': 'social',
-                'Liderança': 'social',
-                'Foco': 'focus', 
-                'Produtividade': 'focus',
-                'Planejamento': 'focus',
-                'Timer': 'focus'
+                'Neurociência': 'awareness', 'Cognitivo': 'awareness', 'Introspecção': 'awareness',
+                'Físico': 'resilience', 'Metabolismo': 'resilience', 'Ação': 'resilience', 'Detox': 'resilience',
+                'Social': 'social', 'Comunicação': 'social', 'Liderança': 'social',
+                'Foco': 'focus', 'Produtividade': 'focus', 'Planejamento': 'focus', 'Timer': 'focus'
             };
-            
-            // Se a categoria não estiver no mapa, usa 'awareness' como padrão
             const statKey = catMap[category] || 'awareness';
-            
-            // Incrementa estatística
             this.state.progress.stats[statKey] = (this.state.progress.stats[statKey] || 0) + 1;
 
             this.updateLevel();
@@ -161,19 +146,7 @@ class Database {
         this.saveState();
     }
 
-    // Atualiza dias desbloqueados
-    unlockNextDay(currentDay) {
-        if (this.state.progress.unlockedDays === currentDay) {
-            this.state.progress.unlockedDays++;
-            this.state.progress.currentDay++; 
-            this.saveState();
-            return true;
-        }
-        return false;
-    }
-
     updateLevel() {
-        // Nível sobe a cada 1000 XP
         const newLevel = Math.floor(this.state.progress.xp / 1000) + 1;
         if (newLevel > this.state.progress.level) this.state.progress.level = newLevel;
     }
