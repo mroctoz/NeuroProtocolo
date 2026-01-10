@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroProtocolo | Desafio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/protocol.css"> <!-- Reusa estilos -->
+    <style>
+        /* Estilos inline específicos para challenge por enquanto */
+        .challenge-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .timer-display {
+            font-size: 5rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            margin: 2rem 0;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+        .journal-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+            font-family: var(--font-main);
+            font-size: 1.1rem;
+            min-height: 200px;
+            resize: vertical;
+            margin: 2rem 0;
+        }
+        .journal-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.08);
+        }
+        .challenge-type-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container" style="background: var(--bg-dark); align-items: flex-start; overflow-y: auto;">
+        <div class="challenge-container fade-in">
+            <a href="javascript:history.back()" class="back-link" style="display: inline-block; margin-bottom: 2rem;">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+
+            <div id="challengeContent">
+                <i class="fas fa-circle-notch fa-spin challenge-type-icon"></i>
+                <h1>Carregando Desafio...</h1>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/database.js"></script>
+    <script src="assets/js/challenge.js"></script>
+</body>
+</html>
