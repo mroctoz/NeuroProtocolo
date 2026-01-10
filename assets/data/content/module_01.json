@@ -1,0 +1,230 @@
+{
+  "days": {
+    "1": {
+      "title": "O Despertar: Anatomia da Reação",
+      "summary": "Saia do piloto automático compreendendo a biologia da sua atenção.",
+      "booklet": {
+        "title": "Quem está no comando?",
+        "read_time": "15 min",
+        "content": "<h3>O Mito do Controle Consciente</h3><p>Você acredita que está lendo este texto por livre e espontânea vontade, no momento exato em que decidiu fazê-lo. A neurociência moderna, baseada em experimentos como os de Benjamin Libet, sugere algo perturbador: áreas do seu cérebro responsáveis pela ação motora se ativaram milissegundos <em>antes</em> de você ter a consciência da decisão de clicar neste módulo.</p><p>Nós vivemos a maior parte da vida operados pelos <strong>Gânglios da Base</strong>, estruturas profundas responsáveis pelos hábitos e automatismos. O cérebro, pesando apenas 2% do corpo, consome 20% da energia. Para sobreviver, ele automatiza tudo o que pode. Pensar cansa. Sentir custa glicose. Mudar dói.</p><h3>O Córtex vs. O Sistema Límbico</h3><p>A batalha diária ocorre entre duas grandes facções dentro do seu crânio:</p><ul><li><strong>O Cérebro Racional (Neocórtex):</strong> A camada externa, enrugada, responsável pela lógica, planejamento futuro, linguagem e inibição de impulsos. É lento, caro energeticamente e se cansa fácil.</li><li><strong>O Cérebro Emocional (Sistema Límbico):</strong> Inclui a Amígdala (medo/raiva), o Hipocampo (memória) e o Hipotálamo (regulação hormonal). É rápido, reativo, primitivo e incansável.</li></ul><p>O objetivo deste protocolo não é 'controlar' suas emoções como um robô, mas fortalecer as vias neurais que permitem que o Neocórtex converse com o Sistema Límbico antes que você destrua um relacionamento ou desista de um sonho.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d1_t1",
+          "type": "reading",
+          "title": "Leitura do Livreto: Anatomia da Reação",
+          "xp": 50
+        },
+        {
+          "id": "d1_t2",
+          "type": "physical",
+          "title": "Neuro-Desconforto Motor",
+          "desc": "Use a mão não-dominante para escovar os dentes e usar o mouse/celular por 1 hora acumulada hoje. Sinta a irritação. Essa irritação é o custo da neuroplasticidade.",
+          "xp": 100
+        },
+        {
+          "id": "d1_t3",
+          "type": "journaling",
+          "title": "Mapeamento de Automatismos",
+          "desc": "Liste 3 momentos hoje onde você agiu sem pensar (ex: comeu sem fome, pegou o celular ao acordar).",
+          "xp": 75
+        }
+      ]
+    },
+    "2": {
+      "title": "O Sequestro da Amígdala",
+      "summary": "Identificando quando a emoção anula a razão.",
+      "booklet": {
+        "title": "Anatomia de um Sequestro",
+        "read_time": "18 min",
+        "content": "<h3>O Sentinela</h3><p>A amígdala é o radar de perigo do cérebro. Sua função evolutiva é garantir que você não seja comido por um tigre. O problema é que, no mundo moderno, ela não distingue um tigre de um e-mail agressivo do chefe.</p><h3>As Duas Estradas de LeDoux</h3><p>O neurocientista Joseph LeDoux descobriu que a informação sensorial (o que você vê ou ouve) chega ao Tálamo e se divide:</p><ol><li><strong>A Estrada Baixa (Rápida e Suja):</strong> Vai direto do Tálamo para a Amígdala. É uma resposta de milissegundos. Você pula antes de saber o que viu. É imprecisa, mas salva vidas na selva.</li><li><strong>A Estrada Alta (Lenta e Precisa):</strong> Vai do Tálamo para o Córtex Visual e depois para o Pré-Frontal. O cérebro analisa: 'Ah, não é uma cobra, é apenas uma mangueira'.</li></ol><p>O <strong>Sequestro Emocional</strong> ocorre quando a Estrada Baixa dispara uma reação hormonal (cortisol/adrenalina) tão forte que 'desliga' o acesso à Estrada Alta. Você age antes de pensar. Daniel Goleman chama isso de 'Sequestro da Amígdala'.</p><h3>Sinais Fisiológicos</h3><p>Antes de você gritar ou fugir, o corpo avisa. O sangue sai das extremidades (mãos frias) para os grandes músculos (luta/fuga), a visão afunila, o coração dispara. Aprender a ler esses sinais é a única forma de interceptar o sequestro.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d2_t1",
+          "type": "reading",
+          "title": "Leitura: O Mecanismo do Sequestro",
+          "xp": 50
+        },
+        {
+          "id": "d2_t2",
+          "type": "meditation",
+          "title": "Pausa Tática (Respiração 4-7-8)",
+          "desc": "Execute 3 ciclos de respiração (Inspira 4s, Segura 7s, Expira 8s) em um momento de tensão. Isso força o nervo vago a frear o coração.",
+          "xp": 100,
+          "timer": 120
+        },
+        {
+          "id": "d2_t3",
+          "type": "journaling",
+          "title": "Autópsia do Sequestro",
+          "desc": "Descreva a última vez que você perdeu a cabeça. Qual foi o gatilho exato? Qual foi a sensação física 5 segundos antes?",
+          "xp": 100
+        }
+      ]
+    },
+    "3": {
+      "title": "Neuroplasticidade e Mudança",
+      "summary": "Como o cérebro muda fisicamente e por que é difícil.",
+      "booklet": {
+        "title": "Esculpindo o Cérebro",
+        "read_time": "12 min",
+        "content": "<h3>O Cérebro não é Fixo</h3><p>Até pouco tempo, acreditava-se que o cérebro adulto era imutável. Hoje sabemos sobre a neuroplasticidade: a capacidade do cérebro de reorganizar conexões.</p><h3>Lei de Hebb</h3><p><em>'Neurons that fire together, wire together'</em> (Neurônios que disparam juntos, se conectam). Se você sempre reclama quando chove, você fortaleceu uma conexão física entre 'chuva' e 'reclamação'. Criou uma rodovia neural. Para mudar, você precisa deixar essa estrada vicinal crescer mato (inibir o uso) e abrir uma nova trilha na mata (criar novo hábito).</p><h3>A Dor da Mudança</h3><p>Abrir uma nova trilha gasta muita energia. O cérebro resistirá. Ele enviará sinais de ansiedade, tédio e desconforto para fazer você voltar para a rodovia antiga. Entenda: o desconforto que você sente ao tentar mudar não é um sinal de que algo está errado. É um sinal de que a neuroplasticidade está acontecendo.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d3_t1",
+          "type": "reading",
+          "title": "Leitura: Lei de Hebb",
+          "xp": 50
+        },
+        {
+          "id": "d3_t2",
+          "type": "action",
+          "title": "Interrupção de Padrão",
+          "desc": "Identifique um hábito automático (ex: pegar o celular no sinal vermelho). Hoje, toda vez que sentir o impulso, faça algo físico diferente (estale os dedos, respire fundo).",
+          "xp": 120
+        },
+        {
+          "id": "d3_t3",
+          "type": "cognitive",
+          "title": "Visualização do Novo Caminho",
+          "desc": "Feche os olhos por 2 minutos e visualize-se reagindo com calma a uma situação que normalmente te irrita. O cérebro não distingue bem imaginação vívida de realidade.",
+          "xp": 100
+        }
+      ]
+    },
+    "4": {
+      "title": "Autoconsciência Somática",
+      "summary": "O corpo sabe antes do cérebro. Leitura dos marcadores somáticos.",
+      "booklet": {
+        "title": "O Corpo como Mapa",
+        "read_time": "14 min",
+        "content": "<h3>Marcadores Somáticos</h3><p>Antonio Damasio introduziu o conceito de que nossas decisões são guiadas por estados corporais. Aquele 'aperto no estômago' antes de uma decisão ruim não é misticismo; é seu cérebro processando dados inconscientes e enviando um sinal via nervo vago para as vísceras.</p><h3>Alexitimia: A Cegueira Emocional</h3><p>Muitas pessoas sofrem de graus variados de alexitimia: a incapacidade de colocar sentimentos em palavras. Elas dizem 'estou mal', mas não sabem se é tristeza, raiva, fome ou cansaço. Sem nomear, você não pode domar (Name it to tame it). O Córtex Pré-Frontal precisa de uma etiqueta verbal para regular a Amígdala.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d4_t1",
+          "type": "reading",
+          "title": "Leitura: Marcadores Somáticos",
+          "xp": 50
+        },
+        {
+          "id": "d4_t2",
+          "type": "journaling",
+          "title": "Inventário Físico-Emocional",
+          "desc": "Pare 3 vezes hoje. Escaneie seu corpo. Onde está a tensão? Ombros? Mandíbula? Estômago? Nomeie a emoção associada a essa tensão.",
+          "xp": 100
+        },
+        {
+          "id": "d4_t3",
+          "type": "action",
+          "title": "Expansão de Vocabulário",
+          "desc": "Não use as palavras 'bem', 'mal', 'triste' ou 'feliz' hoje. Use: 'melancólico', 'eufórico', 'apreensivo', 'grato'. Force seu cérebro a ser preciso.",
+          "xp": 120
+        }
+      ]
+    },
+    "5": {
+      "title": "O Córtex Pré-Frontal: O CEO",
+      "summary": "Fortalecendo a função executiva e o controle inibitório.",
+      "booklet": {
+        "title": "A Sede da Vontade",
+        "read_time": "16 min",
+        "content": "<h3>Funções Executivas</h3><p>O Lobo Frontal é o que nos torna humanos. Ele é responsável por: <ul><li>Controle Inibitório (Não comer o doce agora).</li><li>Memória de Trabalho (Segurar informações para decidir).</li><li>Flexibilidade Cognitiva (Mudar de estratégia).</li></ul></p><h3>A Fadiga de Decisão</h3><p>Seu 'CEO' tem uma bateria limitada. Cada decisão, cada ato de vontade, gasta essa bateria. É por isso que você 'chuta o balde' à noite. Para desenvolver o cérebro, precisamos treinar o músculo da inibição quando ele ainda tem energia.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d5_t1",
+          "type": "reading",
+          "title": "Leitura: O CEO do Cérebro",
+          "xp": 50
+        },
+        {
+          "id": "d5_t2",
+          "type": "action",
+          "title": "O Teste do Marshmallow Adulto",
+          "desc": "Compre sua comida/doce favorito. Coloque na sua frente. Espere 10 minutos olhando para ele sem tocar. Sinta o impulso. Só coma depois de 10 min. Estamos treinando inibição.",
+          "xp": 150
+        },
+        {
+          "id": "d5_t3",
+          "type": "planning",
+          "title": "Planejamento Noturno",
+          "desc": "Para poupar o Córtex Frontal amanhã de manhã, decida TUDO hoje à noite: roupa, café da manhã e a primeira tarefa do dia.",
+          "xp": 80
+        }
+      ]
+    },
+    "6": {
+      "title": "Inteligência Intra-pessoal",
+      "summary": "Aprender a se gerenciar antes de gerenciar o mundo.",
+      "booklet": {
+        "title": "O Observador Interno",
+        "read_time": "15 min",
+        "content": "<h3>Metacognição</h3><p>É a capacidade de pensar sobre o próprio pensamento. É sair do filme e ir para a plateia. Quando você está com raiva, você É a raiva. Quando você diz 'estou percebendo que estou com raiva', você se torna o Observador.</p><h3>O Ego e a Narrativa</h3><p>O lado esquerdo do cérebro é um 'intérprete'. Ele cria histórias para justificar sentimentos. Muitas vezes, essas histórias são mentiras para proteger o ego. A inteligência intrapessoal exige honestidade brutal para separar o fato da narrativa que você criou sobre o fato.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d6_t1",
+          "type": "reading",
+          "title": "Leitura: Metacognição",
+          "xp": 50
+        },
+        {
+          "id": "d6_t2",
+          "type": "meditation",
+          "title": "Meditação Mindfulness (Foco)",
+          "desc": "10 minutos sentado. Foco na respiração. Quando a mente vagar (e ela vai), apenas note 'pensando' e volte. O exercício É o retorno, não a quietude.",
+          "xp": 150,
+          "timer": 600
+        },
+        {
+          "id": "d6_t3",
+          "type": "journaling",
+          "title": "Desconstrução da Narrativa",
+          "desc": "Escreva sobre um conflito recente. Agora risque todos os adjetivos e julgamentos. Deixe apenas os fatos crus. Veja como a história muda.",
+          "xp": 120
+        }
+      ]
+    },
+    "7": {
+      "title": "Consolidação da Fundação",
+      "summary": "Revisão e teste de stress da primeira semana.",
+      "booklet": {
+        "title": "O Fim do Início",
+        "read_time": "10 min",
+        "content": "<h3>Sinaptogênese</h3><p>Nesta semana, você começou a criar novas conexões. Mas elas são frágeis. Se você parar agora, a 'poda neural' vai eliminá-las em dias. A repetição é a chave da mielinização (o isolamento que torna o nervo rápido).</p><p>Hoje não teremos teoria nova. Hoje é dia de teste de stress. Vamos colocar o sistema à prova.</p>"
+      },
+      "challenges": [
+        {
+          "id": "d7_t1",
+          "type": "reading",
+          "title": "Leitura: A Importância da Mielina",
+          "xp": 50
+        },
+        {
+          "id": "d7_t2",
+          "type": "physical",
+          "title": "Desafio de Resistência",
+          "desc": "Exercício físico intenso (o máximo que puder) ou banho gelado. Coloque seu corpo em estresse simpático e tente manter a mente calma (respiração nasal).",
+          "xp": 200
+        },
+        {
+          "id": "d7_t3",
+          "type": "journaling",
+          "title": "Relatório da Semana",
+          "desc": "O que você descobriu sobre seus gatilhos que não sabia 7 dias atrás? Seja detalhado.",
+          "xp": 150
+        },
+        {
+          "id": "d7_t4",
+          "type": "quiz",
+          "title": "Checklist de Prontidão",
+          "desc": "Você sente que consegue identificar um sequestro da amígdala antes ou durante o evento? Se sim, você está pronto para o Módulo 2.",
+          "xp": 100
+        }
+      ]
+    }
+  }
+}
