@@ -1,0 +1,228 @@
+/* Layout Específico */
+.protocol-layout {
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(26, 29, 45, 0.95);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.back-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.back-link:hover {
+    color: var(--primary);
+}
+
+.day-indicator {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.progress-indicator {
+    text-align: right;
+}
+
+.mini-progress-bar {
+    width: 120px;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+}
+
+#miniBar {
+    height: 100%;
+    background: var(--success);
+    transition: width 0.3s ease;
+}
+
+/* Split Layout */
+.content-split {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 70px);
+}
+
+/* Reading Area */
+.reading-area {
+    padding: 4rem 6rem;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    background: var(--bg-dark);
+}
+
+.booklet-header {
+    margin-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 2rem;
+}
+
+.read-time {
+    color: var(--accent);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+#bookletTitle {
+    font-size: 3rem;
+    line-height: 1.2;
+    background: linear-gradient(to right, #fff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Tipografia de Leitura (Imersiva) */
+.booklet-content {
+    font-family: 'Merriweather', serif; /* Fonte serifada para leitura longa */
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #d1d5db;
+    max-width: 750px; /* Largura ideal de leitura */
+}
+
+.booklet-content h3 {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.booklet-content p {
+    margin-bottom: 1.5rem;
+}
+
+.booklet-content ul, .booklet-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.booklet-content li {
+    margin-bottom: 0.5rem;
+}
+
+.booklet-content strong {
+    color: white;
+}
+
+/* Action Sidebar */
+.action-sidebar {
+    background: var(--bg-panel);
+    padding: 2rem;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+}
+
+.sidebar-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Task Cards */
+.task-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.task-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.1);
+    transform: translateX(-5px);
+}
+
+.task-card.completed {
+    border-color: var(--success);
+    background: rgba(0, 184, 148, 0.05);
+}
+
+.task-card.completed::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--success);
+}
+
+.task-category {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.task-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.task-xp {
+    font-size: 0.8rem;
+    color: var(--warning);
+}
+
+.skeleton-text {
+    height: 15px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .content-split {
+        grid-template-columns: 1fr;
+    }
+    .reading-area {
+        padding: 2rem;
+        border-right: none;
+    }
+    .action-sidebar {
+        position: relative;
+        height: auto;
+        top: 0;
+    }
+}
