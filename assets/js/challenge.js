@@ -2,24 +2,26 @@ const urlParams = new URLSearchParams(window.location.search);
 const taskId = urlParams.get('taskId');
 const currentDay = parseInt(urlParams.get('day'));
 
-// Inicialização Principal
+// --- Mapeamento (Crucial estar igual ao protocol.js) ---
+function getModuleIdForDay(day) {
+    if (day <= 7) return 'module_01';
+    if (day <= 14) return 'module_02';
+    if (day <= 21) return 'module_03';
+    return 'module_04';
+}
+
 async function initChallenge() {
-    // 1. Identifica o módulo com base no dia
     const moduleId = getModuleIdForDay(currentDay);
-    
-    // 2. Busca o conteúdo do módulo
     const moduleData = await db.getDayContent(moduleId);
     
-    // Validação de segurança
+    // Verificações de segurança
     if (!moduleData || !moduleData.days || !moduleData.days[currentDay]) {
-        alert("Erro ao carregar dados do dia. Retornando...");
+        alert("Erro de dados. Retornando.");
         window.location.href = 'dashboard.html';
         return;
     }
 
     const dayData = moduleData.days[currentDay];
-    
-    // 3. Encontra a tarefa específica
     const task = dayData.challenges.find(t => t.id === taskId);
 
     if (!task) {
@@ -28,9 +30,9 @@ async function initChallenge() {
         return;
     }
 
-    // 4. Renderiza a UI baseada no tipo
-    // Se for leitura, precisamos passar o objeto 'booklet' do dia, pois o texto está lá
+    // Renderiza UI baseada no tipo
     if (task.type === 'reading') {
+        // Passa o livreto do dia para a função de renderização
         renderReadingUI(task, dayData.booklet);
     } else {
         renderChallengeUI(task);
