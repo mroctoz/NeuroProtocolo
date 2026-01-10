@@ -1,0 +1,38 @@
+[
+  {
+    "id": "mod_01",
+    "title": "Fundação Neural",
+    "subtitle": "Autoconsciência e Anatomia",
+    "description": "Aprenda a identificar a biologia por trás das suas reações. Saia do piloto automático e entenda o sequestro emocional.",
+    "icon": "fa-brain",
+    "color": "var(--primary)",
+    "days": [1, 2, 3, 4, 5, 6, 7]
+  },
+  {
+    "id": "mod_02",
+    "title": "Engenharia Química",
+    "subtitle": "Dopamina e Frustração",
+    "description": "Gestão de impulsos e regulação do sistema de recompensa. Domine a Habênula e o eixo HPA.",
+    "icon": "fa-flask",
+    "color": "var(--accent)",
+    "days": [8, 9, 10, 11, 12, 13, 14]
+  },
+  {
+    "id": "mod_03",
+    "title": "Cérebro Social",
+    "subtitle": "Empatia e Conexão",
+    "description": "Ativação de neurônios espelho e gestão da inveja/admiração. A neurociência das relações humanas.",
+    "icon": "fa-users",
+    "color": "var(--warning)",
+    "days": [15, 16, 17, 18, 19, 20, 21]
+  },
+  {
+    "id": "mod_04",
+    "title": "Transcendência",
+    "subtitle": "Foco e Propósito",
+    "description": "Alta performance, estado de flow e a neurobiologia da espiritualidade e livre arbítrio.",
+    "icon": "fa-infinity",
+    "color": "var(--success)",
+    "days": [22, 23, 24, 25, 26, 27, 28]
+  }
+]
