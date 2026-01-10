@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroProtocolo | Configurações</title>
+    <!-- ... Head padrão ... -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <style>
+        .settings-section { margin-bottom: 3rem; }
+        .setting-item { 
+            background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.05); 
+            padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .setting-info h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .setting-info p { color: var(--text-muted); font-size: 0.9rem; }
+        
+        .danger-zone { border-color: rgba(255, 118, 117, 0.3); }
+        .danger-zone:hover { border-color: var(--danger); background: rgba(255, 118, 117, 0.05); }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <!-- ... Mesma Sidebar ... -->
+            <div class="brand"><i class="fas fa-brain brand-icon"></i><span>NeuroProtocolo</span></div>
+            <nav class="nav-menu">
+                <a href="dashboard.html" class="nav-item"><i class="fas fa-columns"></i> Dashboard</a>
+                <a href="library.html" class="nav-item"><i class="fas fa-book"></i> Biblioteca</a>
+                <a href="stats.html" class="nav-item"><i class="fas fa-chart-line"></i> Estatísticas</a>
+                <a href="settings.html" class="nav-item active"><i class="fas fa-cog"></i> Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header><h1>Configurações do Sistema</h1></header>
+
+            <div class="settings-section">
+                <h2>Dados & Privacidade</h2>
+                
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h3>Exportar Jornada</h3>
+                        <p>Baixe um arquivo JSON com todo seu progresso e diários.</p>
+                    </div>
+                    <button class="btn" onclick="exportData()"><i class="fas fa-download"></i> Exportar</button>
+                </div>
+
+                <div class="setting-item danger-zone">
+                    <div class="setting-info">
+                        <h3 style="color: var(--danger)">Resetar Protocolo</h3>
+                        <p>Apaga todo o progresso e retorna ao Dia 1. Irreversível.</p>
+                    </div>
+                    <button class="btn" style="color: var(--danger); border: 1px solid var(--danger)" onclick="resetSystem()">
+                        <i class="fas fa-trash"></i> Resetar
+                    </button>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Sobre</h2>
+                <p style="color: var(--text-muted)">NeuroProtocolo v1.0. Baseado em Inteligência Emocional e Neurociência Comportamental.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/database.js"></script>
+    <script>
+        function resetSystem() {
+            if(confirm("Tem certeza absoluta? Isso apagará todo seu progresso e diários.")) {
+                db.resetData();
+            }
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(localStorage.getItem('NeuroProtocol_v1')));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href",     dataStr);
+            downloadAnchorNode.setAttribute("download", "neuro_protocol_backup.json");
+            document.body.appendChild(downloadAnchorNode); // required for firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+    </script>
+</body>
+</html>
