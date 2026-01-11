@@ -109,37 +109,19 @@
     
     <script>
         // Função Global de Abertura (para ser acessada pelo onclick)
-        window.openLibraryBooklet = async function(modId, dayNum) {
-            console.log(`Tentando abrir livreto: Módulo ${modId}, Dia ${dayNum}`);
-            
+    async function openLibraryBooklet(modId, dayNum) {
             try {
-                // Verifica se a UI foi carregada
-                if (typeof ui === 'undefined') {
-                    console.error("Erro: UI System não carregado.");
-                    alert("Sistema de interface carregando... Tente novamente.");
-                    return;
-                }
-
-                const content = await db.getDayContent(modId);
+                // MUDANÇA: Busca direta do livreto pesado
+                const booklet = await db.getBooklet(modId, dayNum);
                 
-                if (!content || !content.days || !content.days[dayNum]) {
-                    console.error("Conteúdo não encontrado no JSON.");
-                    alert("Erro ao recuperar conteúdo.");
-                    return;
-                }
-
-                const booklet = content.days[dayNum].booklet;
-                
-                // Abre usando o sistema global
                 ui.openReader(
                     booklet.title, 
                     booklet.content, 
                     `Biblioteca • Dia ${dayNum}`
                 );
-
             } catch (e) {
-                console.error("Erro ao abrir livreto:", e);
-                alert("Erro ao abrir o livreto. Verifique o console.");
+                console.error(e);
+                alert("Erro ao abrir o livreto.");
             }
         };
 
