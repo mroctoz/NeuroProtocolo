@@ -1,0 +1,188 @@
+/* --- Modal de Leitura Imersiva (Global) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 17, 26, 0.95); /* Fundo quase sólido para foco */
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--bg-panel);
+    width: 90%;
+    max-width: 900px;
+    height: 90vh;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(26, 29, 45, 0.95);
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close-modal-btn:hover {
+    color: var(--danger);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 3rem 4rem;
+    overflow-y: auto;
+    flex: 1;
+    font-family: 'Merriweather', serif; /* Foco em legibilidade */
+    font-size: 1.2rem;
+    line-height: 1.9;
+    color: #e0e0e0;
+}
+
+/* Estilos internos do texto rico */
+.modal-body h2 { font-family: 'Inter', sans-serif; color: var(--primary); margin: 2.5rem 0 1rem; font-size: 1.8rem; }
+.modal-body h3 { font-family: 'Inter', sans-serif; color: var(--accent); margin: 2rem 0 0.8rem; font-size: 1.4rem; }
+.modal-body p { margin-bottom: 1.5rem; }
+.modal-body ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+.modal-body li { margin-bottom: 0.5rem; }
+.modal-body blockquote { 
+    border-left: 4px solid var(--primary); 
+    padding-left: 1.5rem; 
+    margin: 2rem 0; 
+    font-style: italic; 
+    color: var(--text-muted); 
+}
+
+/* --- Widget de Música (Neuro-Acústica) --- */
+.music-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(26, 29, 45, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1500;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: var(--transition);
+}
+
+.music-widget:hover {
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.2);
+    border-color: var(--primary);
+}
+
+.music-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.music-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.music-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--primary);
+}
+
+.music-track-info {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.music-widget:hover .music-track-info {
+    width: 100px;
+    opacity: 1;
+    margin-right: 10px;
+}
+
+/* Equalizador Animado */
+.equalizer {
+    display: flex;
+    gap: 2px;
+    height: 15px;
+    align-items: flex-end;
+}
+
+.bar {
+    width: 3px;
+    background: var(--success);
+    animation: equalizer 1s infinite ease-in-out;
+}
+
+.bar:nth-child(1) { animation-delay: 0.1s; height: 40%; }
+.bar:nth-child(2) { animation-delay: 0.2s; height: 80%; }
+.bar:nth-child(3) { animation-delay: 0.3s; height: 50%; }
+
+.equalizer.paused .bar {
+    animation: none;
+    height: 20%;
+    background: var(--text-muted);
+}
+
+@keyframes equalizer {
+    0%, 100% { height: 20%; }
+    50% { height: 100%; }
+}
+
+@media (max-width: 768px) {
+    .modal-body { padding: 2rem; }
+    .music-widget { bottom: 10px; right: 10px; }
+}
