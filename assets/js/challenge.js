@@ -2,7 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const taskId = urlParams.get('taskId');
 const currentDay = parseInt(urlParams.get('day'));
 
-// --- Mapeamento (Crucial estar igual ao protocol.js) ---
+// --- Mapeamento (Igual ao protocol.js) ---
 function getModuleIdForDay(day) {
     if (day <= 7) return 'module_01';
     if (day <= 14) return 'module_02';
@@ -14,7 +14,6 @@ async function initChallenge() {
     const moduleId = getModuleIdForDay(currentDay);
     const moduleData = await db.getDayContent(moduleId);
     
-    // Verificações de segurança
     if (!moduleData || !moduleData.days || !moduleData.days[currentDay]) {
         alert("Erro de dados. Retornando.");
         window.location.href = 'dashboard.html';
@@ -30,11 +29,18 @@ async function initChallenge() {
         return;
     }
 
-    // ... dentro de initChallenge ...
-    
-    // 4. Renderiza a UI baseada no tipo
+    // Injeta o botão de voltar fora do card
+    document.body.insertAdjacentHTML('afterbegin', `
+        <div class="back-link-wrapper">
+            <a href="protocol.html?day=${currentDay}" class="back-link">
+                <i class="fas fa-arrow-left"></i> Voltar ao Protocolo
+            </a>
+        </div>
+    `);
+
+    // Renderiza UI baseada no tipo
     if (task.type === 'reading') {
-        // MUDANÇA: Agora buscamos o livreto separado, não mais do dayData
+        // Busca o livreto completo
         const fullBooklet = await db.getBooklet(moduleId, currentDay);
         renderReadingUI(task, fullBooklet);
     } else {
@@ -42,79 +48,109 @@ async function initChallenge() {
     }
 }
 
-// Auxiliar: Mapeia dias para módulos
-function getModuleIdForDay(day) {
-    if (day <= 7) return 'module_01';
-    if (day <= 14) return 'module_02';
-    if (day <= 21) return 'module_03';
-    return 'module_04';
-}
-
-// UI Específica para Tarefas de Leitura
+// UI: Leitura
 function renderReadingUI(task, booklet) {
     const container = document.getElementById('challengeContent');
-    
     const bookletTitle = booklet ? booklet.title : "Leitura do Dia";
     const bookletContent = booklet ? booklet.content : "<p>Conteúdo indisponível.</p>";
+    const readTime = booklet ? booklet.read_time : "10 min";
 
-    // Agora o botão "Ler Agora" abre o modal chique
-    container.innerHTML = `
-        <div class="icon-circle"><i class="fas fa-book-reader"></i></div>
-        <h1>${task.title}</h1>
-        <p class="instruction-text">Este conteúdo requer imersão total. Coloque seus fones, ative o som binaural abaixo e clique para ler.</p>
-        
-        <div class="interaction-area" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <button class="btn" style="border: 1px solid var(--primary); background: transparent; color: white;"
-                onclick="ui.openReader('${bookletTitle}', \`${bookletContent}\`)">
-                <i class="fas fa-eye"></i> Abrir Leitor Imersivo
-            </button>
-            
-            <button class="btn btn-primary" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category}')">
-                <i class="fas fa-check-circle"></i> Confirmar Leitura
-            </button>
+    // Estrutura em Card/Popup
+    container.outerHTML = `
+        <div class="challenge-card">
+            <div class="challenge-header">
+                <div class="icon-badge"><i class="fas fa-book-reader"></i></div>
+                <h1 class="challenge-title">${task.title}</h1>
+                <span class="challenge-xp">+${task.xp} XP</span>
+            </div>
+
+            <div class="content-block">
+                <span class="block-label">Instrução</span>
+                <p class="instruction-text">A neuroplasticidade exige atenção plena. Acesse o material abaixo, coloque seus fones e dedique-se exclusivamente a esta leitura.</p>
+            </div>
+
+            <!-- Preview do Livreto Clicável -->
+            <div class="booklet-preview" onclick="ui.openReader('${bookletTitle}', \`${bookletContent}\`)">
+                <div class="booklet-icon"><i class="fas fa-file-alt"></i></div>
+                <div class="booklet-info">
+                    <h4>${bookletTitle}</h4>
+                    <p>Tempo estimado: ${readTime} • Clique para abrir</p>
+                </div>
+                <i class="fas fa-external-link-alt" style="margin-left: auto; color: var(--text-muted)"></i>
+            </div>
+
+            <div class="action-area">
+                <button class="btn btn-primary btn-large" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category}')">
+                    <i class="fas fa-check-circle"></i> Confirmar Leitura e Compreensão
+                </button>
+            </div>
         </div>
     `;
 }
 
-// UI para Outros Desafios (Timer, Journaling, Ação)
+// UI: Outros Desafios
 function renderChallengeUI(task) {
     const container = document.getElementById('challengeContent');
-    let interactionHTML = '';
+    let contentHTML = '';
 
-    // Lógica de UI baseada no tipo de tarefa
+    // Bloco de Instrução Padrão
+    const instructionBlock = `
+        <div class="content-block">
+            <span class="block-label">O Desafio</span>
+            <p class="instruction-text">${task.instruction || task.desc}</p>
+        </div>
+    `;
+
+    // Conteúdo Dinâmico
     if (task.type === 'journaling') {
-        interactionHTML = `
-            <textarea id="journalText" class="journal-input" placeholder="Escreva sua reflexão aqui... (Mínimo 10 caracteres)"></textarea>
-            <button class="btn btn-primary" onclick="completeJournal('${task.id}', ${task.xp}, '${task.category}')">Salvar e Completar</button>
+        contentHTML = `
+            ${instructionBlock}
+            <div class="content-block" style="border-left-color: var(--accent);">
+                <span class="block-label">Seu Registro</span>
+                <textarea id="journalText" class="journal-input" placeholder="Escreva sua reflexão aqui..."></textarea>
+            </div>
+            <div class="action-area">
+                <button class="btn btn-primary btn-large" onclick="completeJournal('${task.id}', ${task.xp}, '${task.category}')">
+                    <i class="fas fa-save"></i> Salvar e Completar
+                </button>
+            </div>
         `;
     } else if (task.type === 'meditation' || task.type === 'timer') {
-        interactionHTML = `
+        contentHTML = `
+            ${instructionBlock}
             <div class="timer-display" id="timerDisplay">${formatTime(task.timer || 60)}</div>
-            <button id="startTimerBtn" class="btn btn-primary" onclick="startTimer(${task.timer || 60}, '${task.id}', ${task.xp}, '${task.category}')">
-                <i class="fas fa-play"></i> Iniciar
-            </button>
+            <div class="action-area">
+                <button id="startTimerBtn" class="btn btn-primary btn-large" onclick="startTimer(${task.timer || 60}, '${task.id}', ${task.xp}, '${task.category}')">
+                    <i class="fas fa-play"></i> Iniciar Timer
+                </button>
+            </div>
         `;
     } else {
-        // Ação genérica, física, social
-        interactionHTML = `
-            <button class="btn btn-primary" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category}')">
-                <i class="fas fa-check"></i> Marcar como Concluído
-            </button>
+        // Ação Genérica
+        contentHTML = `
+            ${instructionBlock}
+            <div class="action-area">
+                <button class="btn btn-primary btn-large" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category}')">
+                    <i class="fas fa-check"></i> Marcar como Concluído
+                </button>
+            </div>
         `;
     }
 
-    container.innerHTML = `
-        <div class="icon-circle"><i class="fas ${getIconForType(task.type)}"></i></div>
-        <h1>${task.title}</h1>
-        <p class="instruction-text">${task.instruction || task.desc || "Siga as instruções do protocolo."}</p>
-        
-        <div class="interaction-area">
-            ${interactionHTML}
+    // Renderiza o Card Completo
+    container.outerHTML = `
+        <div class="challenge-card">
+            <div class="challenge-header">
+                <div class="icon-badge"><i class="fas ${getIconForType(task.type)}"></i></div>
+                <h1 class="challenge-title">${task.title}</h1>
+                <span class="challenge-xp">+${task.xp} XP</span>
+            </div>
+            ${contentHTML}
         </div>
     `;
 }
 
-// --- Funções Auxiliares ---
+// --- Funções Auxiliares (Mantidas) ---
 
 function getIconForType(type) {
     const icons = {
@@ -136,17 +172,19 @@ function formatTime(seconds) {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
 }
 
-// --- Lógica de Ação (Completion) ---
+// --- Ações ---
 
 function completeGeneric(id, xp, category) {
-    db.completeTask(id, xp, category);
-    window.location.href = `protocol.html?day=${currentDay}`;
+    if(confirm("Você realmente completou esta tarefa com foco total?")) {
+        db.completeTask(id, xp, category);
+        window.location.href = `protocol.html?day=${currentDay}`;
+    }
 }
 
 function completeJournal(id, xp, category) {
     const text = document.getElementById('journalText').value;
     if (text.trim().length < 10) {
-        alert("Por favor, aprofunde sua reflexão. O cérebro precisa de elaboração.");
+        alert("Aprofunde sua reflexão. O cérebro precisa de elaboração.");
         return;
     }
     db.saveJournalEntry(id, text);
@@ -157,9 +195,16 @@ function completeJournal(id, xp, category) {
 function startTimer(duration, id, xp, category) {
     const display = document.getElementById('timerDisplay');
     const btn = document.getElementById('startTimerBtn');
+    
+    // Inicia som automaticamente se disponível
+    if(typeof ui !== 'undefined' && !ui.isPlaying) {
+        // Tenta tocar música suave se não estiver tocando
+        // ui.loadTrack(1); // Opcional
+    }
+
     btn.disabled = true;
     btn.style.opacity = "0.5";
-    btn.innerText = "Em progresso...";
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Foco Total...';
     
     let timer = duration;
     
@@ -170,18 +215,19 @@ function startTimer(duration, id, xp, category) {
         if (timer <= 0) {
             clearInterval(interval);
             display.style.color = "var(--success)";
-            btn.innerText = "Concluir Desafio";
+            btn.innerHTML = '<i class="fas fa-check"></i> Concluir Desafio';
             btn.style.opacity = "1";
+            btn.classList.replace('btn-primary', 'btn-success'); // Se tiver classe de sucesso
+            btn.style.background = "var(--success)";
+            btn.style.boxShadow = "0 4px 15px rgba(0,184,148,0.4)";
             btn.disabled = false;
             
-            // Redefine o botão para finalizar a tarefa
+            // Redefine o botão para finalizar
             btn.onclick = () => completeGeneric(id, xp, category);
             
-            // Feedback vibratório (se suportado mobile)
-            if (navigator.vibrate) navigator.vibrate(200);
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
         }
     }, 1000);
 }
 
-// Inicia o script
 initChallenge();
