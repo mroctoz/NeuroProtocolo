@@ -1,12 +1,12 @@
 {
   "days": {
     "15": {
-      "title": "O Wi-Fi Neural: Neurônios Espelho",
-      "summary": "Como seu cérebro simula a realidade alheia antes mesmo de você pensar.",
+      "title": "O Wi-Fi Neural",
+      "summary": "Neurônios espelho e a biologia da imitação.",
       "booklet": {
-        "title": "A Biologia da Imitação",
-        "read_time": "14 min",
-        "content": "<h3>O Cérebro Simula Tudo</h3><p>Quando você vê alguém bocejar, você boceja. Isso não é educação, é neurobiologia. Giacomo Rizzolatti descobriu os <strong>Neurônios Espelho</strong>: células que disparam tanto quando você <em>faz</em> uma ação quanto quando você <em>vê</em> alguém fazendo. Eles estão no Córtex Pré-Motor e no Lobo Parietal.</p><h3>Aprendizado por Osmose</h3><p>Somos programados para copiar. Se você convive com pessoas ansiosas, seus neurônios espelho simulam a ansiedade delas, e seu corpo libera cortisol por tabela. Isso explica por que o ambiente é mais forte que a força de vontade. Seus neurônios estão constantemente treinando para ser quem você observa.</p>"
+        "title": "A Descoberta dos Espelhos",
+        "read_time": "16 min",
+        "content": "<h3>Não estamos sozinhos em nossos cérebros</h3><p>Na década de 90, cientistas italianos liderados por Giacomo Rizzolatti descobriram algo fascinante em macacos: neurônios no córtex pré-motor que disparavam quando o macaco pegava uma noz, mas TAMBÉM disparavam quando o macaco apenas <em>via</em> outro macaco pegar a noz.</p><h3>Simulação Encarnada</h3><p>Isso mudou tudo. Significa que, para entender o que o outro faz ou sente, seu cérebro não 'pensa' sobre isso; ele <strong>simula</strong> a ação internamente. Se você vê alguém chorar, seus neurônios espelho simulam o choro. Você sente um 'eco' da emoção do outro. Isso é a base biológica da empatia e do aprendizado.</p><h3>O Perigo do Ambiente</h3><p>Isso também explica por que o ambiente nos molda tanto. Se você convive com pessoas cínicas, agressivas ou ansiosas, seus neurônios espelho estão ensaiando esses comportamentos o dia todo, silenciosamente. Você se torna a média das pessoas com quem convive não por escolha moral, mas por osmose neural.</p>"
       },
       "challenges": [
         {
@@ -19,43 +19,35 @@
         {
           "id": "d15_t2",
           "type": "action",
-          "category": "Observação",
-          "title": "Rastreamento de Mímica",
-          "instruction": "Em uma conversa hoje, observe conscientemente sua própria postura. Você cruzou os braços quando o outro cruzou? Você sorriu apenas porque o outro sorriu? Identifique 3 momentos de 'espelhamento' automático.",
+          "category": "Observação Social",
+          "title": "Rastreio de Mímica",
+          "instruction": "Em uma conversa hoje, observe sua própria postura. Você cruzou os braços quando o outro cruzou? Você sorriu apenas porque o outro sorriu? Identifique 3 momentos de 'espelhamento automático' e anote.",
           "xp": 100
         },
         {
           "id": "d15_t3",
           "type": "journaling",
-          "category": "Análise",
-          "title": "Auditoria de Ambiente",
-          "instruction": "Liste as 5 pessoas com quem você mais convive. Liste 2 hábitos ou emoções predominantes de cada uma. Você está 'espelhando' esses comportamentos? Escreva sobre isso.",
+          "category": "Auditoria",
+          "title": "Análise do Círculo Social",
+          "instruction": "Liste as 5 pessoas com quem mais convive. Liste 2 emoções predominantes de cada uma. Seus neurônios estão treinando essas emoções. Você está feliz com esse treino?",
           "xp": 150
-        },
-        {
-          "id": "d15_t4",
-          "type": "action",
-          "category": "Social",
-          "title": "O Sorriso de Duchenne",
-          "instruction": "Sorria genuinamente (usando os olhos, não só a boca) para um estranho ou atendente hoje. Observe a reação imediata dos neurônios espelho dele. Anote o resultado.",
-          "xp": 100
         }
       ]
     },
     "16": {
-      "title": "Empatia: O Córtex Orbitofrontal",
-      "summary": "A diferença entre entender a dor e sentir a dor.",
+      "title": "Anatomia da Empatia",
+      "summary": "Diferenciando empatia cognitiva de emocional.",
       "booklet": {
-        "title": "Se não exercemos, perdemos",
-        "read_time": "16 min",
-        "content": "<h3>Anatomia da Empatia</h3><p>Estudos da Universidade do Colorado mostram que a empatia não reside em um único lugar, mas envolve o <strong>Córtex Orbitofrontal</strong> (julgamento social) e a <strong>Área Somatossensorial</strong> (sensação física). Para sentir o que o outro sente, você precisa acessar seu próprio mapa corporal.</p><h3>Empatia Cognitiva vs. Emocional</h3><p>Psicopatas têm alta empatia cognitiva (sabem o que você sente e usam isso para manipular), mas zero empatia emocional (não se importam). O treino hoje é conectar o entendimento lógico à sensação visceral. A falta de uso dessas vias leva à atrofia social.</p>"
+        "title": "Sentir vs. Entender",
+        "read_time": "18 min",
+        "content": "<h3>O Circuito da Empatia</h3><p>A empatia não é um sentimento único; é um sistema complexo. Estudos mostram que ela envolve a <strong>Ínsula</strong> (que lê os estados viscerais do corpo) e o <strong>Córtex Cingulado Anterior</strong>. Para sentir o que o outro sente, você precisa ler o mapa do seu próprio corpo.</p><h3>Os Três Tipos de Empatia (Goleman)</h3><ul><li><strong>Empatia Cognitiva:</strong> 'Eu entendo como você vê o mundo'. Útil para negociações e política. Psicopatas são ótimos nisso.</li><li><strong>Empatia Emocional:</strong> 'Eu sinto o que você sente'. Seus neurônios espelho disparam. Cria conexão, mas pode levar à exaustão emocional.</li><li><strong>Preocupação Empática:</strong> 'Eu entendo, sinto e quero ajudar'. É o equilíbrio ideal que leva à ação compassiva.</li></ul><p>O objetivo hoje é treinar a Empatia Emocional sem se afogar nela.</p>"
       },
       "challenges": [
         {
           "id": "d16_t1",
           "type": "reading",
-          "category": "Neurociência",
-          "title": "Leitura: A Anatomia da Empatia",
+          "category": "Psicologia",
+          "title": "Leitura: Os Tipos de Empatia",
           "xp": 50
         },
         {
@@ -63,23 +55,15 @@
           "type": "action",
           "category": "Comunicação",
           "title": "Escuta Radical",
-          "instruction": "Tenha uma conversa de 5 minutos onde você NÃO PODE falar sobre si mesmo, nem dar conselhos. Seu único objetivo é fazer perguntas para entender a emoção do outro. Valide: 'Parece que você está sentindo X'.",
+          "instruction": "Tenha uma conversa de 5 minutos onde você NÃO PODE falar sobre si mesmo, nem dar conselhos. Seu único objetivo é fazer perguntas para aprofundar o entendimento da emoção do outro.",
           "xp": 200
         },
         {
           "id": "d16_t3",
-          "type": "journaling",
-          "category": "Reflexão",
-          "title": "A Perspectiva do 'Inimigo'",
-          "instruction": "Pense em alguém de quem você discorda profundamente ou não gosta. Escreva um parágrafo defendendo o ponto de vista dessa pessoa, na primeira pessoa ('Eu sinto que...'), tentando validar a lógica emocional dela.",
-          "xp": 180
-        },
-        {
-          "id": "d16_t4",
           "type": "meditation",
-          "category": "Metta",
-          "title": "Meditação da Bondade (Metta)",
-          "instruction": "Feche os olhos. Visualize alguém que ama. Deseje bem. Visualize um neutro. Deseje bem. Visualize um desafeto. Deseje bem. Isso treina o córtex cingulado.",
+          "category": "Compaixão",
+          "title": "Meditação Metta (Loving-Kindness)",
+          "instruction": "Feche os olhos. Visualize alguém que ama. Deseje que ela esteja bem e livre de sofrimento. Agora visualize alguém neutro. Agora, alguém difícil. Expanda o círculo de empatia.",
           "timer": 600,
           "xp": 150
         }
@@ -87,24 +71,24 @@
     },
     "17": {
       "title": "Contágio Emocional",
-      "summary": "Você é um termostato ou um termômetro?",
+      "summary": "A liderança como gestão de energia.",
       "booklet": {
-        "title": "A Economia Subterrânea",
-        "read_time": "12 min",
-        "content": "<h3>O Vírus Emocional</h3><p>Goleman descreve as emoções como vírus altamente contagiosos. Em um grupo, a pessoa mais expressiva emocionalmente tende a 'contaminar' as outras em 2 minutos. Se você entra em uma sala onde alguém está estressado, seu cortisol sobe.</p><h3>Termômetro vs. Termostato</h3><p>A maioria das pessoas é termômetro: apenas reflete a temperatura do ambiente (se gritam, ela grita). O líder emocional é um termostato: ele define a temperatura. Ele mantém a calma no caos e força os neurônios espelho dos outros a se acalmarem através da <em>Corregulação</em>.</p>"
+        "title": "Termostato vs. Termômetro",
+        "read_time": "14 min",
+        "content": "<h3>O Vírus Invisível</h3><p>Emoções são contagiosas. O sistema límbico é um sistema de 'circuito aberto', dependente de conexões externas para sua regulação. Em qualquer grupo, a pessoa mais expressiva emocionalmente tende a ditar o tom do grupo em cerca de 2 minutos.</p><h3>Quem você é na sala?</h3><p>A maioria das pessoas é <strong>Termômetro</strong>: elas apenas reagem e refletem a temperatura do ambiente. Se o ambiente está tenso, elas ficam tensas. O Líder (seja pai, chefe ou amigo) deve ser um <strong>Termostato</strong>: ele define a temperatura. Ele mantém a calma no caos, forçando os neurônios espelho dos outros a se acalmarem através de um processo chamado correlação límbica.</p>"
       },
       "challenges": [
         {
           "id": "d17_t1",
           "type": "reading",
-          "category": "Psicologia",
+          "category": "Liderança",
           "title": "Leitura: Contágio Emocional",
           "xp": 50
         },
         {
           "id": "d17_t2",
           "type": "action",
-          "category": "Liderança",
+          "category": "Social",
           "title": "O Desafio do Termostato",
           "instruction": "Identifique uma situação de tensão ou tédio hoje. Entre nela com uma energia deliberadamente diferente (calma ou entusiasmo). Tente 'virar' o humor de uma pessoa apenas com seu tom de voz e postura.",
           "xp": 200
@@ -112,21 +96,21 @@
         {
           "id": "d17_t3",
           "type": "timer",
-          "category": "Fisiologia",
-          "title": "Reset Vagal Antes de Interagir",
-          "instruction": "Antes de entrar em casa ou em uma reunião, faça 2 minutos de respiração lenta para garantir que você não será o vetor de estresse.",
+          "category": "Regulação",
+          "title": "Reset Pré-Interação",
+          "instruction": "Antes de entrar em casa ou em uma reunião, faça 2 minutos de respiração para garantir que você não será o vetor de estresse.",
           "timer": 120,
           "xp": 100
         }
       ]
     },
     "18": {
-      "title": "A Neurociência da Inveja",
-      "summary": "Por que o sucesso do outro dói fisicamente.",
+      "title": "A Biologia da Inveja",
+      "summary": "Por que o sucesso alheio dói fisicamente.",
       "booklet": {
-        "title": "Dor Social é Dor Física",
-        "read_time": "18 min",
-        "content": "<h3>Córtex Cingulado Anterior (CCA)</h3><p>Estudos japoneses mostraram que quando sentimos inveja, o <strong>Córtex Cingulado Anterior</strong> acende. É a mesma área que processa a dor física (um corte, uma queimadura). Inveja dói. Não é metáfora.</p><h3>Schadenfreude</h3><p>Pior ainda: quando a pessoa invejada falha, o <strong>Estriado Ventral</strong> (recompensa) acende. Sentimos prazer na falha alheia. Isso é primitivo e destrutivo. A inveja bloqueia a empatia e aumenta o cortisol.</p><p>A única cura neurológica é a ressignificação: transformar inveja em admiração. A admiração ativa o aprendizado; a inveja ativa a defesa.</p>"
+        "title": "A Dor Social é Real",
+        "read_time": "17 min",
+        "content": "<h3>Córtex Cingulado Anterior (CCA)</h3><p>A neurociência confirmou algo poético: a inveja dói. Estudos de ressonância magnética mostram que quando sentimos inveja forte, o <strong>Córtex Cingulado Anterior</strong> é ativado. Esta é a exata mesma região que processa a <strong>dor física</strong> (como um corte ou queimadura).</p><h3>Schadenfreude</h3><p>Existe um lado sombrio: quando a pessoa invejada falha, o <strong>Estriado Ventral</strong> (centro de recompensa) se ilumina. Sentimos prazer na desgraça alheia. Isso é um instinto primitivo de competição por recursos.</p><h3>O Antídoto: Admiração</h3><p>A inveja paralisa e gera cortisol. A admiração motiva e gera dopamina. O único jeito de desligar a dor do CCA é converter conscientemente a inveja em aprendizado: 'Como ele fez isso? O que posso aprender?'.</p>"
       },
       "challenges": [
         {
@@ -141,7 +125,7 @@
           "type": "journaling",
           "category": "Sombra",
           "title": "Confissão de Inveja",
-          "instruction": "Identifique alguém de quem você tem inveja (profissional, pessoal). Admita a dor. Agora, escreva 3 qualidades dessa pessoa que você pode estudar e aprender. Transforme a dor em currículo.",
+          "instruction": "Identifique alguém de quem você tem inveja. Admita a dor. Agora, escreva 3 qualidades ou estratégias dessa pessoa que você pode estudar. Transforme a dor em currículo.",
           "xp": 250
         },
         {
@@ -149,27 +133,18 @@
           "type": "action",
           "category": "Social",
           "title": "Elogio ao Rival",
-          "instruction": "Encontre algo genuinamente bom que essa pessoa (ou um concorrente) fez e elogie publicamente ou para si mesmo. Quebre o ciclo da dor no Cíngulo Anterior.",
+          "instruction": "Encontre algo genuinamente bom que essa pessoa (ou um concorrente) fez e elogie (mentalmente ou publicamente). Quebre o ciclo da dor.",
           "xp": 150
-        },
-        {
-          "id": "d18_t4",
-          "type": "meditation",
-          "category": "Regulação",
-          "title": "Meditação da Autossuficiência",
-          "instruction": "Foco na gratidão pelo que você já tem. A inveja nasce da escassez.",
-          "timer": 600,
-          "xp": 100
         }
       ]
     },
     "19": {
-      "title": "Gestão de Conflitos",
-      "summary": "Técnicas para desarmar a amígdala alheia.",
+      "title": "Comunicação Não-Defensiva",
+      "summary": "Como reclamar sem ativar a amígdala do outro.",
       "booklet": {
-        "title": "A Arte da Crítica",
+        "title": "Desarmando o Gatilho",
         "read_time": "15 min",
-        "content": "<h3>Ataque vs. Reclamação</h3><p>Gottman descobriu que o que destrói relações não é a briga, é o desprezo. Um ataque pessoal ('Você é preguiçoso') ativa a amígdala do outro, gerando defesa ou contra-ataque. Uma reclamação comportamental ('Fiquei chateado porque a louça não foi lavada') ativa o córtex.</p><h3>A Fórmula XYZ</h3><p>Para comunicar sem ferir: 'Quando você fez X (fato), eu me senti Y (emoção), e eu gostaria que você fizesse Z (solução)'. Isso remove a acusação e foca na solução.</p>"
+        "content": "<h3>Ataque vs. Reclamação</h3><p>O psicólogo John Gottman, em seu 'Laboratório do Amor', descobriu que o que destrói relações não é o conflito, é o <strong>Desprezo</strong> e a <strong>Crítica Pessoal</strong>. Dizer 'Você é preguiçoso' é um ataque ao caráter; a amígdala do outro entra em modo de defesa imediatamente.</p><h3>A Fórmula XYZ</h3><p>Para comunicar uma necessidade sem gerar guerra, use a estrutura:</p><blockquote>'Quando você fez X (fato objetivo), eu me senti Y (sua emoção), e eu gostaria que você fizesse Z (necessidade futura).'</blockquote><p>Isso foca no comportamento, não na pessoa, e mantém o córtex pré-frontal do ouvinte online.</p>"
       },
       "challenges": [
         {
@@ -184,7 +159,7 @@
           "type": "journaling",
           "category": "Scripting",
           "title": "Reescrevendo o Conflito",
-          "instruction": "Lembre de uma discussão recente onde você criticou alguém. Reescreva sua fala usando a fórmula XYZ (Fato -> Emoção -> Pedido), sem adjetivos pejorativos.",
+          "instruction": "Lembre de uma discussão recente. Reescreva sua fala usando a fórmula XYZ, removendo todos os adjetivos e julgamentos sobre a outra pessoa.",
           "xp": 150
         },
         {
@@ -192,27 +167,18 @@
           "type": "action",
           "category": "Social",
           "title": "Validação Emocional",
-          "instruction": "Hoje, quando alguém reclamar de algo para você, não dê soluções. Apenas diga: 'Entendo por que você está chateado, faz sentido'. Observe como a tensão se dissipa.",
+          "instruction": "Hoje, quando alguém reclamar de algo para você, não se defenda e não dê soluções. Apenas diga: 'Entendo por que você está chateado, faz sentido'. Observe a mágica acontecer.",
           "xp": 120
-        },
-        {
-          "id": "d19_t4",
-          "type": "timer",
-          "category": "Pausa",
-          "title": "O Tempo Técnico",
-          "instruction": "Se sentir raiva em uma conversa hoje, peça uma pausa de 2 minutos antes de responder. Respire. Deixe a amígdala esfriar.",
-          "timer": 120,
-          "xp": 100
         }
       ]
     },
     "20": {
-      "title": "Ocitocina e Confiança",
-      "summary": "O hormônio do vínculo e como ele reduz o estresse.",
+      "title": "Ocitocina: O Elo Químico",
+      "summary": "O hormônio da confiança e a redução do estresse.",
       "booklet": {
         "title": "A Biologia do Vínculo",
         "read_time": "14 min",
-        "content": "<h3>O Antídoto do Cortisol</h3><p>A Ocitocina não serve apenas para o parto. Ela é liberada no abraço, no aperto de mão, no olho no olho. Quando a Ocitocina sobe, o Cortisol desce e a Amígdala relaxa.</p><h3>Isolamento Mata</h3><p>Seres humanos isolados têm 2x mais chance de morrer de qualquer causa. O cérebro interpreta solidão como ameaça à vida (na savana, um humano sozinho era um humano morto). Investir em laços sociais não é lazer, é saúde pública e manutenção neural.</p>"
+        "content": "<h3>O Antídoto do Cortisol</h3><p>A Ocitocina não é apenas o hormônio do parto. Ela é o neuropeptídeo da confiança e do vínculo social. O mais interessante? Ela é um antagonista direto do Cortisol. Quando a Ocitocina sobe, o medo e o estresse descem.</p><h3>Gerando Ocitocina</h3><p>O cérebro libera ocitocina através do toque físico (abraço de 20 segundos), contato visual sustentado e atos de generosidade. Pessoas solitárias têm níveis cronicamente altos de cortisol porque lhes falta esse amortecedor químico natural.</p>"
       },
       "challenges": [
         {
@@ -226,8 +192,8 @@
           "id": "d20_t2",
           "type": "action",
           "category": "Social",
-          "title": "Conexão Física (ou Virtual Profunda)",
-          "instruction": "Dê um abraço de pelo menos 20 segundos em alguém que você confia (é o tempo para a ocitocina disparar) ou tenha uma conversa de vídeo de 15 min focada apenas em conexão, sem distrações.",
+          "title": "O Abraço Longo",
+          "instruction": "Dê um abraço de pelo menos 20 segundos em alguém que você confia. A maioria dos abraços dura 3 segundos. Aos 20, a ocitocina é liberada. Sinta o relaxamento muscular que ocorre.",
           "xp": 150
         },
         {
@@ -235,26 +201,18 @@
           "type": "action",
           "category": "Altruísmo",
           "title": "Ato de Serviço",
-          "instruction": "Faça um favor a alguém sem que a pessoa saiba ou peça. O altruísmo ativa o sistema de recompensa de forma mais sustentável que o consumo.",
-          "xp": 150
-        },
-        {
-          "id": "d20_t4",
-          "type": "journaling",
-          "category": "Gratidão",
-          "title": "Rede de Apoio",
-          "instruction": "Liste 3 pessoas que estariam lá por você em uma crise. Escreva uma mensagem de agradecimento para uma delas agora.",
+          "instruction": "Faça um pequeno favor a alguém sem esperar nada em troca. O altruísmo ativa o sistema de recompensa e libera ocitocina.",
           "xp": 100
         }
       ]
     },
     "21": {
-      "title": "Consolidação Módulo 03",
-      "summary": "Integração das habilidades sociais e emocionais.",
+      "title": "Consolidação Social",
+      "summary": "Integrando empatia e liderança.",
       "booklet": {
         "title": "O Cérebro Coletivo",
         "read_time": "10 min",
-        "content": "<h3>Inteligência de Grupo</h3><p>Você aprendeu que seu cérebro muda o cérebro dos outros. Sua calma acalma os outros. Sua raiva inflama os outros. Assumir a responsabilidade pelo seu estado emocional é o maior ato de liderança possível.</p><p>Você agora tem as ferramentas para não ser 'sequestrado' pela amígdala em conflitos e para não sentir a dor da inveja no cíngulo anterior. Está na hora de transcender o ego.</p>"
+        "content": "<h3>Inteligência Interpessoal</h3><p>Nesta semana, você aprendeu que seu cérebro está conectado aos cérebros ao seu redor via wi-fi neural (neurônios espelho). Sua raiva é contagiosa, mas sua calma também é. Assumir a responsabilidade pelo seu estado emocional é o primeiro passo para a liderança.</p><p>Você aprendeu a sentir a dor da inveja sem agir sobre ela e a usar a ocitocina para reduzir o estresse. Você está pronto para o módulo final: Transcendência.</p>"
       },
       "challenges": [
         {
@@ -276,8 +234,8 @@
           "id": "d21_t3",
           "type": "quiz",
           "category": "Validação",
-          "title": "Checklist de Prontidão - Módulo 4",
-          "instruction": "Você consegue perceber quando está absorvendo a emoção de outra pessoa? Se sim, você está pronto para o módulo final: Transcendência.",
+          "title": "Checklist de Prontidão",
+          "instruction": "Você consegue perceber quando está absorvendo a emoção de outra pessoa (contágio)? Se sim, você está pronto para o final.",
           "xp": 100
         }
       ]
