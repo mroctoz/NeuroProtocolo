@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroProtocolo | Sistema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; background: #0f111a; }
+        
+        /* Iframe ocupa toda a tela */
+        iframe {
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            display: block;
+        }
+
+        /* Overlay de Início (Para permitir Autoplay do Áudio) */
+        .start-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f111a; z-index: 9999;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        .start-btn {
+            padding: 1.5rem 4rem; font-size: 1.5rem;
+            background: var(--primary); color: white;
+            border: none; border-radius: 50px;
+            cursor: pointer; font-weight: 700;
+            box-shadow: 0 0 30px var(--primary-glow);
+            transition: transform 0.2s;
+        }
+        
+        .start-btn:hover { transform: scale(1.05); }
+
+        /* Ajuste do player para ficar acima do iframe */
+        .music-widget {
+            bottom: 30px;
+            right: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay para forçar interação inicial (necessário para áudio web) -->
+    <div class="start-overlay" id="startOverlay">
+        <i class="fas fa-brain" style="font-size: 4rem; color: var(--primary); margin-bottom: 2rem;"></i>
+        <h1 style="margin-bottom: 3rem;">Sistema Pronto</h1>
+        <button class="start-btn" onclick="enterSystem()">
+            <i class="fas fa-power-off"></i> INICIAR
+        </button>
+        <p style="color: var(--text-muted); margin-top: 1rem;">Clique para ativar os sistemas neurais e sonoros.</p>
+    </div>
+
+    <!-- O Site roda aqui dentro -->
+    <iframe src="dashboard.html" name="app-frame" id="appFrame"></iframe>
+
+    <!-- Script de Áudio Global -->
+    <script src="assets/js/audio.js"></script>
+
+    <script>
+        function enterSystem() {
+            const overlay = document.getElementById('startOverlay');
+            
+            // Tenta iniciar o áudio imediatamente com o clique do usuário
+            // Isso desbloqueia o AudioContext do navegador
+            audioManager.toggleAudio().then(() => {
+                // Se der certo, ótimo. Se não, o widget está lá.
+            });
+
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        }
+    </script>
+</body>
+</html>
