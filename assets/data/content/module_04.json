@@ -6,7 +6,7 @@
       "booklet": {
         "title": "O Cérebro Espiritual",
         "read_time": "18 min",
-        "content": "<h3>O Lobo Parietal e o Eu</h3><p>O lobo parietal é responsável pela propriocepção: saber onde seu corpo termina e o mundo começa. Estudos de Andrew Newberg com monges e freiras em oração profunda mostraram que a atividade no lobo parietal <strong>diminui</strong> drasticamente nesses estados.</p><h3>A Fusão com o Todo</h3><p>Quando o lobo parietal 'apaga', o cérebro perde a fronteira física. A sensação subjetiva é de unidade com o universo ou com Deus. Isso não prova nem refuta a existência de Deus, mas prova que o cérebro tem um mecanismo biológico para a transcendência. A espiritualidade não é apenas cultural; é anatômica.</p>"
+        "content": "<h3>Onde Deus reside no cérebro?</h3><p>Não existe um 'ponto de Deus' único, mas a neurociência identificou áreas cruciais na experiência espiritual. O pesquisador Andrew Newberg, estudando monges budistas e freiras franciscanas em oração profunda, notou uma queda drástica de atividade no <strong>Lobo Parietal Superior Posterior</strong>.</p><h3>A Fronteira do Eu</h3><p>A função dessa área é a orientação espacial: ela define onde 'você' termina e o 'mundo' começa. Quando essa área é inibida durante a meditação profunda, o cérebro perde a capacidade de criar essa fronteira. O resultado subjetivo? Uma sensação de unidade absoluta com o universo, de dissolução do ego. A ciência sugere que a transcendência é uma capacidade biológica inata, acessível através do treino da atenção, independente de dogma religioso.</p>"
       },
       "challenges": [
         {
@@ -21,7 +21,7 @@
           "type": "meditation",
           "category": "Transcendência",
           "title": "Silenciando o Parietal",
-          "instruction": "Meditação focada na dissolução das fronteiras corporais. Sente-se. Imagine que sua pele não é um limite, mas uma ponte. Tente sentir o ar como uma extensão do pulmão.",
+          "instruction": "Sente-se. Feche os olhos. Imagine que sua pele não é uma barreira, mas uma membrana permeável. Tente sentir o ar não como algo 'fora', mas como uma extensão do seu pulmão. Dissolva a fronteira.",
           "timer": 900,
           "xp": 200
         },
@@ -30,52 +30,52 @@
           "type": "journaling",
           "category": "Reflexão",
           "title": "Conexão Maior",
-          "instruction": "Independentemente de religião, escreva sobre um momento em sua vida onde você se sentiu pequeno diante de algo maior (natureza, arte, amor).",
+          "instruction": "Descreva um momento onde você se sentiu pequeno, mas conectado a algo maior (olhando as estrelas, no mar, em oração). Qual era a sensação física?",
           "xp": 100
         }
       ]
     },
     "23": {
-      "title": "A Falácia do Livre Arbítrio",
+      "title": "Livre Arbítrio: Ilusão ou Veto?",
       "summary": "Quem decide: Você ou seus neurônios?",
       "booklet": {
         "title": "Algo Pensa em Mim",
         "read_time": "20 min",
-        "content": "<h3>O Inconsciente no Comando</h3><p>Como vimos, o experimento de Libet sugere que o cérebro inicia a ação antes da decisão consciente. Nietzsche disse: 'Um pensamento vem quando ele quer, e não quando eu quero'.</p><h3>O 'Veto' Consciente</h3><p>Se não temos livre arbítrio para <em>iniciar</em>, talvez tenhamos para <em>vetar</em>. A função do córtex pré-frontal é dizer NÃO aos impulsos que sobem do sistema límbico. A liberdade não é fazer o que se quer; é não fazer o que o impulso dita. O autocontrole é a única liberdade real.</p>"
+        "content": "<h3>O Experimento de Libet</h3><p>Na década de 80, Benjamin Libet demonstrou que a atividade cerebral para mover um dedo começa 300 milissegundos <em>antes</em> de a pessoa ter a consciência da decisão de mover. Nietzsche já dizia: 'Um pensamento vem quando ele quer, e não quando eu quero'.</p><h3>O Poder do 'Não'</h3><p>Se não controlamos o surgimento do impulso (que vem do sistema límbico e gânglios da base), temos o poder do <strong>Veto Consciente</strong>. A função do Córtex Pré-Frontal é inibir. Talvez não tenhamos 'Livre Arbítrio' (Free Will), mas temos 'Livre Veto' (Free Won't). A verdadeira liberdade humana não é fazer o que se quer, mas ser capaz de NÃO fazer o que o impulso dita.</p>"
       },
       "challenges": [
         {
           "id": "d23_t1",
           "type": "reading",
           "category": "Filosofia Neural",
-          "title": "Leitura: Livre Arbítrio",
+          "title": "Leitura: O Veto Consciente",
           "xp": 50
         },
         {
           "id": "d23_t2",
           "type": "action",
-          "category": "Veto",
+          "category": "Controle Inibitório",
           "title": "O Poder do Não",
-          "instruction": "Hoje, identifique 3 impulsos fortes (comer, checar celular, responder mal). Sua tarefa é simples: Vetar. Diga 'Não' mentalmente e observe o impulso morrer.",
+          "instruction": "Hoje, identifique 3 impulsos fortes (comer doce, checar celular, interromper alguém). Sua tarefa é simples: Vetar. Diga 'Não' mentalmente e observe a energia do impulso se dissipar.",
           "xp": 150
         },
         {
           "id": "d23_t3",
           "type": "journaling",
           "category": "Análise",
-          "title": "Origem dos Pensamentos",
-          "instruction": "Sente-se por 5 minutos. Observe seus pensamentos surgirem. Tente identificar de onde eles vêm. Você os chamou? Ou eles apareceram?",
+          "title": "A Origem",
+          "instruction": "Sente-se por 5 minutos e observe seus pensamentos. Tente identificar de onde eles vêm. Você os convocou? Ou eles apareceram? Quem é o observador?",
           "xp": 100
         }
       ]
     },
     "24": {
-      "title": "Procrastinação: Medo, não Preguiça",
-      "summary": "A amígdala e a dor da tarefa não feita.",
+      "title": "Procrastinação é Medo",
+      "summary": "A amígdala e a gestão da dor emocional.",
       "booklet": {
         "title": "O Cérebro Procrastinador",
         "read_time": "15 min",
-        "content": "<h3>A Amígdala e a Tarefa</h3><p>Procrastinação não é falha de caráter, é regulação emocional falha. Quando você pensa na tarefa difícil, a amígdala dispara (medo, insegurança, tédio). Para aliviar essa dor imediata, o cérebro busca uma recompensa imediata (procrastinação).</p><h3>A Solução: Apenas 5 Minutos</h3><p>A única forma de vencer é enganar a amígdala. 'Vou fazer só por 5 minutos'. Isso reduz a ameaça. Uma vez começado, a dor diminui e o foco assume.</p>"
+        "content": "<h3>Não é Preguiça, é Regulação Emocional</h3><p>A neurociência derrubou o mito da preguiça. Procrastinar é uma falha na regulação da emoção. Quando você pensa na tarefa difícil, a amígdala dispara (medo de falhar, tédio, ansiedade). Para aliviar essa dor imediata, o cérebro busca uma recompensa imediata (procrastinação).</p><h3>A Solução: Enganar a Amígdala</h3><p>Você não vence a procrastinação com lógica ('eu preciso fazer'). Você vence reduzindo a ameaça. A técnica 'Só 5 Minutos' funciona porque diz à amígdala: 'A dor vai durar pouco'. Uma vez que você começa, a amígdala se acalma e o foco assume.</p>"
       },
       "challenges": [
         {
@@ -90,7 +90,7 @@
           "type": "timer",
           "category": "Ação",
           "title": "A Regra dos 5 Minutos",
-          "instruction": "Pegue a tarefa que você mais teme hoje. Comprometa-se a fazê-la por apenas 5 minutos. Se quiser parar depois, pare. (Spoiler: Você não vai parar).",
+          "instruction": "Pegue a tarefa que você mais teme hoje. Comprometa-se a fazê-la por apenas 5 minutos. Use o timer. Se quiser parar depois, pare. (Spoiler: Você provavelmente não vai parar).",
           "timer": 300,
           "xp": 150
         },
@@ -98,26 +98,26 @@
           "id": "d24_t3",
           "type": "journaling",
           "category": "Diagnóstico",
-          "title": "O Que Você Teme?",
-          "instruction": "Para cada tarefa procrastinada, escreva o medo associado a ela (Medo de falhar? Medo de não ser perfeito? Medo do tédio?).",
+          "title": "Nomeando o Medo",
+          "instruction": "Para cada tarefa procrastinada, escreva o medo real associado a ela (Medo de não ser perfeito? Medo do tédio? Medo de ser julgado?).",
           "xp": 120
         }
       ]
     },
     "25": {
       "title": "Default Mode Network (DMN)",
-      "summary": "O modo padrão do cérebro e a ruminação.",
+      "summary": "O modo padrão do cérebro e a infelicidade.",
       "booklet": {
         "title": "O Cérebro em Repouso",
         "read_time": "14 min",
-        "content": "<h3>A Rede da Ruminação</h3><p>Quando você não está focado em nada, seu cérebro não desliga. Ele ativa a <strong>Default Mode Network (DMN)</strong>. É aqui que ocorre o pensamento autorreferencial: remoer o passado, preocupar-se com o futuro, julgar a si mesmo.</p><h3>Foco como Antídoto</h3><p>Estudos mostram que quando ativamos a <strong>Task Positive Network</strong> (foco em tarefa), a DMN desliga. A felicidade não está no devaneio, está na ação focada. Ocioso, o cérebro tende à infelicidade.</p>"
+        "content": "<h3>A Rede da Ruminação</h3><p>Quando você não está focado em nada, seu cérebro não desliga. Ele ativa a <strong>Default Mode Network (DMN)</strong>. É aqui que ocorre o pensamento autorreferencial: remoer o passado, preocupar-se com o futuro, julgar a si mesmo.</p><h3>Foco como Antídoto</h3><p>Estudos de Harvard ('A Wandering Mind is an Unhappy Mind') mostram que a felicidade é inversamente proporcional à atividade da DMN. Quando ativamos a <strong>Task Positive Network</strong> (foco externo), a DMN desliga. A paz não está no descanso mental, está na ação focada.</p>"
       },
       "challenges": [
         {
           "id": "d25_t1",
           "type": "reading",
           "category": "Neurociência",
-          "title": "Leitura: A Rede Padrão",
+          "title": "Leitura: A Mente que Vaga",
           "xp": 50
         },
         {
@@ -125,15 +125,15 @@
           "type": "action",
           "category": "Foco",
           "title": "Eliminação de Tempos Mortos",
-          "instruction": "Hoje, não tenha 'tempos mortos' (espera de fila, transporte) onde a mente vaga para preocupações. Tenha sempre um foco: um audiobook, uma observação atenta do ambiente ou respiração.",
+          "instruction": "Hoje, não tenha 'tempos mortos' (fila, transporte) onde a mente vaga para preocupações. Tenha sempre um foco intencional: um audiobook, ou observação atenta dos detalhes visuais do ambiente.",
           "xp": 150
         },
         {
           "id": "d25_t3",
           "type": "meditation",
           "category": "Mindfulness",
-          "title": "Desligando a DMN",
-          "instruction": "Foco intenso em um objeto externo (uma vela, uma flor) por 10 minutos. Toda atenção para fora, zero para dentro.",
+          "title": "Foco Externo (Trataka)",
+          "instruction": "Foco visual intenso em um único objeto (uma vela, uma flor) por 10 minutos. Toda atenção para fora, zero para dentro. Desligue a DMN.",
           "timer": 600,
           "xp": 150
         }
@@ -141,11 +141,11 @@
     },
     "26": {
       "title": "Resiliência Radical",
-      "summary": "Preparando o cérebro para o caos.",
+      "summary": "Antifragilidade e o teste de estresse.",
       "booklet": {
-        "title": "Antifragilidade Neural",
+        "title": "Hormese: O Benefício do Estresse",
         "read_time": "12 min",
-        "content": "<h3>Estresse Hormético</h3><p>Assim como o músculo precisa romper fibras para crescer, o cérebro precisa de estresse controlado para ficar forte. O conforto contínuo atrofia a mente.</p><h3>O Desafio Final</h3><p>Estamos nos aproximando do fim. Hoje é dia de aumentar a carga. Vamos combinar privação sensorial, esforço físico e foco cognitivo.</p>"
+        "content": "<h3>O que não me mata...</h3><p>Nassim Taleb cunhou o termo 'Antifragilidade': coisas que melhoram com o caos. Seu cérebro e corpo são antifrágeis. O músculo precisa romper fibras para crescer. O cérebro precisa de estresse controlado (hormese) para criar novas sinapses.</p><h3>O Conforto Atrofia</h3><p>A busca constante por conforto e segurança cria uma mente frágil, onde qualquer pequeno problema gera ansiedade. Hoje vamos buscar o desconforto voluntário para expandir sua zona de tolerância.</p>"
       },
       "challenges": [
         {
@@ -160,27 +160,27 @@
           "type": "physical",
           "category": "Resistência",
           "title": "Treino de Exaustão",
-          "instruction": "Faça um exercício até a falha muscular ou aeróbica (seguro, claro). No momento da falha, observe sua mente querendo desistir antes do corpo.",
+          "instruction": "Faça um exercício até a falha muscular ou aeróbica (com segurança). No momento da falha, observe sua mente querendo desistir milissegundos antes do corpo realmente parar.",
           "xp": 200
         },
         {
           "id": "d26_t3",
           "type": "timer",
-          "category": "Silêncio",
-          "title": "1 Hora de Silêncio Total",
-          "instruction": "Sem falar, sem celular, sem música, sem leitura. Apenas existindo. Deixe o tédio limpar sua dopamina.",
+          "category": "Privação",
+          "title": "Dopamina Zero (1 Hora)",
+          "instruction": "1 hora de silêncio total. Sem falar, sem celular, sem música, sem leitura. Apenas existindo sentado ou caminhando. Deixe o tédio limpar seus receptores.",
           "timer": 3600,
           "xp": 300
         }
       ]
     },
     "27": {
-      "title": "A Integração",
-      "summary": "Unindo os 3 cérebros: Reptiliano, Límbico e Neocórtex.",
+      "title": "A Grande Integração",
+      "summary": "Unindo Cérebro, Mente e Espírito.",
       "booklet": {
         "title": "O Cérebro Unificado",
         "read_time": "10 min",
-        "content": "<h3>Coerência</h3><p>Você passou 26 dias treinando partes isoladas. Agora, a meta é a coerência. O instinto (Reptiliano) avisa, a emoção (Límbico) colore e a razão (Neocórtex) decide.</p><p>Não suprima a emoção. Use-a como dado. Não ignore o instinto. Use-o como alerta. Mas deixe o Neocórtex dirigir o carro.</p>"
+        "content": "<h3>Coerência Neural</h3><p>Você passou 26 dias treinando partes isoladas: amígdala, pré-frontal, habênula, parietal. A maestria não é usar uma parte, é a orquestra tocar junto.</p><p>O instinto (Reptiliano) avisa do perigo. A emoção (Límbico) dá cor e significado. A razão (Neocórtex) traça a rota. O espírito (Parietal silencioso) conecta ao todo. Não negue nenhuma parte. Integre.</p>"
       },
       "challenges": [
         {
@@ -195,7 +195,7 @@
           "type": "journaling",
           "category": "Visão",
           "title": "Carta para o Eu do Futuro",
-          "instruction": "Escreva uma carta para você daqui a 1 ano. Quais hábitos neurológicos você manteve? Quem você se tornou?",
+          "instruction": "Escreva uma carta para você daqui a 1 ano. Quais hábitos neurológicos você manteve? Quem você se tornou? Quais medos você superou?",
           "xp": 200
         },
         {
@@ -203,18 +203,18 @@
           "type": "action",
           "category": "Legado",
           "title": "Ensinar para Aprender",
-          "instruction": "Explique um conceito que aprendeu aqui (Amígdala, Habênula, Neurônios Espelho) para outra pessoa hoje. Ensinar é a melhor forma de fixar.",
+          "instruction": "A melhor forma de aprender é ensinar. Explique um conceito que aprendeu aqui (ex: Sequestro da Amígdala) para outra pessoa hoje.",
           "xp": 150
         }
       ]
     },
     "28": {
-      "title": "O Grande Reset",
-      "summary": "O fim é apenas o começo da neuroplasticidade contínua.",
+      "title": "O Fim é o Começo",
+      "summary": "Planejamento para a vida pós-protocolo.",
       "booklet": {
         "title": "Protocolo Vitalício",
         "read_time": "15 min",
-        "content": "<h3>A Manutenção</h3><p>O cérebro é plástico, mas elástico. Se você parar, ele volta à forma antiga. Você não 'terminou' o NeuroProtocolo. Você apenas instalou o sistema operacional.</p><p>Mantenha os rituais básicos: Sono, Exercício, Mindfulness e Regulação Emocional. Quando cair (e você vai cair), lembre-se: não é fracasso, é apenas a Habênula disparando. Respire, ative o Pré-Frontal e recomece.</p>"
+        "content": "<h3>Neuroplasticidade Reversa</h3><p>O cérebro é plástico, mas elástico. Se você parar os estímulos hoje, ele tenderá a voltar à forma antiga (caminho de menor resistência) em algumas semanas. Você não 'terminou' o NeuroProtocolo. Você apenas instalou o sistema operacional.</p><h3>Manutenção</h3><p>Defina seus 'Não Negociáveis': Sono, Exercício, Mindfulness e Regulação Emocional. Quando cair (e você vai cair), lembre-se: não é fracasso moral, é apenas a Habênula disparando. Respire, ative o Pré-Frontal e recomece.</p>"
       },
       "challenges": [
         {
@@ -229,7 +229,7 @@
           "type": "action",
           "category": "Compromisso",
           "title": "O Contrato Final",
-          "instruction": "Escreva seus 3 'Não Negociáveis' a partir de hoje. 3 hábitos que você manterá custe o que custar.",
+          "instruction": "Escreva seus 3 'Não Negociáveis' a partir de hoje. 3 hábitos que você manterá custe o que custar para proteger seu cérebro.",
           "xp": 300
         },
         {
@@ -237,7 +237,7 @@
           "type": "action",
           "category": "Celebração",
           "title": "Dopamina Merecida",
-          "instruction": "Celebre. Faça algo que você ama puramente. Sem culpa. Você reconfigurou seu cérebro.",
+          "instruction": "Celebre. Faça algo que você ama puramente. Sem culpa. Você completou o ciclo.",
           "xp": 500
         }
       ]
