@@ -1,687 +1,215 @@
-/* challenge.css - Glassmorphism Challenge Moderno */
-@import 'animations.css';
-
-/* Layout Principal com Glassmorphism */
+/* Layout Geral da Página de Desafio */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: 
-        radial-gradient(ellipse at 20% 30%, rgba(108, 92, 231, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, rgba(0, 206, 201, 0.1) 0%, transparent 50%),
-        linear-gradient(135deg, #0f111a 0%, #1a1d2d 100%);
-    overflow-y: auto;
+    background: radial-gradient(circle at center, #1a1d2d 0%, var(--bg-dark) 100%);
+    overflow-y: auto; /* Permite scroll se o conteúdo for grande */
     padding: 2rem;
-    position: relative;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="transparent"/><path d="M0,50 Q25,25 50,50 T100,50" stroke="rgba(255,255,255,0.02)" stroke-width="0.5" fill="none"/></svg>') repeat,
-        url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.02)"/></svg>') repeat;
-    z-index: 0;
-    pointer-events: none;
-    animation: glassTilt 60s linear infinite;
+/* O Link de Voltar (Fica fora do card) */
+.back-link-wrapper {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    z-index: 10;
 }
 
-/* Container Principal */
-.challenge-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-    animation: fadeIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    width: 100%;
-}
-
-/* Back Link - Glassmorphism */
 .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     color: var(--text-muted);
     text-decoration: none;
     font-weight: 600;
     transition: var(--transition);
-    padding: 0.75rem 1.5rem;
-    border-radius: 50px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    margin-bottom: 2.5rem;
-    position: relative;
-    overflow: hidden;
-    animation: slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
-}
-
-.back-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent
-    );
-    transition: left 0.6s;
-}
-
-.back-link:hover::before {
-    left: 100%;
+    padding: 10px 20px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(5px);
 }
 
 .back-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-main);
-    transform: translateX(-8px);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transform: translateX(-5px);
 }
 
-.back-link i {
-    font-size: 1.1rem;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.back-link:hover i {
-    transform: translateX(-3px);
-}
-
-/* Challenge Card Principal */
+/* O Card Principal (Estilo Popup) */
 .challenge-card {
     background: rgba(26, 29, 45, 0.85);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-xl);
-    padding: 3.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 3rem;
     width: 100%;
-    max-width: 750px;
-    box-shadow: 
-        0 30px 100px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 0 40px rgba(255, 255, 255, 0.02);
+    max-width: 650px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
     position: relative;
-    overflow: hidden;
-    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
-}
-
-.challenge-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.15), 
-        transparent);
-}
-
-.challenge-card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-        circle at 30% 30%,
-        rgba(108, 92, 231, 0.08) 0%,
-        transparent 40%
-    );
-    z-index: 0;
-    pointer-events: none;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
 }
 
 @keyframes popIn {
-    from { 
-        opacity: 0; 
-        transform: scale(0.95) translateY(30px);
-        filter: blur(5px);
-    }
-    to { 
-        opacity: 1; 
-        transform: scale(1) translateY(0);
-        filter: blur(0);
-    }
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Header do Card */
 .challenge-header {
-    margin-bottom: 3rem;
-    position: relative;
-    z-index: 1;
+    margin-bottom: 2.5rem;
 }
 
 .icon-badge {
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-lg);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 2rem;
-    font-size: 3rem;
+    margin: 0 auto 1.5rem;
+    font-size: 2.5rem;
     color: var(--accent);
-    box-shadow: 
-        0 15px 40px rgba(0, 206, 201, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    position: relative;
-    transition: var(--transition);
-}
-
-.icon-badge::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(135deg, var(--accent), var(--primary));
-    border-radius: inherit;
-    z-index: -1;
-    opacity: 0.5;
-    animation: borderFlow 3s linear infinite;
-}
-
-.icon-badge:hover {
-    transform: scale(1.05) rotate(10deg);
-    box-shadow: 
-        0 20px 50px rgba(0, 206, 201, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .challenge-title {
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: var(--text-main);
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
     line-height: 1.2;
-    background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.challenge-subtitle {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-    opacity: 0.9;
-    line-height: 1.6;
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .challenge-xp {
     display: inline-block;
-    padding: 0.5rem 1.5rem;
-    background: linear-gradient(135deg, rgba(253, 203, 110, 0.15), rgba(253, 203, 110, 0.05));
+    padding: 4px 12px;
+    background: rgba(253, 203, 110, 0.1);
     color: var(--warning);
-    border-radius: 50px;
-    font-size: 0.9rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    border: 1px solid rgba(253, 203, 110, 0.2);
-    box-shadow: 0 5px 20px rgba(253, 203, 110, 0.1);
-    backdrop-filter: blur(10px);
+    letter-spacing: 1px;
 }
 
-/* Blocos de Conteúdo - Glassmorphism */
+/* Blocos de Conteúdo */
 .content-block {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius-lg);
-    padding: 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
     text-align: left;
     margin-bottom: 2rem;
     border-left: 4px solid var(--primary);
-    position: relative;
-    z-index: 1;
-    transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.content-block:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.12);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 10px 40px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .block-label {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     color: var(--text-muted);
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     display: block;
-    letter-spacing: 1.5px;
-    opacity: 0.8;
+    letter-spacing: 1px;
 }
 
 .instruction-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #e0e0e0;
-    line-height: 1.8;
-    font-weight: 400;
-}
-
-.instruction-text strong {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-.instruction-text em {
-    color: var(--warning);
-    font-style: italic;
+    line-height: 1.6;
 }
 
 /* Área Específica de Leitura */
 .booklet-preview {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-lg);
+    background: linear-gradient(to right, rgba(255,255,255,0.03), transparent);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
     padding: 1.5rem;
     text-align: left;
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     cursor: pointer;
     transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-
-.booklet-preview::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(to bottom, var(--primary), var(--accent));
-    opacity: 0.5;
 }
 
 .booklet-preview:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255,255,255,0.05);
     border-color: var(--primary);
-    transform: translateY(-3px);
-    box-shadow: 
-        0 15px 40px rgba(108, 92, 231, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
 .booklet-icon {
-    font-size: 2.5rem;
-    color: var(--primary);
-    background: rgba(108, 92, 231, 0.1);
-    width: 70px;
-    height: 70px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.booklet-info h4 {
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-.booklet-info p {
-    font-size: 0.95rem;
+    font-size: 2rem;
     color: var(--text-muted);
-    line-height: 1.5;
 }
 
-/* Timer Display - Glassmorphism */
-.timer-container {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(15px);
-    border-radius: var(--radius-xl);
-    padding: 2.5rem;
-    margin: 2.5rem 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    position: relative;
-    overflow: hidden;
-}
+.booklet-info h4 { color: var(--primary); margin-bottom: 0.2rem; }
+.booklet-info p { font-size: 0.9rem; color: var(--text-muted); }
 
-.timer-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 255, 255, 0.1), 
-        transparent);
-}
-
-.timer-display {
-    font-size: 5.5rem;
-    font-weight: 900;
-    font-variant-numeric: tabular-nums;
-    color: var(--primary);
-    margin: 1rem 0;
-    text-shadow: 
-        0 0 40px var(--primary-glow),
-        0 0 80px rgba(108, 92, 231, 0.3);
-    font-family: 'Inter', monospace;
-    letter-spacing: 2px;
-    position: relative;
-    display: inline-block;
-    animation: pulse 2s infinite alternate;
-}
-
-.timer-display::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, var(--primary), transparent);
-    border-radius: 2px;
-    opacity: 0.6;
-}
-
-.timer-label {
-    font-size: 1rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-    opacity: 0.8;
-}
-
-/* Journal Input - Glassmorphism */
-.journal-container {
-    margin: 2.5rem 0;
-    text-align: left;
-}
-
-.journal-input {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    color: var(--text-main);
-    font-family: var(--font-main);
-    font-size: 1.1rem;
-    min-height: 200px;
-    resize: vertical;
-    transition: var(--transition);
-    line-height: 1.6;
-}
-
-.journal-input:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 
-        0 0 0 3px rgba(0, 206, 201, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.journal-input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-    font-style: italic;
-}
-
-/* Action Area - Botões */
+/* Ações / Botões */
 .action-area {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-    margin-top: 3rem;
-    position: relative;
-    z-index: 1;
+    gap: 1rem;
 }
 
 .btn-large {
     width: 100%;
-    padding: 1.2rem 2rem;
+    padding: 1rem;
     justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: var(--radius-lg);
-    position: relative;
-    overflow: hidden;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    font-size: 1.1rem;
 }
 
-.btn-large::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.15),
-        transparent
-    );
-    transition: left 0.6s;
-}
-
-.btn-large:hover::before {
-    left: 100%;
-}
-
-.btn-primary-large {
-    background: linear-gradient(135deg, var(--primary), #8a7cff);
+.btn-secondary {
+    background: rgba(255,255,255,0.05);
     color: white;
-    border: none;
-    box-shadow: 
-        0 10px 40px var(--primary-glow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.btn-primary-large:hover {
-    transform: translateY(-3px);
-    box-shadow: 
-        0 20px 50px var(--primary-glow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
 }
 
-.btn-secondary-large {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    color: var(--text-main);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.btn-secondary-large:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Challenge Type Icon */
-.challenge-type-icon {
+/* Inputs Específicos */
+.timer-display {
     font-size: 4rem;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px rgba(0, 206, 201, 0.3));
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--primary);
+    margin: 1rem 0;
+    text-shadow: 0 0 30px var(--primary-glow);
 }
 
-/* Loading State */
-#challengeContent {
-    animation: fadeIn 0.8s ease-out;
+.journal-input {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    color: white;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    min-height: 150px;
+    resize: vertical;
+    margin-top: 0.5rem;
 }
 
-.challenge-loading {
-    padding: 4rem 0;
+.journal-input:focus {
+    outline: none;
+    border-color: var(--primary);
 }
 
-.challenge-loading h1 {
-    font-size: 2rem;
-    color: var(--text-muted);
-    margin-top: 1.5rem;
-    animation: pulse 2s infinite;
-}
-
-/* Progress Indicator */
-.progress-indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin: 2rem 0;
-}
-
-.progress-dot {
-    width: 10px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transition: var(--transition);
-}
-
-.progress-dot.active {
-    background: var(--primary);
-    transform: scale(1.3);
-    box-shadow: 0 0 10px var(--primary-glow);
-}
-
-/* Success/Completion States */
-.challenge-complete {
-    text-align: center;
-    padding: 2rem 0;
-}
-
-.challenge-complete .icon-badge {
-    background: rgba(0, 184, 148, 0.1);
-    color: var(--success);
-    border-color: rgba(0, 184, 148, 0.3);
-    box-shadow: 0 15px 40px rgba(0, 184, 148, 0.2);
-}
-
-.challenge-complete h2 {
-    color: var(--success);
-    font-size: 2.5rem;
-    margin: 1.5rem 0;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    body {
-        padding: 1rem;
-        align-items: flex-start;
-        min-height: auto;
-        padding-top: 2rem;
-    }
-    
-    .challenge-container {
-        padding: 1rem;
-    }
-    
-    .challenge-card {
-        padding: 2rem;
-    }
-    
-    .challenge-title {
-        font-size: 2.2rem;
-    }
-    
-    .timer-display {
-        font-size: 4rem;
-    }
-    
-    .icon-badge {
-        width: 80px;
-        height: 80px;
-        font-size: 2.5rem;
-    }
-    
-    .booklet-preview {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-    
-    .booklet-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 2rem;
-    }
-    
-    .action-area {
-        gap: 1rem;
-    }
-    
-    .btn-large {
-        padding: 1rem 1.5rem;
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .challenge-card {
-        padding: 1.5rem;
-    }
-    
-    .challenge-title {
-        font-size: 1.8rem;
-    }
-    
-    .timer-display {
-        font-size: 3rem;
-    }
-    
-    .instruction-text {
-        font-size: 1rem;
-    }
-    
-    .journal-input {
-        min-height: 150px;
-        font-size: 1rem;
-    }
-    
-    .back-link {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
-    }
+/* Mobile */
+@media (max-width: 600px) {
+    .challenge-card { padding: 1.5rem; width: 95%; }
+    .back-link-wrapper { position: static; margin-bottom: 1rem; }
+    body { flex-direction: column; justify-content: flex-start; padding: 1rem; }
 }
