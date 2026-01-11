@@ -152,8 +152,11 @@ function goToDay(day) {
 
 function logout() {
     if(confirm("Deseja sair do sistema?")) {
-        localStorage.removeItem('NeuroProtocol_DB'); // Opcional: Limpar dados ou apenas 'session'
-        window.location.href = 'index.html';
+        // Limpa dados (opcional)
+        // localStorage.removeItem('NeuroProtocol_DB'); 
+        
+        // Redireciona a janela TOPO (quebra o iframe)
+        window.top.location.href = 'index.html';
     }
 }
 
