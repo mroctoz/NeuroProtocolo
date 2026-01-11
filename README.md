@@ -100,4 +100,4 @@ O conteúdo teórico deste protocolo foi sintetizado e adaptado a partir das seg
 * Estudos de Neuroteologia (Andrew Newberg).
 
 ---
-Feito com Cérebro e Código.
+Conteúdo feito com Inteligência Artificial: Gemini 3; DeepSeek.
