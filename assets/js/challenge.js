@@ -61,7 +61,7 @@ function renderReadingUI(task, booklet) {
         <p class="instruction-text">Este conteúdo requer imersão total. Coloque seus fones, ative o som binaural abaixo e clique para ler.</p>
         
         <div class="interaction-area" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <button class="btn" style="border: 1px solid var(--primary); background: transparent;" 
+            <button class="btn" style="border: 1px solid var(--primary); background: transparent; color: white;"
                 onclick="ui.openReader('${bookletTitle}', \`${bookletContent}\`)">
                 <i class="fas fa-eye"></i> Abrir Leitor Imersivo
             </button>
