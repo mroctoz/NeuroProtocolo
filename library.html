@@ -3,57 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroProtocolo | Biblioteca</title>
+    <title>NeuroProtocolo | Biblioteca Neural</title>
     
     <!-- Fontes e Ícones -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Estilos -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
-    <link rel="stylesheet" href="assets/css/components.css"> <!-- Importante para o Modal -->
+    <link rel="stylesheet" href="assets/css/components.css">
     
     <style>
+        /* Estilos específicos para a biblioteca */
+        .library-header {
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .library-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .library-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .library-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            min-width: 180px;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
         .library-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
         }
+        
         .booklet-card {
-            background: var(--bg-panel);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
             transition: var(--transition);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 250px;
+            min-height: 280px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
         }
+        
+        .booklet-card:nth-child(1) { animation-delay: 0.2s; }
+        .booklet-card:nth-child(2) { animation-delay: 0.3s; }
+        .booklet-card:nth-child(3) { animation-delay: 0.4s; }
+        .booklet-card:nth-child(4) { animation-delay: 0.5s; }
+        .booklet-card:nth-child(5) { animation-delay: 0.6s; }
+        .booklet-card:nth-child(6) { animation-delay: 0.7s; }
+        
+        .booklet-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.05) 0%,
+                transparent 100%
+            );
+            z-index: 0;
+            pointer-events: none;
+        }
+        
         .booklet-card:hover { 
-            transform: translateY(-5px); 
+            transform: translateY(-10px); 
             border-color: var(--primary); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(108, 92, 231, 0.2);
         }
+        
+        .booklet-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            opacity: 0.5;
+        }
+        
         .booklet-day { 
-            font-size: 0.8rem; 
+            font-size: 0.85rem; 
             text-transform: uppercase; 
             color: var(--accent); 
-            letter-spacing: 1px; 
-            margin-bottom: 0.5rem; 
-        }
-        .booklet-title { 
-            font-size: 1.4rem; 
-            font-weight: 700; 
+            letter-spacing: 1.5px; 
             margin-bottom: 1rem; 
+            font-weight: 700;
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 206, 201, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 206, 201, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .booklet-title { 
+            font-size: 1.6rem; 
+            font-weight: 700; 
+            margin-bottom: 1.5rem; 
             color: white; 
             line-height: 1.4;
+            position: relative;
+            z-index: 1;
         }
+        
         .booklet-meta { 
             display: flex; 
             align-items: center; 
@@ -61,18 +180,162 @@
             color: var(--text-muted); 
             font-size: 0.9rem; 
             margin-top: auto; 
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .booklet-meta .read-time {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .booklet-meta .read-action {
+            margin-left: auto;
+            color: var(--primary);
+            font-weight: 700;
+            background: rgba(108, 92, 231, 0.1);
+            padding: 0.5rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .booklet-card:hover .booklet-meta .read-action {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: var(--primary);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
         }
         
         .empty-state {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 4rem;
+            padding: 5rem 3rem;
             color: var(--text-muted);
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            border: 1px dashed rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .empty-state p {
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .skeleton-loader {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            animation: pulse 1.5s infinite;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skeleton-loader::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        .library-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .filter-btn.active {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1200px) {
+            .library-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .library-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .library-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .booklet-card {
+                padding: 2rem;
+                min-height: 250px;
+            }
+            
+            .booklet-title {
+                font-size: 1.4rem;
+            }
+            
+            .library-stats {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -80,38 +343,72 @@
     <div class="app-layout">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="brand"><i class="fas fa-brain brand-icon"></i><span>NeuroProtocolo</span></div>
+            <div class="brand">
+                <i class="fas fa-brain brand-icon"></i>
+                <span>NeuroProtocolo</span>
+            </div>
+            
             <nav class="nav-menu">
-                <a href="dashboard.html" class="nav-item"><i class="fas fa-columns"></i> Dashboard</a>
-                <a href="library.html" class="nav-item active"><i class="fas fa-book"></i> Biblioteca</a>
-                <a href="stats.html" class="nav-item"><i class="fas fa-chart-line"></i> Estatísticas</a>
-                <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Configurações</a>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-columns"></i> Dashboard
+                </a>
+                <a href="library.html" class="nav-item active">
+                    <i class="fas fa-book"></i> Biblioteca
+                </a>
+                <a href="stats.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i> Estatísticas
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i> Configurações
+                </a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <header>
+            <header class="library-header">
                 <h1>Biblioteca Neural</h1>
-                <p style="color: var(--text-muted)">Repositório de todo conhecimento adquirido e desbloqueado.</p>
+                <p>Repositório de todo conhecimento adquirido e desbloqueado. Cada livro representa um dia de aprendizado consolidado.</p>
+                
+                <div class="library-stats" id="libraryStats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalBooklets">0</div>
+                        <div class="stat-label">Livretos Desbloqueados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalModules">0</div>
+                        <div class="stat-label">Módulos Concluídos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalHours">0</div>
+                        <div class="stat-label">Horas de Leitura</div>
+                    </div>
+                </div>
+                
+                <div class="library-filters">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="module_01">Fundamentos</button>
+                    <button class="filter-btn" data-filter="module_02">Avançado</button>
+                    <button class="filter-btn" data-filter="module_03">Mestre</button>
+                    <button class="filter-btn" data-filter="module_04">Especialista</button>
+                </div>
             </header>
 
             <div class="library-grid" id="libraryGrid">
-                <div class="skeleton-loader" style="height: 250px"></div>
-                <div class="skeleton-loader" style="height: 250px"></div>
-                <div class="skeleton-loader" style="height: 250px"></div>
+                <div class="skeleton-loader"></div>
+                <div class="skeleton-loader"></div>
+                <div class="skeleton-loader"></div>
             </div>
         </main>
     </div>
 
-    <!-- Scripts Essenciais (Ordem Importa) -->
+    <!-- Scripts Essenciais -->
     <script src="assets/js/database.js"></script>
     <script src="assets/js/ui.js"></script>
     
     <script>
-        // Função Global de Abertura (para ser acessada pelo onclick)
-    async function openLibraryBooklet(modId, dayNum) {
+        // Função Global de Abertura
+        async function openLibraryBooklet(modId, dayNum) {
             try {
-                // MUDANÇA: Busca direta do livreto pesado
                 const booklet = await db.getBooklet(modId, dayNum);
                 
                 ui.openReader(
@@ -131,15 +428,22 @@
                 const progress = db.getUnlockStatus();
                 const modules = await db.getModules();
                 const container = document.getElementById('libraryGrid');
+                const statsContainer = document.getElementById('libraryStats');
                 
                 // Limpa skeletons
                 container.innerHTML = '';
-
+                
                 let bookletsFound = 0;
+                let totalHours = 0;
+                const bookletsByModule = {
+                    'module_01': [],
+                    'module_02': [],
+                    'module_03': [],
+                    'module_04': []
+                };
 
                 // Itera sobre módulos
                 for (const mod of modules) {
-                    // Busca conteúdo (com proteção contra erro 404)
                     const content = await db.getDayContent(mod.id);
                     
                     if (!content || !content.days) continue;
@@ -148,47 +452,132 @@
                     Object.keys(content.days).forEach(dayNum => {
                         const dayInt = parseInt(dayNum);
                         
-                        // Mostra APENAS se o dia já foi desbloqueado
                         if (dayInt <= progress.unlockedDays) {
                             const dayData = content.days[dayNum];
                             
-                            // Só mostra se tiver um livreto
                             if (dayData.booklet) {
                                 bookletsFound++;
-                                const html = `
-                                    <div class="booklet-card fade-in" onclick="openLibraryBooklet('${mod.id}', '${dayNum}')">
-                                        <div>
-                                            <div class="booklet-day">Dia ${dayNum} • ${mod.title}</div>
-                                            <h3 class="booklet-title">${dayData.booklet.title}</h3>
-                                        </div>
-                                        <div class="booklet-meta">
-                                            <span><i class="far fa-clock"></i> ${dayData.booklet.read_time || 'Leitura'}</span>
-                                            <span style="margin-left: auto; color: var(--primary); font-weight:600;">Ler <i class="fas fa-arrow-right"></i></span>
-                                        </div>
-                                    </div>
-                                `;
-                                container.insertAdjacentHTML('beforeend', html);
+                                
+                                // Calcular horas de leitura
+                                const readTime = dayData.booklet.read_time || '10 min';
+                                const hoursMatch = readTime.match(/(\d+)\s*min/);
+                                if (hoursMatch) {
+                                    totalHours += parseInt(hoursMatch[1]) / 60;
+                                }
+                                
+                                const bookletData = {
+                                    modId: mod.id,
+                                    modTitle: mod.title,
+                                    dayNum: dayNum,
+                                    dayData: dayData
+                                };
+                                
+                                bookletsByModule[mod.id].push(bookletData);
                             }
                         }
                     });
                 }
-
-                if (bookletsFound === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-muted);"></i>
-                            <h3>Biblioteca Vazia</h3>
-                            <p>Complete os desafios do Dia 1 para desbloquear seu primeiro livreto.</p>
-                        </div>
-                    `;
+                
+                // Atualizar estatísticas
+                if (statsContainer) {
+                    document.getElementById('totalBooklets').textContent = bookletsFound;
+                    document.getElementById('totalModules').textContent = Object.keys(bookletsByModule).filter(mod => bookletsByModule[mod].length > 0).length;
+                    document.getElementById('totalHours').textContent = Math.round(totalHours);
                 }
+                
+                // Função para renderizar livretos
+                function renderBooklets(filter = 'all') {
+                    container.innerHTML = '';
+                    
+                    let filteredBooklets = [];
+                    
+                    if (filter === 'all') {
+                        Object.values(bookletsByModule).forEach(modBooklets => {
+                            filteredBooklets.push(...modBooklets);
+                        });
+                    } else if (bookletsByModule[filter]) {
+                        filteredBooklets = bookletsByModule[filter];
+                    }
+                    
+                    if (filteredBooklets.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-book-open"></i>
+                                <h3>Nenhum livreto encontrado</h3>
+                                <p>${filter === 'all' ? 
+                                    'Complete os desafios para desbloquear seu primeiro livreto.' : 
+                                    'Nenhum livreto disponível neste módulo.'}
+                                </p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Ordenar por módulo e dia
+                    filteredBooklets.sort((a, b) => {
+                        if (a.modId === b.modId) {
+                            return parseInt(a.dayNum) - parseInt(b.dayNum);
+                        }
+                        return a.modId.localeCompare(b.modId);
+                    });
+                    
+                    // Renderizar cada livreto
+                    filteredBooklets.forEach((booklet, index) => {
+                        const html = `
+                            <div class="booklet-card" onclick="openLibraryBooklet('${booklet.modId}', '${booklet.dayNum}')">
+                                <div>
+                                    <div class="booklet-day">Dia ${booklet.dayNum} • ${booklet.modTitle}</div>
+                                    <h3 class="booklet-title">${booklet.dayData.booklet.title}</h3>
+                                </div>
+                                <div class="booklet-meta">
+                                    <span class="read-time">
+                                        <i class="far fa-clock"></i> 
+                                        ${booklet.dayData.booklet.read_time || 'Leitura'}
+                                    </span>
+                                    <span class="read-action">
+                                        Ler 
+                                        <i class="fas fa-arrow-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                        container.insertAdjacentHTML('beforeend', html);
+                    });
+                }
+                
+                // Renderizar todos inicialmente
+                renderBooklets('all');
+                
+                // Adicionar event listeners aos filtros
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Remover classe active de todos
+                        document.querySelectorAll('.filter-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        
+                        // Adicionar classe active ao botão clicado
+                        this.classList.add('active');
+                        
+                        // Aplicar filtro
+                        const filter = this.getAttribute('data-filter');
+                        renderBooklets(filter);
+                    });
+                });
 
             } catch (error) {
                 console.error("Erro crítico na biblioteca:", error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Erro ao carregar biblioteca</h3>
+                        <p>Por favor, tente novamente mais tarde.</p>
+                    </div>
+                `;
             }
         }
 
-        // Inicia
+        // Iniciar carregamento
         loadLibrary();
     </script>
 </body>
