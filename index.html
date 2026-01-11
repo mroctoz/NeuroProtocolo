@@ -3,43 +3,427 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroProtocolo | Acesso</title>
+    <title>NeuroProtocolo | Início Neural</title>
     
     <!-- Fontes e Ícones -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Estilos -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    
+    <style>
+        /* Reset e Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #6c5ce7;
+            --accent: #00cec9;
+            --text-main: #ffffff;
+            --text-muted: #a0a0c0;
+            --bg-dark: #0a0a1a;
+            --bg-darker: #050510;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-darker);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 206, 201, 0.1) 0%, transparent 40%);
+        }
+        
+        /* Container Principal */
+        .neural-access-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        /* Efeito de Partículas (Background) */
+        .neural-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        /* Card Principal */
+        .neural-access-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 4rem;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                var(--shadow-lg),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+        
+        .neural-access-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 24px 24px 0 0;
+        }
+        
+        .neural-access-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        /* Logo e Cabeçalho */
+        .neural-brand {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .neural-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .neural-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .neural-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 300px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Formulário */
+        .neural-form {
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Botão */
+        .neural-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            border-radius: 16px;
+            padding: 1.25rem;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .neural-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 10px 30px rgba(108, 92, 231, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .neural-btn:active {
+            transform: translateY(0);
+        }
+        
+        .neural-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .neural-btn:hover::after {
+            opacity: 1;
+        }
+        
+        /* Loader */
+        .neural-loader {
+            text-align: center;
+            padding: 3rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loader-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        
+        /* Neuro Stats (Efeito Visual) */
+        .neuro-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            opacity: 0.7;
+        }
+        
+        .neuro-stat {
+            text-align: center;
+        }
+        
+        .neuro-stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .neuro-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.25rem;
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-100px) translateX(100px); }
+            50% { transform: translateY(-50px) translateX(-100px); }
+            75% { transform: translateY(100px) translateX(50px); }
+        }
+        
+        /* Utilitários */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .neural-access-container {
+                padding: 1rem;
+            }
+            
+            .neural-access-card {
+                padding: 3rem 2rem;
+            }
+            
+            .neural-title {
+                font-size: 2.2rem;
+            }
+            
+            .neural-icon {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .neural-access-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .neural-title {
+                font-size: 1.8rem;
+            }
+            
+            .neuro-stats {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-    <div class="auth-container">
-        <div class="neural-bg"></div>
+    <div class="neural-access-container">
+        <!-- Efeito de Partículas -->
+        <div class="neural-particles" id="particles"></div>
         
-        <div class="auth-card fade-in">
-            <div class="logo-area">
-                <i class="fas fa-brain logo-icon"></i>
-                <h1 class="auth-title">NeuroProtocolo</h1>
-                <p class="auth-subtitle">Engenharia Emocional & Neuroplasticidade</p>
+        <!-- Card Principal -->
+        <div class="neural-access-card">
+            <!-- Brand Area -->
+            <div class="neural-brand">
+                <i class="fas fa-brain neural-icon"></i>
+                <h1 class="neural-title">NeuroProtocolo</h1>
+                <p class="neural-subtitle">Engenharia Emocional & Neuroplasticidade</p>
             </div>
-
-            <!-- Formulário de Registro (Só aparece se não houver usuário) -->
-            <div id="registerForm">
+            
+            <!-- Formulário de Registro -->
+            <div id="registerForm" class="neural-form">
                 <div class="form-group">
-                    <label>Como devemos chamar você?</label>
-                    <input type="text" id="usernameInput" class="form-input" placeholder="Seu nome..." autocomplete="off">
+                    <label class="form-label">Sua Identidade Neural</label>
+                    <input 
+                        type="text" 
+                        id="usernameInput" 
+                        class="form-input" 
+                        placeholder="Digite seu nome..." 
+                        autocomplete="off"
+                        autofocus
+                    >
                 </div>
-                <button class="btn btn-primary btn-block" onclick="handleRegister()">
-                    <i class="fas fa-fingerprint"></i> Iniciar Protocolo
+                <button class="neural-btn" onclick="handleRegister()">
+                    <i class="fas fa-fingerprint"></i>
+                    Iniciar Protocolo Neural
                 </button>
             </div>
-
-            <!-- Loading (para transição) -->
-            <div id="loader" class="hidden">
-                <p>Configurando redes neurais...</p>
-                <!-- Adicionaremos um spinner CSS depois -->
+            
+            <!-- Loader -->
+            <div id="loader" class="neural-loader hidden">
+                <div class="loader-content">
+                    <div class="loader-spinner"></div>
+                    <p class="loader-text">Inicializando redes neurais...</p>
+                </div>
+            </div>
+            
+            <!-- Stats Decorativos -->
+            <div class="neuro-stats">
+                <div class="neuro-stat">
+                    <div class="neuro-stat-value">28</div>
+                    <div class="neuro-stat-label">Dias</div>
+                </div>
+                <div class="neuro-stat">
+                    <div class="neuro-stat-value">4</div>
+                    <div class="neuro-stat-label">Módulos</div>
+                </div>
+                <div class="neuro-stat">
+                    <div class="neuro-stat-value">∞</div>
+                    <div class="neuro-stat-label">Potencial</div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,33 +431,97 @@
     <!-- Scripts -->
     <script src="assets/js/database.js"></script>
     <script>
-        // Lógica simples inline para redirecionamento
-        const userInput = document.getElementById('usernameInput');
-
-        // Verifica se já existe usuário
+        // Criar partículas de fundo
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Posição aleatória
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Tamanho aleatório
+                const size = Math.random() * 3 + 1;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Opacidade aleatória
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                // Delay de animação
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                
+                // Cor aleatória (entre primary e accent)
+                const hue = Math.random() > 0.5 ? 262 : 176;
+                particle.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Verificar se usuário já existe
         window.onload = () => {
+            createParticles();
+            
             const user = db.getUser();
             if (user) {
-                // Se já existe, vai direto pro dashboard
                 window.location.href = 'app.html';
             }
+            
+            // Focar no input automaticamente
+            document.getElementById('usernameInput').focus();
         };
-
+        
+        // Função de registro
         function handleRegister() {
-            const name = userInput.value.trim();
+            const nameInput = document.getElementById('usernameInput');
+            const name = nameInput.value.trim();
+            
             if (name.length > 2) {
-                db.registerUser(name);
+                // Efeito visual de carregamento
                 document.getElementById('registerForm').classList.add('hidden');
                 document.getElementById('loader').classList.remove('hidden');
                 
-                // Pequeno delay para efeito dramático
+                // Registrar usuário com pequeno delay para efeito
+                setTimeout(() => {
+                    db.registerUser(name);
+                }, 500);
+                
+                // Redirecionar após animação
                 setTimeout(() => {
                     window.location.href = 'app.html';
-                }, 1500);
+                }, 2000);
             } else {
-                alert("Por favor, insira um nome válido para iniciar.");
+                // Efeito de erro no input
+                nameInput.style.borderColor = '#ff4757';
+                nameInput.style.boxShadow = '0 0 0 3px rgba(255, 71, 87, 0.2)';
+                
+                // Reset após 1s
+                setTimeout(() => {
+                    nameInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    nameInput.style.boxShadow = 'none';
+                    nameInput.focus();
+                }, 1000);
+                
+                // Feedback visual
+                const originalPlaceholder = nameInput.placeholder;
+                nameInput.placeholder = "Por favor, digite um nome válido...";
+                setTimeout(() => {
+                    nameInput.placeholder = originalPlaceholder;
+                }, 1500);
             }
         }
+        
+        // Permitir submit com Enter
+        document.getElementById('usernameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleRegister();
+            }
+        });
     </script>
 </body>
 </html>
