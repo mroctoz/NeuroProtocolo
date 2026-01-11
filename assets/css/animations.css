@@ -1,65 +1,250 @@
-/* Entradas Suaves */
+/* Entradas Suaves - Aprimoradas */
 @keyframes slideInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.98);
+        filter: blur(2px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 @keyframes slideInRight {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
+    from { 
+        opacity: 0; 
+        transform: translateX(-30px) rotateY(-5deg);
+        filter: blur(2px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0) rotateY(0);
+        filter: blur(0);
+    }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { 
+        opacity: 0; 
+        transform: scale(0.95);
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1);
+    }
 }
 
-/* Efeitos de Destaque */
+@keyframes slideInLeft {
+    from { 
+        opacity: 0; 
+        transform: translateX(30px) rotateY(5deg);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0) rotateY(0);
+    }
+}
+
+/* Efeitos de Destaque Aprimorados */
 @keyframes pulseGlow {
-    0% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(108, 92, 231, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0); }
+    0% { 
+        box-shadow: 
+            0 0 0 0 rgba(108, 92, 231, 0.4),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    70% { 
+        box-shadow: 
+            0 0 0 15px rgba(108, 92, 231, 0),
+            inset 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+    100% { 
+        box-shadow: 
+            0 0 0 0 rgba(108, 92, 231, 0),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
 }
 
 @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+    0%, 100% { 
+        transform: translateY(0px) rotateX(0deg);
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+    }
+    50% { 
+        transform: translateY(-15px) rotateX(5deg);
+        filter: drop-shadow(0 15px 30px rgba(108, 92, 231, 0.3));
+    }
 }
 
-/* Classes Utilitárias para HTML */
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes borderFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes glassTilt {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(0.5deg); }
+    75% { transform: rotate(-0.5deg); }
+}
+
+/* Animações de Background Glassmorphism */
+@keyframes glassShift {
+    0%, 100% { 
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    50% { 
+        backdrop-filter: blur(15px);
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+
+/* Classes Utilitárias para HTML - Expandidas */
 .fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .slide-up {
-    animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: slideInUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .slide-right {
-    animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: slideInRight 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.slide-left {
+    animation: slideInLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+    background: rgba(15, 17, 26, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.glow::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle,
+        rgba(108, 92, 231, 0.1) 0%,
+        rgba(108, 92, 231, 0.05) 25%,
+        transparent 70%
+    );
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* Aplicação Específica */
 .current-module-card {
-    animation: float 6s ease-in-out infinite;
+    animation: 
+        float 8s ease-in-out infinite,
+        glassTilt 20s ease-in-out infinite;
 }
 
 .day-card.current {
-    animation: pulseGlow 2s infinite;
+    animation: 
+        pulseGlow 3s infinite,
+        glassShift 5s infinite alternate;
     z-index: 1;
 }
 
-/* Cascata de entrada para listas */
-.task-card:nth-child(1) { animation: slideInUp 0.5s ease-out forwards; animation-delay: 0.1s; opacity: 0; }
-.task-card:nth-child(2) { animation: slideInUp 0.5s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
-.task-card:nth-child(3) { animation: slideInUp 0.5s ease-out forwards; animation-delay: 0.3s; opacity: 0; }
-.task-card:nth-child(4) { animation: slideInUp 0.5s ease-out forwards; animation-delay: 0.4s; opacity: 0; }
-.task-card:nth-child(5) { animation: slideInUp 0.5s ease-out forwards; animation-delay: 0.5s; opacity: 0; }
+/* Cascata de entrada para listas - Expandida */
+.task-card {
+    opacity: 0;
+    transform-origin: center bottom;
+}
 
-/* Micro-interações de Botão */
+.task-card:nth-child(1) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.1s; 
+}
+.task-card:nth-child(2) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.2s; 
+}
+.task-card:nth-child(3) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s; 
+}
+.task-card:nth-child(4) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.4s; 
+}
+.task-card:nth-child(5) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s; 
+}
+.task-card:nth-child(6) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.6s; 
+}
+.task-card:nth-child(7) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.7s; 
+}
+.task-card:nth-child(8) { 
+    animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.8s; 
+}
+
+/* Micro-interações de Botão - Aprimoradas */
 .btn {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.btn:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(30, 30);
+        opacity: 0;
+    }
 }
 
 .btn:active {
@@ -67,20 +252,108 @@
 }
 
 .day-card.unlocked:active {
-    transform: scale(0.95);
+    transform: scale(0.95) translateY(2px);
 }
 
-/* Loading Spinner Moderno */
+/* Hover Effects */
+.hover-lift {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+}
+
+.hover-glow {
+    transition: box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-glow:hover {
+    box-shadow: 
+        0 10px 40px rgba(108, 92, 231, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Loading Spinner Moderno - Aprimorado */
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(255,255,255,0.1);
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     border-top-color: var(--primary);
-    animation: spin 1s ease-in-out infinite;
+    border-right-color: var(--accent);
+    border-bottom-color: var(--success);
+    animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
     margin: 2rem auto;
+    position: relative;
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+}
+
+.spinner::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+    animation: pulse 2s infinite alternate;
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to { 
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.3; transform: scale(0.9); }
+    100% { opacity: 0.6; transform: scale(1.1); }
+}
+
+/* Shimmer Effect */
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+/* Progress Bar Animation */
+@keyframes progressFill {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+.progress-animate {
+    animation: progressFill 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Particle Effects */
+@keyframes floatParticle {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+    10%, 90% {
+        opacity: 1;
+    }
+    50% {
+        transform: translate(100px, -100px) rotate(180deg);
+    }
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: floatParticle 4s infinite linear;
 }
