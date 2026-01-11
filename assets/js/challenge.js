@@ -51,26 +51,23 @@ function getModuleIdForDay(day) {
 function renderReadingUI(task, booklet) {
     const container = document.getElementById('challengeContent');
     
-    // Se por acaso não houver livreto, usa uma mensagem padrão
     const bookletTitle = booklet ? booklet.title : "Leitura do Dia";
-    const bookletContent = booklet ? booklet.content : "<p>Conteúdo de leitura principal do dia.</p>";
+    const bookletContent = booklet ? booklet.content : "<p>Conteúdo indisponível.</p>";
 
+    // Agora o botão "Ler Agora" abre o modal chique
     container.innerHTML = `
         <div class="icon-circle"><i class="fas fa-book-reader"></i></div>
         <h1>${task.title}</h1>
+        <p class="instruction-text">Este conteúdo requer imersão total. Coloque seus fones, ative o som binaural abaixo e clique para ler.</p>
         
-        <div class="booklet-review-card">
-            <h3>Material de Referência: ${bookletTitle}</h3>
-            <div class="booklet-snippet">
-                ${bookletContent} 
-            </div>
-        </div>
-
-        <p class="instruction-text">Você leu e compreendeu o material acima com atenção plena? A neuroplasticidade exige foco, não apenas 'scrolling'.</p>
-        
-        <div class="interaction-area">
-            <button class="btn btn-primary" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category || 'Cognitivo'}')">
-                <i class="fas fa-check-circle"></i> Confirmar Leitura Profunda
+        <div class="interaction-area" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <button class="btn" style="border: 1px solid var(--primary); background: transparent;" 
+                onclick="ui.openReader('${bookletTitle}', \`${bookletContent}\`)">
+                <i class="fas fa-eye"></i> Abrir Leitor Imersivo
+            </button>
+            
+            <button class="btn btn-primary" onclick="completeGeneric('${task.id}', ${task.xp}, '${task.category}')">
+                <i class="fas fa-check-circle"></i> Confirmar Leitura
             </button>
         </div>
     `;
