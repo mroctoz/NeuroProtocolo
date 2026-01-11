@@ -84,27 +84,44 @@ class Database {
         }
     }
 
+    // ... (Mantenha o código anterior até a parte de Data Fetching)
+
     async getDayContent(moduleId) {
         if (this.contentCache[moduleId]) return this.contentCache[moduleId];
         try {
-            // Caminho corrigido para garantir leitura correta
-            const path = `assets/data/content/${moduleId}.json`;
-            const res = await fetch(path);
-            
-            if (!res.ok) {
-                console.error(`Arquivo não encontrado: ${path}`);
-                throw new Error(`Arquivo não encontrado: ${moduleId}`);
-            }
-            
+            const res = await fetch(`assets/data/content/${moduleId}.json`);
+            if (!res.ok) throw new Error("Arquivo de módulo não encontrado");
             const data = await res.json();
             this.contentCache[moduleId] = data;
             return data;
         } catch (e) {
-            console.error(`Erro ao carregar conteúdo de ${moduleId}:`, e);
-            // Retorna estrutura vazia para não quebrar a UI
-            return { days: {} };
+            console.error(`Erro ao carregar ${moduleId}.json`, e);
+            return null;
         }
     }
+
+    // NOVO MÉTODO: Busca o livreto denso específico
+    async getBooklet(moduleId, dayId) {
+        // Formata o dia para ter 2 dígitos (ex: 1 -> d01)
+        const dayFormatted = dayId.toString().padStart(2, '0');
+        const path = `assets/data/booklets/${moduleId}/d${dayFormatted}.json`;
+        
+        try {
+            const res = await fetch(path);
+            if (!res.ok) throw new Error(`Livreto não encontrado: ${path}`);
+            return await res.json();
+        } catch (e) {
+            console.error("Erro ao carregar livreto:", e);
+            // Fallback para caso o arquivo não exista ainda
+            return {
+                title: "Conteúdo em Desenvolvimento",
+                read_time: "N/A",
+                content: "<p>O conteúdo profundo deste dia está sendo compilado pelos neurocientistas.</p>"
+            };
+        }
+    }
+
+    // ... (Mantenha o restante do código)
 
     // --- Logic ---
 
