@@ -442,14 +442,31 @@
                     'module_04': []
                 };
 
+                // Itera sobre módulos EM ORDEM
+                const sortedModules = modules.sort((a, b) => {
+                    const order = {
+                        'module_01': 1,
+                        'module_02': 2,
+                        'module_03': 3,
+                        'module_04': 4
+                    };
+                    return (order[a.id] || 999) - (order[b.id] || 999);
+                });
+
                 // Itera sobre módulos
-                for (const mod of modules) {
+                for (const mod of sortedModules) {
                     const content = await db.getDayContent(mod.id);
                     
                     if (!content || !content.days) continue;
 
+                    // CORREÇÃO 1: Iterar sobre dias EM ORDEM NUMÉRICA
+                    const sortedDays = Object.keys(content.days)
+                        .map(dayNum => parseInt(dayNum))
+                        .sort((a, b) => a - b)
+                        .map(dayNum => dayNum.toString());
+
                     // Itera sobre dias
-                    Object.keys(content.days).forEach(dayNum => {
+                    sortedDays.forEach(dayNum => {
                         const dayInt = parseInt(dayNum);
                         
                         if (dayInt <= progress.unlockedDays) {
@@ -485,73 +502,83 @@
                     document.getElementById('totalHours').textContent = Math.round(totalHours);
                 }
                 
-// Função para renderizar livretos
-function renderBooklets(filter = 'all') {
-    container.innerHTML = '';
-    
-    let filteredBooklets = [];
-    
-    if (filter === 'all') {
-        Object.values(bookletsByModule).forEach(modBooklets => {
-            filteredBooklets.push(...modBooklets);
-        });
-    } else if (bookletsByModule[filter]) {
-        filteredBooklets = bookletsByModule[filter];
-    }
-    
-    if (filteredBooklets.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-book-open"></i>
-                <h3>Nenhum livreto encontrado</h3>
-                <p>${filter === 'all' ? 
-                    'Complete os desafios para desbloquear seu primeiro livreto.' : 
-                    'Nenhum livreto disponível neste módulo.'}
-                </p>
-            </div>
-        `;
-        return;
-    }
-    
-    // ORDENAÇÃO CORRIGIDA AQUI
-    // Ordenar por módulo numérico (module_01 -> 1, module_02 -> 2) e depois por dia numérico
-    filteredBooklets.sort((a, b) => {
-        // Extrair número do módulo (ex: 'module_01' -> 1)
-        const modNumA = parseInt(a.modId.replace('module_', ''));
-        const modNumB = parseInt(b.modId.replace('module_', ''));
-        
-        if (modNumA === modNumB) {
-            // Mesmo módulo: ordenar por dia
-            return parseInt(a.dayNum) - parseInt(b.dayNum);
-        }
-        
-        // Módulos diferentes: ordenar por número do módulo
-        return modNumA - modNumB;
-    });
-    
-    // Renderizar cada livreto
-    filteredBooklets.forEach((booklet, index) => {
-        const html = `
-            <div class="booklet-card" onclick="openLibraryBooklet('${booklet.modId}', '${booklet.dayNum}')">
-                <div>
-                    <div class="booklet-day">Dia ${booklet.dayNum} • ${booklet.modTitle}</div>
-                    <h3 class="booklet-title">${booklet.dayData.booklet.title}</h3>
-                </div>
-                <div class="booklet-meta">
-                    <span class="read-time">
-                        <i class="far fa-clock"></i> 
-                        ${booklet.dayData.booklet.read_time || 'Leitura'}
-                    </span>
-                    <span class="read-action">
-                        Ler 
-                        <i class="fas fa-arrow-right"></i>
-                    </span>
-                </div>
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', html);
-    });
-}
+                // Função para renderizar livretos
+                function renderBooklets(filter = 'all') {
+                    container.innerHTML = '';
+                    
+                    let filteredBooklets = [];
+                    
+                    if (filter === 'all') {
+                        Object.values(bookletsByModule).forEach(modBooklets => {
+                            filteredBooklets.push(...modBooklets);
+                        });
+                    } else if (bookletsByModule[filter]) {
+                        filteredBooklets = bookletsByModule[filter];
+                    }
+                    
+                    if (filteredBooklets.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-book-open"></i>
+                                <h3>Nenhum livreto encontrado</h3>
+                                <p>${filter === 'all' ? 
+                                    'Complete os desafios para desbloquear seu primeiro livreto.' : 
+                                    'Nenhum livreto disponível neste módulo.'}
+                                </p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // CORREÇÃO 2: Ordenação robusta por módulo e dia
+                    filteredBooklets.sort((a, b) => {
+                        // Definir ordem de módulos
+                        const moduleOrder = {
+                            'module_01': 1,
+                            'module_02': 2, 
+                            'module_03': 3,
+                            'module_04': 4
+                        };
+                        
+                        // Obter ordem numérica dos módulos
+                        const modOrderA = moduleOrder[a.modId] || 999;
+                        const modOrderB = moduleOrder[b.modId] || 999;
+                        
+                        // Primeiro ordena por módulo
+                        if (modOrderA !== modOrderB) {
+                            return modOrderA - modOrderB;
+                        }
+                        
+                        // Se mesmo módulo, ordena por dia (convertendo para número)
+                        const dayA = parseInt(a.dayNum);
+                        const dayB = parseInt(b.dayNum);
+                        
+                        return dayA - dayB;
+                    });
+                    
+                    // Renderizar cada livreto
+                    filteredBooklets.forEach((booklet, index) => {
+                        const html = `
+                            <div class="booklet-card" onclick="openLibraryBooklet('${booklet.modId}', '${booklet.dayNum}')">
+                                <div>
+                                    <div class="booklet-day">Dia ${booklet.dayNum} • ${booklet.modTitle}</div>
+                                    <h3 class="booklet-title">${booklet.dayData.booklet.title}</h3>
+                                </div>
+                                <div class="booklet-meta">
+                                    <span class="read-time">
+                                        <i class="far fa-clock"></i> 
+                                        ${booklet.dayData.booklet.read_time || 'Leitura'}
+                                    </span>
+                                    <span class="read-action">
+                                        Ler 
+                                        <i class="fas fa-arrow-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                        container.insertAdjacentHTML('beforeend', html);
+                    });
+                }
                 
                 // Renderizar todos inicialmente
                 renderBooklets('all');
