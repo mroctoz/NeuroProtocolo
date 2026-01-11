@@ -55,7 +55,7 @@
             const user = db.getUser();
             if (user) {
                 // Se já existe, vai direto pro dashboard
-                window.location.href = 'dashboard.html';
+                window.location.href = 'app.html';
             }
         };
 
@@ -68,7 +68,7 @@
                 
                 // Pequeno delay para efeito dramático
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = 'app.html';
                 }, 1500);
             } else {
                 alert("Por favor, insira um nome válido para iniciar.");
