@@ -3,70 +3,597 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroProtocolo | Desafio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>NeuroProtocolo | Missão Neural</title>
+    
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Estilos -->
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/protocol.css"> <!-- Reusa estilos -->
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/challenge.css">
+    
     <style>
-        /* Estilos inline específicos para challenge por enquanto */
-        .challenge-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-        .timer-display {
-            font-size: 5rem;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-            margin: 2rem 0;
-            color: var(--primary);
-            text-shadow: 0 0 20px var(--primary-glow);
-        }
-        .journal-input {
+        /* Estilos específicos para aprimoramento visual */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .challenge-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+        
+        .challenge-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .challenge-progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        .challenge-complete-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 17, 26, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .challenge-complete-overlay.active {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .celebration-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15rem;
+            color: var(--success);
+            opacity: 0.1;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .xp-earned-badge {
+            background: linear-gradient(135deg, var(--warning), #ffd166);
+            color: var(--bg-dark);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            display: inline-block;
+            margin: 1.5rem 0;
+            box-shadow: 0 15px 40px rgba(253, 203, 110, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: pulseGlow 2s infinite;
+        }
+        
+        .neuro-hint {
+            background: rgba(108, 92, 231, 0.1);
+            border-left: 4px solid var(--primary);
             padding: 1.5rem;
-            color: white;
-            font-family: var(--font-main);
-            font-size: 1.1rem;
-            min-height: 200px;
-            resize: vertical;
-            margin: 2rem 0;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
         }
-        .journal-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(255,255,255,0.08);
+        
+        .neuro-hint::before {
+            content: '💡';
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            opacity: 0.3;
         }
-        .challenge-type-icon {
-            font-size: 3rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
+        
+        .challenge-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2.5rem 0;
         }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--primary);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+        
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .typewriter-text {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--primary);
+            animation: typewriter 3s steps(40, end), blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        .floating-neurons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .neuron {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.3;
+            animation: floatParticle 15s infinite linear;
+        }
+        
+        .neuron:nth-child(2) { animation-delay: 2s; left: 20%; top: 30%; }
+        .neuron:nth-child(3) { animation-delay: 4s; left: 70%; top: 60%; }
+        .neuron:nth-child(4) { animation-delay: 6s; left: 40%; top: 80%; }
+        .neuron:nth-child(5) { animation-delay: 8s; left: 80%; top: 20%; }
     </style>
 </head>
 <body>
+    
+    <!-- Barra de Progresso Fixa -->
+    <div class="challenge-progress-bar">
+        <div class="challenge-progress-fill" id="progressBar"></div>
+    </div>
+    
+    <!-- Partículas de Fundo -->
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Neurônios Flutuantes -->
+    <div class="floating-neurons">
+        <div class="neuron"></div>
+        <div class="neuron"></div>
+        <div class="neuron"></div>
+        <div class="neuron"></div>
+        <div class="neuron"></div>
+    </div>
 
-    <div class="auth-container" style="background: var(--bg-dark); align-items: flex-start; overflow-y: auto;">
-        <div class="challenge-container fade-in">
-            <a href="javascript:history.back()" class="back-link" style="display: inline-block; margin-bottom: 2rem;">
-                <i class="fas fa-arrow-left"></i> Cancelar
-            </a>
+    <div class="challenge-container">
+        <!-- Botão Voltar com Glassmorphism -->
+        <a href="javascript:history.back()" class="back-link slide-left">
+            <i class="fas fa-chevron-left"></i>
+            <span>Voltar ao Dashboard</span>
+        </a>
 
-            <div id="challengeContent">
-                <i class="fas fa-circle-notch fa-spin challenge-type-icon"></i>
-                <h1>Carregando Desafio...</h1>
+        <!-- Card Principal do Desafio -->
+        <div class="challenge-card fade-in" id="challengeCard">
+            
+            <!-- Cabeçalho do Desafio -->
+            <div class="challenge-header">
+                <div class="icon-badge" id="challengeIcon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                
+                <div class="challenge-meta">
+                    <span class="challenge-tag" id="challengeTag">Missão Neural</span>
+                    <h1 class="challenge-title" id="challengeTitle">Desafio em Carregamento</h1>
+                    <p class="challenge-subtitle" id="challengeSubtitle">
+                        <span class="typewriter-text">Preparando sua experiência imersiva...</span>
+                    </p>
+                    
+                    <div class="challenge-xp" id="challengeXp">
+                        <i class="fas fa-bolt"></i>
+                        <span>+0 XP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estatísticas do Desafio -->
+            <div class="challenge-stats fade-in" id="challengeStats" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-value" id="statTime">00:00</div>
+                    <div class="stat-label">Tempo Estimado</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statFocus">90%</div>
+                    <div class="stat-label">Nível de Foco</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statStreak">0</div>
+                    <div class="stat-label">Sequência Atual</div>
+                </div>
+            </div>
+
+            <!-- Instruções do Desafio -->
+            <div class="content-block slide-up" id="instructionsBlock" style="display: none;">
+                <span class="block-label">
+                    <i class="fas fa-scroll"></i>
+                    Instruções da Missão
+                </span>
+                <div class="instruction-text" id="challengeInstructions">
+                    Carregando instruções...
+                </div>
+                
+                <!-- Dica Neurocientífica -->
+                <div class="neuro-hint" id="neuroHint">
+                    <strong>Dica Neuro:</strong> Esta atividade estimula a neuroplasticidade através do foco sustentado.
+                </div>
+            </div>
+
+            <!-- Timer para Meditação/Foco -->
+            <div class="timer-container fade-in" id="timerContainer" style="display: none;">
+                <div class="timer-label">
+                    <i class="fas fa-hourglass-half"></i>
+                    Tempo Restante
+                </div>
+                <div class="timer-display" id="timerDisplay">
+                    05:00
+                </div>
+                <div class="timer-controls">
+                    <button class="btn btn-icon" id="timerStart">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="btn btn-icon" id="timerPause">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="btn btn-icon" id="timerReset">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Área de Leitura (para desafios de leitura) -->
+            <div class="booklet-preview slide-up" id="readingBlock" style="display: none;">
+                <div class="booklet-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="booklet-info">
+                    <h4>Leitura Neurocientífica</h4>
+                    <p>Clique para abrir o conteúdo de leitura imersiva.</p>
+                </div>
+                <div class="booklet-action">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Área de Diário Neural -->
+            <div class="journal-container slide-up" id="journalBlock" style="display: none;">
+                <span class="block-label">
+                    <i class="fas fa-pen-fancy"></i>
+                    Diário Neural
+                </span>
+                <p class="instruction-text">
+                    Registre seus insights, reflexões e aprendizados desta experiência.
+                </p>
+                <textarea 
+                    class="journal-input" 
+                    id="journalInput"
+                    placeholder="Digite aqui seus pensamentos, insights ou reflexões sobre esta atividade... (Este diário fortalece a consolidação da memória)"
+                    rows="6"
+                ></textarea>
+                <div class="word-count" id="wordCount">
+                    <i class="fas fa-font"></i>
+                    <span>0 palavras</span>
+                </div>
+            </div>
+
+            <!-- Área de Resposta (para desafios reflexivos) -->
+            <div class="content-block slide-up" id="reflectionBlock" style="display: none;">
+                <span class="block-label">
+                    <i class="fas fa-lightbulb"></i>
+                    Reflexão Guiada
+                </span>
+                <div class="instruction-text" id="reflectionPrompt">
+                    Pense sobre a seguinte questão e registre sua resposta abaixo:
+                </div>
+                <div class="reflection-question" id="reflectionQuestion">
+                    Como você pode aplicar os conceitos aprendidos hoje em sua vida diária?
+                </div>
+                <textarea 
+                    class="journal-input" 
+                    id="reflectionInput"
+                    placeholder="Escreva sua resposta aqui..."
+                    rows="4"
+                ></textarea>
+            </div>
+
+            <!-- Área de Ações -->
+            <div class="action-area">
+                <button class="btn btn-primary btn-large" id="startChallenge">
+                    <i class="fas fa-rocket"></i>
+                    <span>Iniciar Missão</span>
+                </button>
+                
+                <button class="btn btn-secondary btn-large" id="pauseChallenge" style="display: none;">
+                    <i class="fas fa-pause"></i>
+                    <span>Pausar Missão</span>
+                </button>
+                
+                <button class="btn btn-primary btn-large" id="completeChallenge" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Concluir Missão</span>
+                </button>
+                
+                <button class="btn btn-outline" id="showHint" style="display: none;">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Precisa de Ajuda?</span>
+                </button>
+            </div>
+
+            <!-- Indicador de Progresso -->
+            <div class="progress-indicator" id="progressIndicator" style="display: none;">
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
             </div>
         </div>
     </div>
 
+    <!-- Overlay de Conclusão -->
+    <div class="challenge-complete-overlay" id="completionOverlay">
+        <div class="challenge-card">
+            <div class="celebration-animation">
+                <i class="fas fa-trophy"></i>
+            </div>
+            
+            <div class="challenge-header">
+                <div class="icon-badge" style="background: rgba(0, 184, 148, 0.1); color: var(--success); border-color: rgba(0, 184, 148, 0.3);">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                
+                <h1 class="challenge-title" style="color: var(--success);">Missão Concluída!</h1>
+                <p class="challenge-subtitle">
+                    Você fortaleceu suas conexões neurais com sucesso!
+                </p>
+                
+                <div class="xp-earned-badge" id="earnedXp">
+                    <i class="fas fa-bolt"></i>
+                    <span>+150 XP Ganhos!</span>
+                </div>
+            </div>
+            
+            <div class="challenge-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="completionTime">05:30</div>
+                    <div class="stat-label">Tempo Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="focusScore">94%</div>
+                    <div class="stat-label">Foco Mantido</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="streakBonus">+2</div>
+                    <div class="stat-label">Bônus de Sequência</div>
+                </div>
+            </div>
+            
+            <div class="neuro-hint" style="text-align: center; border-color: var(--success);">
+                <strong>Neuroplasticidade Ativada!</strong><br>
+                Cada missão concluída fortalece permanentemente suas redes neurais.
+            </div>
+            
+            <div class="action-area">
+                <button class="btn btn-primary btn-large" id="continueJourney">
+                    <i class="fas fa-forward"></i>
+                    <span>Continuar Jornada</span>
+                </button>
+                
+                <button class="btn btn-outline" id="reviewJournal">
+                    <i class="fas fa-book"></i>
+                    <span>Revisar Diário</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/database.js"></script>
     <script src="assets/js/challenge.js"></script>
+    
+    <script>
+        // Inicialização de elementos visuais
+        document.addEventListener('DOMContentLoaded', function() {
+            // Criar partículas de fundo
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.width = Math.random() * 3 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particles.appendChild(particle);
+            }
+            
+            // Simular carregamento do desafio
+            setTimeout(() => {
+                document.getElementById('challengeTitle').textContent = 'Meditação Guiada';
+                document.getElementById('challengeSubtitle').textContent = 'Foco na respiração e atenção plena por 5 minutos';
+                document.getElementById('challengeTag').textContent = 'Prática de Foco';
+                document.getElementById('challengeXp').innerHTML = '<i class="fas fa-bolt"></i><span>+150 XP</span>';
+                document.getElementById('challengeIcon').innerHTML = '<i class="fas fa-spa"></i>';
+                document.getElementById('challengeInstructions').innerHTML = `
+                    <p>Sente-se em uma posição confortável com a coluna ereta.</p>
+                    <p>Feche os olhos e concentre-se apenas na sua respiração.</p>
+                    <p>Quando sua mente vagar (e ela vai), gentilmente traga sua atenção de volta à respiração.</p>
+                    <p>Permaneça assim por 5 minutos, observando o fluxo natural da sua respiração.</p>
+                `;
+                
+                // Mostrar blocos relevantes
+                document.getElementById('instructionsBlock').style.display = 'block';
+                document.getElementById('timerContainer').style.display = 'block';
+                document.getElementById('journalBlock').style.display = 'block';
+                document.getElementById('challengeStats').style.display = 'grid';
+                document.getElementById('progressIndicator').style.display = 'flex';
+                
+                // Atualizar estatísticas
+                document.getElementById('statTime').textContent = '05:00';
+                document.getElementById('statFocus').textContent = '90%';
+                document.getElementById('statStreak').textContent = '3';
+                
+                // Mostrar botão de iniciar
+                document.getElementById('startChallenge').style.display = 'flex';
+                
+                // Animar entrada
+                document.querySelectorAll('.slide-up, .fade-in').forEach(el => {
+                    el.style.animationPlayState = 'running';
+                });
+            }, 1500);
+            
+            // Contador de palavras do diário
+            const journalInput = document.getElementById('journalInput');
+            const wordCount = document.getElementById('wordCount');
+            
+            if (journalInput && wordCount) {
+                journalInput.addEventListener('input', function() {
+                    const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+                    wordCount.innerHTML = `<i class="fas fa-font"></i><span>${words.length} palavras</span>`;
+                });
+            }
+            
+            // Controle do timer
+            let timerInterval;
+            let timerSeconds = 300; // 5 minutos
+            let timerRunning = false;
+            
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timerSeconds / 60);
+                const seconds = timerSeconds % 60;
+                document.getElementById('timerDisplay').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Atualizar barra de progresso
+                const progress = ((300 - timerSeconds) / 300) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+            }
+            
+            function startTimer() {
+                if (timerRunning) return;
+                timerRunning = true;
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        // Mostrar conclusão
+                        document.getElementById('completionOverlay').classList.add('active');
+                    }
+                }, 1000);
+            }
+            
+            function pauseTimer() {
+                clearInterval(timerInterval);
+                timerRunning = false;
+            }
+            
+            function resetTimer() {
+                clearInterval(timerInterval);
+                timerSeconds = 300;
+                timerRunning = false;
+                updateTimerDisplay();
+            }
+            
+            // Event listeners para controles do timer
+            document.getElementById('timerStart')?.addEventListener('click', startTimer);
+            document.getElementById('timerPause')?.addEventListener('click', pauseTimer);
+            document.getElementById('timerReset')?.addEventListener('click', resetTimer);
+            
+            // Controle dos botões principais
+            document.getElementById('startChallenge')?.addEventListener('click', function() {
+                this.style.display = 'none';
+                document.getElementById('pauseChallenge').style.display = 'flex';
+                document.getElementById('completeChallenge').style.display = 'flex';
+                document.getElementById('showHint').style.display = 'flex';
+                startTimer();
+            });
+            
+            document.getElementById('completeChallenge')?.addEventListener('click', function() {
+                document.getElementById('completionOverlay').classList.add('active');
+                pauseTimer();
+            });
+            
+            document.getElementById('continueJourney')?.addEventListener('click', function() {
+                window.location.href = 'dashboard.html';
+            });
+            
+            // Inicializar display do timer
+            updateTimerDisplay();
+        });
+    </script>
 </body>
 </html>
