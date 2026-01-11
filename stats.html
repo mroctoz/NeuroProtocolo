@@ -3,81 +3,702 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroProtocolo | Estatísticas</title>
-    <!-- ... Head padrão ... -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>NeuroProtocolo | Neuro-Metrics</title>
+    
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Estilos -->
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    
     <style>
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
-        .stat-card { background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; }
-        .big-number { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 1rem 0; }
-        .stat-label { color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        /* Estilos específicos para estatísticas */
+        .stats-header {
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
         
-        /* Gráfico de Barras CSS */
-        .chart-container { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem; }
-        .chart-row { display: flex; align-items: center; gap: 1rem; }
-        .chart-label { width: 100px; font-size: 0.9rem; color: var(--text-muted); }
-        .chart-bar-bg { flex: 1; height: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; }
-        .chart-bar-fill { height: 100%; border-radius: 5px; width: 0%; transition: width 1s ease-out; }
+        .stats-header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
         
-        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
+        .stats-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        /* Grid de Estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        /* Cards Principais */
+        .stat-card {
+            background: rgba(26, 29, 45, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .stat-card:nth-child(1) { animation-delay: 0.2s; }
+        .stat-card:nth-child(2) { animation-delay: 0.3s; }
+        .stat-card:nth-child(3) { animation-delay: 0.4s; }
+        .stat-card:nth-child(4) { animation-delay: 0.5s; }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.05) 0%,
+                transparent 100%
+            );
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(26, 29, 45, 0.9);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Card de Nível */
+        .level-card {
+            grid-column: span 6;
+            background: linear-gradient(
+                135deg,
+                rgba(108, 92, 231, 0.15),
+                rgba(26, 29, 45, 0.9)
+            );
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            position: relative;
+        }
+        
+        .level-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            opacity: 0.7;
+        }
+        
+        /* Card de Desafios */
+        .challenges-card {
+            grid-column: span 6;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 206, 201, 0.15),
+                rgba(26, 29, 45, 0.9)
+            );
+            border: 1px solid rgba(0, 206, 201, 0.3);
+        }
+        
+        .challenges-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), #2ee6e1);
+            opacity: 0.7;
+        }
+        
+        /* Gráfico de Radar */
+        .radar-card {
+            grid-column: span 8;
+            position: relative;
+        }
+        
+        /* Progresso Mensal */
+        .progress-card {
+            grid-column: span 4;
+            background: linear-gradient(
+                135deg,
+                rgba(253, 203, 110, 0.15),
+                rgba(26, 29, 45, 0.9)
+            );
+            border: 1px solid rgba(253, 203, 110, 0.3);
+        }
+        
+        .progress-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--warning), #ffd166);
+            opacity: 0.7;
+        }
+        
+        /* Estatísticas de Categorias */
+        .categories-card {
+            grid-column: span 4;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 184, 148, 0.15),
+                rgba(26, 29, 45, 0.9)
+            );
+            border: 1px solid rgba(0, 184, 148, 0.3);
+        }
+        
+        .categories-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--success), #00d2b3);
+            opacity: 0.7;
+        }
+        
+        /* Histórico de Atividade */
+        .history-card {
+            grid-column: span 8;
+        }
+        
+        /* Conteúdo dos Cards */
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .big-number {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 0.5rem 0;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .level-card .big-number {
+            background: linear-gradient(135deg, var(--primary), #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(108, 92, 231, 0.3);
+        }
+        
+        .challenges-card .big-number {
+            background: linear-gradient(135deg, var(--accent), #2ee6e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-details {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-highlight {
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Gráfico de Radar (SVG) */
+        .radar-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin-top: 1rem;
+        }
+        
+        .radar-svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .radar-polygon {
+            fill: rgba(108, 92, 231, 0.15);
+            stroke: var(--primary);
+            stroke-width: 2;
+            animation: pulseGlow 3s infinite alternate;
+        }
+        
+        .radar-axis {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 1;
+        }
+        
+        .radar-label {
+            font-size: 0.85rem;
+            fill: var(--text-muted);
+            font-weight: 600;
+        }
+        
+        .radar-value {
+            fill: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        /* Gráfico de Barras Horizontal */
+        .chart-container {
+            margin-top: 1.5rem;
+        }
+        
+        .chart-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .chart-label {
+            width: 120px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .chart-bar-bg {
+            flex: 1;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chart-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        .chart-value {
+            width: 40px;
+            text-align: right;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        /* Progresso Mensal */
+        .monthly-progress {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .month-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .month-name {
+            width: 80px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .month-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .month-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--warning), #ffd166);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        /* Heatmap de Atividade */
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin-top: 1.5rem;
+        }
+        
+        .heatmap-day {
+            width: 100%;
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .heatmap-day:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
+        }
+        
+        .heatmap-day.active-1 { background: rgba(108, 92, 231, 0.2); }
+        .heatmap-day.active-2 { background: rgba(108, 92, 231, 0.4); }
+        .heatmap-day.active-3 { background: rgba(108, 92, 231, 0.6); }
+        .heatmap-day.active-4 { background: rgba(108, 92, 231, 0.8); }
+        .heatmap-day.active-5 { background: var(--primary); }
+        
+        /* Histórico de Conquistas */
+        .achievement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .achievement-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .achievement-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .achievement-info {
+            flex: 1;
+        }
+        
+        .achievement-title {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.2rem;
+        }
+        
+        .achievement-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .level-card,
+            .challenges-card {
+                grid-column: span 3;
+            }
+            
+            .radar-card,
+            .history-card {
+                grid-column: span 6;
+            }
+            
+            .progress-card,
+            .categories-card {
+                grid-column: span 3;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .level-card,
+            .challenges-card,
+            .radar-card,
+            .history-card,
+            .progress-card,
+            .categories-card {
+                grid-column: span 1;
+            }
+            
+            .big-number {
+                font-size: 3rem;
+            }
+            
+            .radar-container {
+                height: 250px;
+            }
+        }
+        
+        /* Scrollbar personalizada */
+        .achievement-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .achievement-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+        
+        .achievement-list::-webkit-scrollbar-thumb {
+            background: rgba(108, 92, 231, 0.3);
+            border-radius: 3px;
+        }
+        
+        .achievement-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(108, 92, 231, 0.5);
+        }
     </style>
 </head>
 <body>
     <div class="app-layout">
+        <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="brand"><i class="fas fa-brain brand-icon"></i><span>NeuroProtocolo</span></div>
+            <div class="brand">
+                <i class="fas fa-brain brand-icon"></i>
+                <span>NeuroProtocolo</span>
+            </div>
+            
             <nav class="nav-menu">
-                <a href="dashboard.html" class="nav-item"><i class="fas fa-columns"></i> Dashboard</a>
-                <a href="library.html" class="nav-item"><i class="fas fa-book"></i> Biblioteca</a>
-                <a href="stats.html" class="nav-item active"><i class="fas fa-chart-line"></i> Estatísticas</a>
-                <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Configurações</a>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fas fa-columns"></i> Dashboard
+                </a>
+                <a href="library.html" class="nav-item">
+                    <i class="fas fa-book"></i> Biblioteca
+                </a>
+                <a href="stats.html" class="nav-item active">
+                    <i class="fas fa-chart-network"></i> Neuro-Metrics
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fas fa-cog"></i> Configurações
+                </a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <header><h1>Performance Neural</h1></header>
+            <header class="stats-header">
+                <h1>Neuro-Metrics</h1>
+                <p>Analytics avançados do seu desenvolvimento neuroplástico. Visualize seu progresso e otimize sua evolução.</p>
+            </header>
 
             <div class="stats-grid">
-                <!-- Overview -->
-                <div class="stat-card">
-                    <span class="stat-label">Nível de Neuroplasticidade</span>
+                <!-- Card de Nível -->
+                <div class="stat-card level-card">
+                    <div class="stat-label">
+                        <i class="fas fa-layer-group"></i>
+                        Nível de Neuroplasticidade
+                    </div>
                     <div class="big-number" id="levelDisplay">0</div>
-                    <p style="color: var(--text-muted)">Total de XP Acumulado: <span id="xpDisplay" style="color:white">0</span></p>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Desafios Superados</span>
-                    <div class="big-number" id="tasksDisplay" style="color: var(--accent)">0</div>
-                    <p style="color: var(--text-muted)">Consistência é a chave da mielinização.</p>
+                    <div class="stat-details">
+                        Total de <span class="stat-highlight" id="xpDisplay">0 XP</span> acumulado
+                    </div>
+                    <div class="progress-bar" style="margin-top: 1.5rem;">
+                        <div class="xp-bar-bg">
+                            <div class="xp-bar-fill" id="levelProgress" style="width: 0%"></div>
+                        </div>
+                        <div class="xp-text" id="nextLevelText">0/1000 XP para o próximo nível</div>
+                    </div>
                 </div>
 
-                <!-- Radar Chart (Simulado com Barras) -->
-                <div class="stat-card" style="grid-column: 1 / -1;">
-                    <span class="stat-label">Equilíbrio de Competências</span>
+                <!-- Card de Desafios -->
+                <div class="stat-card challenges-card">
+                    <div class="stat-label">
+                        <i class="fas fa-trophy"></i>
+                        Desafios Superados
+                    </div>
+                    <div class="big-number" id="tasksDisplay">0</div>
+                    <div class="stat-details">
+                        Taxa de conclusão: <span class="stat-highlight" id="completionRate">0%</span>
+                    </div>
+                    <div class="chart-container" style="margin-top: 1.5rem;">
+                        <div class="chart-row">
+                            <div class="chart-label">Consistência</div>
+                            <div class="chart-bar-bg">
+                                <div class="chart-bar-fill" id="consistencyBar" style="background: linear-gradient(90deg, var(--accent), #2ee6e1); width: 0%"></div>
+                            </div>
+                            <div class="chart-value" id="consistencyValue">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Radar -->
+                <div class="stat-card radar-card">
+                    <div class="stat-label">
+                        <i class="fas fa-radar"></i>
+                        Equilíbrio de Competências
+                    </div>
+                    <div class="radar-container">
+                        <svg class="radar-svg" viewBox="0 0 400 300" id="radarChart"></svg>
+                    </div>
+                </div>
+
+                <!-- Progresso Mensal -->
+                <div class="stat-card progress-card">
+                    <div class="stat-label">
+                        <i class="fas fa-chart-line"></i>
+                        Progresso Mensal
+                    </div>
+                    <div class="monthly-progress">
+                        <div class="month-row">
+                            <div class="month-name">Jan</div>
+                            <div class="month-bar">
+                                <div class="month-fill" id="month1" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="month-row">
+                            <div class="month-name">Fev</div>
+                            <div class="month-bar">
+                                <div class="month-fill" id="month2" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="month-row">
+                            <div class="month-name">Mar</div>
+                            <div class="month-bar">
+                                <div class="month-fill" id="month3" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="month-row">
+                            <div class="month-name">Abr</div>
+                            <div class="month-bar">
+                                <div class="month-fill" id="month4" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estatísticas por Categoria -->
+                <div class="stat-card categories-card">
+                    <div class="stat-label">
+                        <i class="fas fa-puzzle-piece"></i>
+                        Distribuição por Categoria
+                    </div>
                     <div class="chart-container">
                         <div class="chart-row">
-                            <span class="chart-label">Autoconsciência</span>
-                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barAwareness" style="background: #FF6B6B"></div></div>
-                            <span id="valAwareness">0</span>
+                            <div class="chart-label">Autoconsciência</div>
+                            <div class="chart-bar-bg">
+                                <div class="chart-bar-fill" id="barAwareness" style="background: linear-gradient(90deg, #FF6B6B, #FF8E8E); width: 0%"></div>
+                            </div>
+                            <div class="chart-value" id="valAwareness">0</div>
                         </div>
                         <div class="chart-row">
-                            <span class="chart-label">Resiliência</span>
-                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barResilience" style="background: #4ECDC4"></div></div>
-                            <span id="valResilience">0</span>
+                            <div class="chart-label">Resiliência</div>
+                            <div class="chart-bar-bg">
+                                <div class="chart-bar-fill" id="barResilience" style="background: linear-gradient(90deg, #4ECDC4, #6BE3DC); width: 0%"></div>
+                            </div>
+                            <div class="chart-value" id="valResilience">0</div>
                         </div>
                         <div class="chart-row">
-                            <span class="chart-label">Social</span>
-                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barSocial" style="background: #FFE66D"></div></div>
-                            <span id="valSocial">0</span>
+                            <div class="chart-label">Social</div>
+                            <div class="chart-bar-bg">
+                                <div class="chart-bar-fill" id="barSocial" style="background: linear-gradient(90deg, #FFE66D, #FFF0A3); width: 0%"></div>
+                            </div>
+                            <div class="chart-value" id="valSocial">0</div>
                         </div>
                         <div class="chart-row">
-                            <span class="chart-label">Foco</span>
-                            <div class="chart-bar-bg"><div class="chart-bar-fill" id="barFocus" style="background: #A78BFA"></div></div>
-                            <span id="valFocus">0</span>
+                            <div class="chart-label">Foco</div>
+                            <div class="chart-bar-bg">
+                                <div class="chart-bar-fill" id="barFocus" style="background: linear-gradient(90deg, #A78BFA, #C4B5FD); width: 0%"></div>
+                            </div>
+                            <div class="chart-value" id="valFocus">0</div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Histórico de Atividade -->
+                <div class="stat-card history-card">
+                    <div class="stat-label">
+                        <i class="fas fa-history"></i>
+                        Heatmap de Atividade
+                    </div>
+                    <div class="heatmap-grid" id="heatmapGrid">
+                        <!-- Dias serão gerados via JavaScript -->
+                    </div>
+                    <div class="stat-details" style="margin-top: 1rem; text-align: center;">
+                        <i class="fas fa-info-circle"></i>
+                        Cada quadrado representa um dia de atividade
                     </div>
                 </div>
             </div>
@@ -86,31 +707,217 @@
 
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/database.js"></script>
+    
     <script>
+        // Carregar dados do banco
         const progress = db.getUnlockStatus();
         const stats = progress.stats;
-
-        // Renderiza Números
-        document.getElementById('levelDisplay').innerText = progress.level;
-        document.getElementById('xpDisplay').innerText = progress.xp;
-        document.getElementById('tasksDisplay').innerText = progress.completedTasks.length;
-
-        // Renderiza Gráfico
-        // Calcula o máximo para normalizar a barra (ex: se o maior valor for 10, 10 = 100%)
-        const maxVal = Math.max(stats.awareness, stats.resilience, stats.social, stats.focus, 1); // Evita divisão por 0
-
-        function setBar(id, valId, value) {
-            const percent = (value / maxVal) * 100;
-            document.getElementById(id).style.width = `${percent}%`;
-            document.getElementById(valId).innerText = value;
+        
+        // Função para animar barras
+        function animateBar(barId, valueId, value, maxVal = 10) {
+            const bar = document.getElementById(barId);
+            const valueElement = document.getElementById(valueId);
+            
+            if (bar && valueElement) {
+                const percent = (value / maxVal) * 100;
+                
+                // Delay para animação sequencial
+                setTimeout(() => {
+                    bar.style.width = `${percent}%`;
+                    valueElement.textContent = value;
+                    
+                    // Adicionar efeito de brilho
+                    bar.style.boxShadow = `0 0 20px ${bar.style.background}`;
+                    setTimeout(() => {
+                        bar.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)';
+                    }, 500);
+                }, 300);
+            }
         }
-
-        setTimeout(() => {
-            setBar('barAwareness', 'valAwareness', stats.awareness);
-            setBar('barResilience', 'valResilience', stats.resilience);
-            setBar('barSocial', 'valSocial', stats.social);
-            setBar('barFocus', 'valFocus', stats.focus);
-        }, 300); // Delay para animação
+        
+        // Função para criar gráfico de radar
+        function createRadarChart(awareness, resilience, social, focus) {
+            const svg = document.getElementById('radarChart');
+            svg.innerHTML = '';
+            
+            const centerX = 200;
+            const centerY = 150;
+            const radius = 100;
+            
+            // Desenhar eixos
+            const axes = ['Autoconsciência', 'Resiliência', 'Social', 'Foco'];
+            const values = [awareness, resilience, social, focus];
+            
+            // Linhas do radar
+            for (let i = 0; i < 4; i++) {
+                const angle = (i * Math.PI * 2) / 4 - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                
+                // Linha do eixo
+                const axis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                axis.setAttribute('x1', centerX);
+                axis.setAttribute('y1', centerY);
+                axis.setAttribute('x2', x);
+                axis.setAttribute('y2', y);
+                axis.setAttribute('class', 'radar-axis');
+                svg.appendChild(axis);
+                
+                // Label do eixo
+                const labelAngle = angle - Math.PI / 8;
+                const labelX = centerX + (radius + 30) * Math.cos(labelAngle);
+                const labelY = centerY + (radius + 30) * Math.sin(labelAngle);
+                
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('x', labelX);
+                label.setAttribute('y', labelY);
+                label.setAttribute('text-anchor', 'middle');
+                label.setAttribute('dominant-baseline', 'middle');
+                label.setAttribute('class', 'radar-label');
+                label.textContent = axes[i];
+                svg.appendChild(label);
+            }
+            
+            // Calcular pontos do polígono
+            let points = '';
+            for (let i = 0; i < 4; i++) {
+                const angle = (i * Math.PI * 2) / 4 - Math.PI / 2;
+                const valueRadius = (values[i] / 10) * radius;
+                const x = centerX + valueRadius * Math.cos(angle);
+                const y = centerY + valueRadius * Math.sin(angle);
+                points += `${x},${y} `;
+            }
+            
+            // Desenhar polígono
+            const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            polygon.setAttribute('points', points.trim());
+            polygon.setAttribute('class', 'radar-polygon');
+            svg.appendChild(polygon);
+            
+            // Adicionar pontos nos vértices
+            for (let i = 0; i < 4; i++) {
+                const angle = (i * Math.PI * 2) / 4 - Math.PI / 2;
+                const valueRadius = (values[i] / 10) * radius;
+                const x = centerX + valueRadius * Math.cos(angle);
+                const y = centerY + valueRadius * Math.sin(angle);
+                
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', x);
+                circle.setAttribute('cy', y);
+                circle.setAttribute('r', 5);
+                circle.setAttribute('fill', var('--primary'));
+                svg.appendChild(circle);
+                
+                // Valor numérico
+                const valueText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                valueText.setAttribute('x', x);
+                valueText.setAttribute('y', y - 15);
+                valueText.setAttribute('text-anchor', 'middle');
+                valueText.setAttribute('class', 'radar-value');
+                valueText.textContent = values[i];
+                svg.appendChild(valueText);
+            }
+        }
+        
+        // Função para gerar heatmap
+        function generateHeatmap() {
+            const heatmapGrid = document.getElementById('heatmapGrid');
+            heatmapGrid.innerHTML = '';
+            
+            // Gerar 42 dias (6 semanas)
+            for (let i = 0; i < 42; i++) {
+                const day = document.createElement('div');
+                day.className = 'heatmap-day';
+                
+                // Nível de atividade aleatório para demonstração
+                const activityLevel = Math.floor(Math.random() * 6); // 0-5
+                if (activityLevel > 0) {
+                    day.classList.add(`active-${activityLevel}`);
+                }
+                
+                // Tooltip
+                day.title = `${activityLevel} atividade(s) neste dia`;
+                
+                heatmapGrid.appendChild(day);
+            }
+        }
+        
+        // Função para calcular progresso mensal
+        function calculateMonthlyProgress() {
+            // Dados simulados para demonstração
+            const months = [
+                { id: 'month1', value: 75 },
+                { id: 'month2', value: 60 },
+                { id: 'month3', value: 90 },
+                { id: 'month4', value: 85 }
+            ];
+            
+            months.forEach((month, index) => {
+                setTimeout(() => {
+                    const bar = document.getElementById(month.id);
+                    if (bar) {
+                        bar.style.width = `${month.value}%`;
+                    }
+                }, 800 + index * 200);
+            });
+        }
+        
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dados básicos
+            document.getElementById('levelDisplay').textContent = progress.level;
+            document.getElementById('xpDisplay').textContent = `${progress.xp} XP`;
+            document.getElementById('tasksDisplay').textContent = progress.completedTasks.length;
+            
+            // Calcular taxa de conclusão
+            const totalTasks = 84; // Total estimado de tarefas (4 módulos * 21 dias)
+            const completionRate = Math.round((progress.completedTasks.length / totalTasks) * 100);
+            document.getElementById('completionRate').textContent = `${completionRate}%`;
+            
+            // Progresso do nível
+            const levelProgress = (progress.xp % 1000) / 10;
+            document.getElementById('levelProgress').style.width = `${levelProgress}%`;
+            document.getElementById('nextLevelText').textContent = 
+                `${progress.xp % 1000}/1000 XP para o próximo nível`;
+            
+            // Consistência
+            const consistency = Math.min(completionRate + 20, 95); // Simulação
+            document.getElementById('consistencyValue').textContent = `${consistency}%`;
+            
+            // Animar gráfico de barras
+            const maxVal = Math.max(stats.awareness, stats.resilience, stats.social, stats.focus, 1);
+            
+            setTimeout(() => {
+                animateBar('barAwareness', 'valAwareness', stats.awareness, maxVal);
+            }, 500);
+            
+            setTimeout(() => {
+                animateBar('barResilience', 'valResilience', stats.resilience, maxVal);
+            }, 700);
+            
+            setTimeout(() => {
+                animateBar('barSocial', 'valSocial', stats.social, maxVal);
+            }, 900);
+            
+            setTimeout(() => {
+                animateBar('barFocus', 'valFocus', stats.focus, maxVal);
+            }, 1100);
+            
+            setTimeout(() => {
+                animateBar('consistencyBar', 'consistencyValue', consistency, 100);
+            }, 1300);
+            
+            // Criar gráfico de radar
+            setTimeout(() => {
+                createRadarChart(stats.awareness, stats.resilience, stats.social, stats.focus);
+            }, 1500);
+            
+            // Gerar heatmap
+            generateHeatmap();
+            
+            // Calcular progresso mensal
+            calculateMonthlyProgress();
+        });
     </script>
 </body>
 </html>
