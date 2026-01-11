@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroProtocolo | Biblioteca</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/components.css">
+    
+    <!-- Estilos -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/dashboard.css"> <!-- Reusa sidebar -->
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/components.css"> <!-- Importante para o Modal -->
+    
     <style>
         .library-grid {
             display: grid;
@@ -26,31 +31,54 @@
             flex-direction: column;
             justify-content: space-between;
             min-height: 250px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
-        .booklet-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .booklet-day { font-size: 0.8rem; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .booklet-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; color: white; }
-        .booklet-meta { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 0.9rem; margin-top: auto; }
+        .booklet-card:hover { 
+            transform: translateY(-5px); 
+            border-color: var(--primary); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .booklet-day { 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            color: var(--accent); 
+            letter-spacing: 1px; 
+            margin-bottom: 0.5rem; 
+        }
+        .booklet-title { 
+            font-size: 1.4rem; 
+            font-weight: 700; 
+            margin-bottom: 1rem; 
+            color: white; 
+            line-height: 1.4;
+        }
+        .booklet-meta { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: var(--text-muted); 
+            font-size: 0.9rem; 
+            margin-top: auto; 
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 1rem;
+        }
         
-        /* Modal de Leitura */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-            z-index: 1000; display: none; justify-content: center; align-items: center;
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            border: 1px dashed rgba(255,255,255,0.1);
         }
-        .modal-content {
-            background: var(--bg-dark); width: 90%; max-width: 800px; height: 90%;
-            border-radius: 20px; border: 1px solid var(--primary);
-            overflow-y: auto; padding: 3rem; position: relative;
-            box-shadow: 0 0 50px rgba(108, 92, 231, 0.2);
-        }
-        .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
-        .close-modal:hover { color: white; }
     </style>
 </head>
 <body>
     <div class="app-layout">
-        <!-- Sidebar (Mesma do Dashboard - Idealmente seria um componente, mas repetimos aqui para funcionar local) -->
+        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="brand"><i class="fas fa-brain brand-icon"></i><span>NeuroProtocolo</span></div>
             <nav class="nav-menu">
@@ -64,7 +92,7 @@
         <main class="main-content">
             <header>
                 <h1>Biblioteca Neural</h1>
-                <p style="color: var(--text-muted)">Repositório de todo conhecimento adquirido.</p>
+                <p style="color: var(--text-muted)">Repositório de todo conhecimento adquirido e desbloqueado.</p>
             </header>
 
             <div class="library-grid" id="libraryGrid">
@@ -75,69 +103,110 @@
         </main>
     </div>
 
-    <!-- Modal de Leitura -->
-    <div class="modal-overlay" id="readModal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" onclick="closeModal()"></i>
-            <div id="modalBody" class="booklet-content"></div>
-        </div>
-    </div>
-
-    <script src="assets/js/ui.js"></script>
+    <!-- Scripts Essenciais (Ordem Importa) -->
     <script src="assets/js/database.js"></script>
+    <script src="assets/js/ui.js"></script>
+    
     <script>
+        // Função Global de Abertura (para ser acessada pelo onclick)
+        window.openLibraryBooklet = async function(modId, dayNum) {
+            console.log(`Tentando abrir livreto: Módulo ${modId}, Dia ${dayNum}`);
+            
+            try {
+                // Verifica se a UI foi carregada
+                if (typeof ui === 'undefined') {
+                    console.error("Erro: UI System não carregado.");
+                    alert("Sistema de interface carregando... Tente novamente.");
+                    return;
+                }
+
+                const content = await db.getDayContent(modId);
+                
+                if (!content || !content.days || !content.days[dayNum]) {
+                    console.error("Conteúdo não encontrado no JSON.");
+                    alert("Erro ao recuperar conteúdo.");
+                    return;
+                }
+
+                const booklet = content.days[dayNum].booklet;
+                
+                // Abre usando o sistema global
+                ui.openReader(
+                    booklet.title, 
+                    booklet.content, 
+                    `Biblioteca • Dia ${dayNum}`
+                );
+
+            } catch (e) {
+                console.error("Erro ao abrir livreto:", e);
+                alert("Erro ao abrir o livreto. Verifique o console.");
+            }
+        };
+
+        // Lógica de Carregamento da Grid
         async function loadLibrary() {
-            const progress = db.getUnlockStatus();
-            const modules = await db.getModules();
-            const container = document.getElementById('libraryGrid');
-            container.innerHTML = '';
+            try {
+                const progress = db.getUnlockStatus();
+                const modules = await db.getModules();
+                const container = document.getElementById('libraryGrid');
+                
+                // Limpa skeletons
+                container.innerHTML = '';
 
-            // Itera sobre todos os módulos
-            for (const mod of modules) {
-                // Carrega conteúdo do módulo
-                const content = await db.getDayContent(mod.id);
-                if (!content) continue;
+                let bookletsFound = 0;
 
-                // Itera sobre os dias do módulo
-                Object.keys(content.days).forEach(dayNum => {
-                    // Só mostra se o dia já foi desbloqueado
-                    if (parseInt(dayNum) <= progress.unlockedDays) {
-                        const day = content.days[dayNum];
-                        const html = `
-                            <div class="booklet-card" onclick="openBooklet('${mod.id}', '${dayNum}')">
-                                <div>
-                                    <div class="booklet-day">Dia ${dayNum} • ${mod.title}</div>
-                                    <h3 class="booklet-title">${day.booklet.title}</h3>
-                                </div>
-                                <div class="booklet-meta">
-                                    <i class="far fa-clock"></i> ${day.booklet.read_time}
-                                    <i class="fas fa-book-open" style="margin-left: auto;"></i> Ler
-                                </div>
-                            </div>
-                        `;
-                        container.innerHTML += html;
-                    }
-                });
+                // Itera sobre módulos
+                for (const mod of modules) {
+                    // Busca conteúdo (com proteção contra erro 404)
+                    const content = await db.getDayContent(mod.id);
+                    
+                    if (!content || !content.days) continue;
+
+                    // Itera sobre dias
+                    Object.keys(content.days).forEach(dayNum => {
+                        const dayInt = parseInt(dayNum);
+                        
+                        // Mostra APENAS se o dia já foi desbloqueado
+                        if (dayInt <= progress.unlockedDays) {
+                            const dayData = content.days[dayNum];
+                            
+                            // Só mostra se tiver um livreto
+                            if (dayData.booklet) {
+                                bookletsFound++;
+                                const html = `
+                                    <div class="booklet-card fade-in" onclick="openLibraryBooklet('${mod.id}', '${dayNum}')">
+                                        <div>
+                                            <div class="booklet-day">Dia ${dayNum} • ${mod.title}</div>
+                                            <h3 class="booklet-title">${dayData.booklet.title}</h3>
+                                        </div>
+                                        <div class="booklet-meta">
+                                            <span><i class="far fa-clock"></i> ${dayData.booklet.read_time || 'Leitura'}</span>
+                                            <span style="margin-left: auto; color: var(--primary); font-weight:600;">Ler <i class="fas fa-arrow-right"></i></span>
+                                        </div>
+                                    </div>
+                                `;
+                                container.insertAdjacentHTML('beforeend', html);
+                            }
+                        }
+                    });
+                }
+
+                if (bookletsFound === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-muted);"></i>
+                            <h3>Biblioteca Vazia</h3>
+                            <p>Complete os desafios do Dia 1 para desbloquear seu primeiro livreto.</p>
+                        </div>
+                    `;
+                }
+
+            } catch (error) {
+                console.error("Erro crítico na biblioteca:", error);
             }
         }
 
-        async function openBooklet(modId, dayNum) {
-            const content = await db.getDayContent(modId);
-            const booklet = content.days[dayNum].booklet;
-            
-            const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = `
-                <h1 style="color:white; margin-bottom: 2rem; font-family:'Inter'">${booklet.title}</h1>
-                ${booklet.content}
-            `;
-            
-            document.getElementById('readModal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('readModal').style.display = 'none';
-        }
-
+        // Inicia
         loadLibrary();
     </script>
 </body>
