@@ -30,10 +30,13 @@ async function initChallenge() {
         return;
     }
 
-    // Renderiza UI baseada no tipo
+    // ... dentro de initChallenge ...
+    
+    // 4. Renderiza a UI baseada no tipo
     if (task.type === 'reading') {
-        // Passa o livreto do dia para a função de renderização
-        renderReadingUI(task, dayData.booklet);
+        // MUDANÇA: Agora buscamos o livreto separado, não mais do dayData
+        const fullBooklet = await db.getBooklet(moduleId, currentDay);
+        renderReadingUI(task, fullBooklet);
     } else {
         renderChallengeUI(task);
     }
