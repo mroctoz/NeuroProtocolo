@@ -448,34 +448,39 @@
                     
                     if (!content || !content.days) continue;
 
-                    // Itera sobre dias
-                    Object.keys(content.days).forEach(dayNum => {
-                        const dayInt = parseInt(dayNum);
-                        
-                        if (dayInt <= progress.unlockedDays) {
-                            const dayData = content.days[dayNum];
-                            
-                            if (dayData.booklet) {
-                                bookletsFound++;
-                                
-                                // Calcular horas de leitura
-                                const readTime = dayData.booklet.read_time || '10 min';
-                                const hoursMatch = readTime.match(/(\d+)\s*min/);
-                                if (hoursMatch) {
-                                    totalHours += parseInt(hoursMatch[1]) / 60;
-                                }
-                                
-                                const bookletData = {
-                                    modId: mod.id,
-                                    modTitle: mod.title,
-                                    dayNum: dayNum,
-                                    dayData: dayData
-                                };
-                                
-                                bookletsByModule[mod.id].push(bookletData);
-                            }
-                        }
-                    });
+// Obter os dias ordenados numericamente
+const sortedDays = Object.keys(content.days)
+    .map(day => parseInt(day))
+    .sort((a, b) => a - b);
+
+// Itera sobre dias
+for (const dayNum of sortedDays) {
+    const dayStr = dayNum.toString();
+    
+    if (dayNum <= progress.unlockedDays) {
+        const dayData = content.days[dayStr];
+        
+        if (dayData.booklet) {
+            bookletsFound++;
+            
+            // Calcular horas de leitura
+            const readTime = dayData.booklet.read_time || '10 min';
+            const hoursMatch = readTime.match(/(\d+)\s*min/);
+            if (hoursMatch) {
+                totalHours += parseInt(hoursMatch[1]) / 60;
+            }
+            
+            const bookletData = {
+                modId: mod.id,
+                modTitle: mod.title,
+                dayNum: dayStr,
+                dayData: dayData
+            };
+            
+            bookletsByModule[mod.id].push(bookletData);
+        }
+    }
+}
                 }
                 
                 // Atualizar estatísticas
@@ -513,13 +518,14 @@
                         return;
                     }
                     
-                    // Ordenar por módulo e dia
-                    filteredBooklets.sort((a, b) => {
-                        if (a.modId === b.modId) {
-                            return parseInt(a.dayNum) - parseInt(b.dayNum);
-                        }
-                        return a.modId.localeCompare(b.modId);
-                    });
+// Ordenar por módulo e dia (ordenando numericamente)
+filteredBooklets.sort((a, b) => {
+    if (a.modId === b.modId) {
+        // Garante ordenação numérica correta (1, 2, 3... em vez de 1, 10, 11...)
+        return Number(a.dayNum) - Number(b.dayNum);
+    }
+    return a.modId.localeCompare(b.modId);
+});
                     
                     // Renderizar cada livreto
                     filteredBooklets.forEach((booklet, index) => {
