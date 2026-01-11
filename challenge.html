@@ -12,73 +12,121 @@
     <!-- Estilos -->
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
     <link rel="stylesheet" href="assets/css/challenge.css">
     
     <style>
-        /* Estilos específicos para aprimoramento visual mantendo a estrutura original */
-        .challenge-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 30%, rgba(108, 92, 231, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 70%, rgba(0, 206, 201, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, #0f111a 0%, #1a1d2d 100%);
-            z-index: -1;
-        }
-        
-        /* Estado de conclusão */
-        .challenge-completed {
+        /* Estilos específicos para os diferentes tipos de desafio */
+        .challenge-loading-state {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
         }
         
-        .completion-icon {
-            font-size: 4rem;
+        .loading-challenge {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            border-right-color: var(--accent);
+            margin: 0 auto 1.5rem;
+            animation: spin 1.2s ease-in-out infinite;
+        }
+        
+        /* Estilos específicos para cada tipo de desafio */
+        .challenge-reading .icon-badge {
+            background: rgba(108, 92, 231, 0.15);
+            color: var(--primary);
+        }
+        
+        .challenge-journaling .icon-badge {
+            background: rgba(0, 206, 201, 0.15);
+            color: var(--accent);
+        }
+        
+        .challenge-meditation .icon-badge {
+            background: rgba(253, 203, 110, 0.15);
+            color: var(--warning);
+        }
+        
+        .challenge-timer .icon-badge {
+            background: rgba(255, 118, 117, 0.15);
+            color: var(--danger);
+        }
+        
+        .challenge-physical .icon-badge {
+            background: rgba(0, 184, 148, 0.15);
             color: var(--success);
-            margin-bottom: 1.5rem;
-            animation: float 3s ease-in-out infinite;
         }
         
-        .completion-message {
-            font-size: 1.8rem;
-            color: var(--text-main);
-            margin-bottom: 1rem;
-            font-weight: 700;
+        /* Controles do timer */
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
         }
         
-        .xp-award {
-            background: linear-gradient(135deg, var(--warning), #ffd166);
-            color: var(--bg-dark);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+        .timer-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
             font-size: 1.2rem;
-            font-weight: 900;
-            display: inline-block;
-            margin: 1rem 0;
-            box-shadow: 0 10px 30px rgba(253, 203, 110, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        /* Contador de palavras */
-        .word-counter {
+        .timer-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.1);
+        }
+        
+        .timer-btn.primary {
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        
+        .timer-btn.primary:hover {
+            background: #7a6cff;
+        }
+        
+        /* Área do diário */
+        .journal-textarea {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            color: white;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            transition: var(--transition);
+        }
+        
+        .journal-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+        
+        .word-count {
             font-size: 0.85rem;
             color: var(--text-muted);
             text-align: right;
             margin-top: 0.5rem;
         }
         
-        /* Controles do Timer */
-        .timer-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        /* Modal de Leitura (estilo simplificado) */
+        /* Modal de leitura - estilo aprimorado */
         .reading-modal {
             position: fixed;
             top: 0;
@@ -93,25 +141,43 @@
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+            padding: 1rem;
         }
         
         .reading-modal.active {
             display: flex;
             opacity: 1;
+            animation: fadeIn 0.3s ease-out;
         }
         
         .reading-content {
             background: rgba(26, 29, 45, 0.95);
-            backdrop-filter: blur(20px);
-            width: 90%;
-            max-width: 800px;
+            backdrop-filter: blur(30px);
+            width: 100%;
+            max-width: 900px;
             height: 90vh;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            box-shadow: 
+                0 40px 100px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
+        }
+        
+        .reading-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.15), 
+                transparent);
         }
         
         .reading-header {
@@ -120,6 +186,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(26, 29, 45, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .reading-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        
+        .close-reading {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .close-reading:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            transform: rotate(90deg);
         }
         
         .reading-body {
@@ -127,469 +224,229 @@
             overflow-y: auto;
             flex: 1;
             font-family: 'Merriweather', serif;
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1.15rem;
+            line-height: 1.9;
             color: #e0e0e0;
         }
         
-        /* Estados do desafio */
-        .challenge-state {
-            display: none;
-        }
-        
-        .challenge-state.active {
-            display: block;
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        /* Dicas contextuais */
-        .context-hint {
-            background: rgba(108, 92, 231, 0.08);
-            border-left: 3px solid var(--primary);
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-        
-        .context-hint i {
+        .reading-body h2 {
+            font-family: 'Inter', sans-serif;
             color: var(--primary);
-            margin-right: 0.5rem;
+            margin: 2.5rem 0 1.2rem;
+            font-size: 1.8rem;
+            font-weight: 700;
         }
         
-        /* Loading animado */
-        .challenge-loading {
-            text-align: center;
-            padding: 4rem 0;
+        .reading-body h3 {
+            font-family: 'Inter', sans-serif;
+            color: var(--accent);
+            margin: 2rem 0 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
         }
         
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            margin: 0 auto 1.5rem;
-            animation: spin 1.2s linear infinite;
+        .reading-body p {
+            margin-bottom: 1.5rem;
         }
         
-        /* Progresso do desafio */
-        .challenge-progress {
-            height: 4px;
+        .reading-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-muted);
+            background: rgba(108, 92, 231, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .reading-body ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .reading-body li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .reading-body li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: -1rem;
+        }
+        
+        /* Progresso do timer */
+        .timer-progress {
+            width: 100%;
+            height: 6px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 2px;
+            border-radius: 3px;
             margin: 1.5rem 0;
             overflow: hidden;
         }
         
-        .progress-fill {
+        .timer-progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             width: 0%;
-            transition: width 0.5s ease;
-            position: relative;
+            transition: width 1s linear;
+            border-radius: 3px;
         }
         
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shimmer 2s infinite;
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .reading-body {
+                padding: 1.5rem;
+                font-size: 1.05rem;
+            }
+            
+            .reading-header {
+                padding: 1rem 1.5rem;
+            }
+            
+            .timer-controls {
+                flex-wrap: wrap;
+            }
+            
+            .challenge-card {
+                padding: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    
-    <!-- Fundo Gradiente -->
+    <!-- Background com gradiente -->
     <div class="challenge-background"></div>
-
-    <div class="auth-container" style="background: transparent; align-items: center; justify-content: center; min-height: 100vh;">
-        <div class="challenge-container fade-in">
-            <!-- Botão Voltar (mantendo estrutura original) -->
-            <a href="dashboard.html" class="back-link slide-left">
-                <i class="fas fa-arrow-left"></i>
-                <span>Voltar ao Dashboard</span>
-            </a>
-
-            <!-- Conteúdo do Desafio - Estrutura Original Aprimorada -->
-            <div class="challenge-card" id="challengeCard">
-                
-                <!-- Estado de Carregamento -->
-                <div class="challenge-state active" id="loadingState">
-                    <div class="challenge-loading">
-                        <div class="loading-spinner"></div>
-                        <h1>Carregando Desafio...</h1>
-                        <p>Preparando sua experiência de aprendizado neurocientífico</p>
-                    </div>
-                </div>
-                
-                <!-- Estado Ativo do Desafio -->
-                <div class="challenge-state" id="activeState">
-                    <!-- Cabeçalho -->
-                    <div class="challenge-header">
-                        <div class="icon-badge" id="challengeIcon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        
-                        <div class="challenge-meta">
-                            <h1 class="challenge-title" id="challengeTitle">Título do Desafio</h1>
-                            <p class="challenge-subtitle" id="challengeSubtitle">
-                                Descrição breve do desafio
-                            </p>
-                            
-                            <div class="challenge-xp" id="challengeXp">
-                                <i class="fas fa-bolt"></i>
-                                <span id="xpValue">+150 XP</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Barra de Progresso -->
-                    <div class="challenge-progress">
-                        <div class="progress-fill" id="challengeProgress"></div>
-                    </div>
-                    
-                    <!-- Instruções -->
-                    <div class="content-block slide-up">
-                        <span class="block-label">
-                            <i class="fas fa-scroll"></i>
-                            Instruções
-                        </span>
-                        <div class="instruction-text" id="challengeInstructions">
-                            Instruções detalhadas do desafio aparecerão aqui.
-                        </div>
-                    </div>
-                    
-                    <!-- Área de Leitura (se aplicável) -->
-                    <div class="booklet-preview slide-up" id="readingSection">
-                        <div class="booklet-icon">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                        <div class="booklet-info">
-                            <h4>Leitura do Dia</h4>
-                            <p>Clique para ler o conteúdo completo</p>
-                        </div>
-                        <div class="booklet-action">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    
-                    <!-- Timer (se aplicável) -->
-                    <div class="timer-container slide-up" id="timerSection">
-                        <div class="timer-label">
-                            <i class="fas fa-hourglass-half"></i>
-                            Tempo Restante
-                        </div>
-                        <div class="timer-display" id="timerDisplay">
-                            05:00
-                        </div>
-                        <div class="timer-controls">
-                            <button class="btn btn-icon" id="startTimer">
-                                <i class="fas fa-play"></i>
-                            </button>
-                            <button class="btn btn-icon" id="pauseTimer" style="display: none;">
-                                <i class="fas fa-pause"></i>
-                            </button>
-                            <button class="btn btn-icon" id="resetTimer">
-                                <i class="fas fa-redo"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Diário Neural (se aplicável) -->
-                    <div class="journal-container slide-up" id="journalSection">
-                        <span class="block-label">
-                            <i class="fas fa-pen-fancy"></i>
-                            Diário Neural
-                        </span>
-                        <div class="instruction-text">
-                            Registre seus insights e reflexões sobre este desafio.
-                        </div>
-                        <textarea 
-                            class="journal-input" 
-                            id="journalInput"
-                            placeholder="Escreva aqui suas reflexões, aprendizados e insights..."
-                            rows="6"
-                        ></textarea>
-                        <div class="word-counter">
-                            <span id="wordCount">0</span> palavras
-                        </div>
-                    </div>
-                    
-                    <!-- Dica Contextual -->
-                    <div class="context-hint fade-in">
-                        <i class="fas fa-lightbulb"></i>
-                        <strong>Dica Neuro:</strong> Complete este desafio para fortalecer suas conexões neurais e ganhar experiência.
-                    </div>
-                    
-                    <!-- Área de Ações -->
-                    <div class="action-area">
-                        <button class="btn btn-primary btn-large" id="startChallenge">
-                            <i class="fas fa-play-circle"></i>
-                            <span>Iniciar Desafio</span>
-                        </button>
-                        
-                        <button class="btn btn-primary btn-large" id="completeChallenge" style="display: none;">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Concluir Desafio</span>
-                        </button>
-                        
-                        <button class="btn btn-secondary" id="skipChallenge">
-                            <i class="fas fa-forward"></i>
-                            <span>Pular (perde XP)</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Estado de Conclusão -->
-                <div class="challenge-state" id="completionState">
-                    <div class="challenge-completed">
-                        <div class="completion-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        
-                        <h2 class="completion-message">Desafio Concluído!</h2>
-                        <p>Você fortaleceu suas conexões neurais com sucesso.</p>
-                        
-                        <div class="xp-award" id="earnedXp">
-                            +150 XP Ganhos!
-                        </div>
-                        
-                        <div class="content-block" style="text-align: left; margin: 2rem 0;">
-                            <span class="block-label">Seus Insights</span>
-                            <div class="instruction-text" id="savedJournal">
-                                Seu diário será exibido aqui após a conclusão.
-                            </div>
-                        </div>
-                        
-                        <div class="action-area">
-                            <button class="btn btn-primary btn-large" id="nextChallenge">
-                                <i class="fas fa-forward"></i>
-                                <span>Próximo Desafio</span>
-                            </button>
-                            
-                            <button class="btn btn-secondary" id="reviewChallenge">
-                                <i class="fas fa-redo"></i>
-                                <span>Revisar</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+    
+    <!-- Container principal mantendo a estrutura original -->
+    <div class="auth-container" style="background: transparent; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem;">
+        <div class="challenge-container">
+            <!-- Botão de voltar será injetado aqui pelo JS -->
+            
+            <!-- Conteúdo do desafio - será totalmente substituído pelo JS -->
+            <div id="challengeContent" class="challenge-loading-state">
+                <div class="loading-challenge"></div>
+                <h2>Carregando Desafio...</h2>
+                <p>Preparando sua experiência neurocientífica</p>
             </div>
         </div>
     </div>
-
-    <!-- Modal de Leitura (livreto) -->
+    
+    <!-- Modal de leitura (será usado pelos desafios de leitura) -->
     <div class="reading-modal" id="readingModal">
         <div class="reading-content">
             <div class="reading-header">
-                <div class="modal-title">Leitura do Dia</div>
-                <button class="close-modal-btn" id="closeReadingModal">
+                <div class="reading-title" id="readingModalTitle">Leitura do Dia</div>
+                <button class="close-reading" id="closeReadingModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="reading-body" id="readingContent">
-                <h2>Título da Leitura</h2>
-                <p>Conteúdo da leitura aparecerá aqui...</p>
-                <!-- Conteúdo será injetado via JavaScript -->
+            <div class="reading-body" id="readingModalContent">
+                <!-- Conteúdo será injetado aqui -->
             </div>
         </div>
     </div>
-
+    
     <!-- Scripts -->
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/database.js"></script>
     <script src="assets/js/challenge.js"></script>
     
     <script>
-        // Simulação do carregamento do desafio
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingState = document.getElementById('loadingState');
-            const activeState = document.getElementById('activeState');
-            const completionState = document.getElementById('completionState');
+        // Adicionar funcionalidades extras que interagem com o challenge.js
+        
+        // Função para abrir o modal de leitura (será chamada pelo challenge.js)
+        window.openReader = function(title, content) {
+            const modal = document.getElementById('readingModal');
+            const modalTitle = document.getElementById('readingModalTitle');
+            const modalContent = document.getElementById('readingModalContent');
             
-            // Simular carregamento do desafio
-            setTimeout(() => {
-                loadingState.classList.remove('active');
-                activeState.classList.add('active');
-                
-                // Configurar desafio de exemplo (Meditação)
-                setupExampleChallenge();
-                
-                // Inicializar funcionalidades
-                initializeChallenge();
-            }, 1500);
+            modalTitle.textContent = title;
+            modalContent.innerHTML = content;
+            modal.classList.add('active');
+        };
+        
+        // Fechar modal de leitura
+        document.getElementById('closeReadingModal').addEventListener('click', function() {
+            document.getElementById('readingModal').classList.remove('active');
         });
         
-        function setupExampleChallenge() {
-            // Dados do desafio de exemplo
-            document.getElementById('challengeTitle').textContent = 'Meditação de 5 Minutos';
-            document.getElementById('challengeSubtitle').textContent = 'Pratique o foco na respiração para desenvolver atenção plena';
-            document.getElementById('challengeXp').innerHTML = '<i class="fas fa-bolt"></i><span>+150 XP</span>';
-            document.getElementById('challengeIcon').innerHTML = '<i class="fas fa-spa"></i>';
-            
-            document.getElementById('challengeInstructions').innerHTML = `
-                <p>1. Sente-se em uma posição confortável com a coluna ereta</p>
-                <p>2. Feche os olhos e concentre-se apenas na sua respiração</p>
-                <p>3. Observe o ar entrando e saindo, sem tentar controlá-lo</p>
-                <p>4. Quando sua mente vagar, gentilmente traga a atenção de volta à respiração</p>
-                <p>5. Mantenha-se assim por 5 minutos completos</p>
-            `;
-            
-            // Mostrar seções relevantes para este tipo de desafio
-            document.getElementById('timerSection').style.display = 'block';
-            document.getElementById('journalSection').style.display = 'block';
-            document.getElementById('readingSection').style.display = 'none'; // Este desafio não tem leitura
-        }
+        // Fechar modal ao clicar fora
+        document.getElementById('readingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
         
-        function initializeChallenge() {
-            // Timer functionality
-            let timerSeconds = 300; // 5 minutos
-            let timerInterval;
-            let timerRunning = false;
-            
-            function updateTimerDisplay() {
-                const minutes = Math.floor(timerSeconds / 60);
-                const seconds = timerSeconds % 60;
-                document.getElementById('timerDisplay').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        // Contador de palavras para diário (se existir)
+        document.addEventListener('input', function(e) {
+            if (e.target.id === 'journalText') {
+                const text = e.target.value;
+                const words = text.trim().split(/\s+/).filter(word => word.length > 0);
                 
-                // Atualizar progresso
-                const progress = ((300 - timerSeconds) / 300) * 100;
-                document.getElementById('challengeProgress').style.width = progress + '%';
+                // Criar ou atualizar contador de palavras
+                let counter = e.target.parentNode.querySelector('.word-count');
+                if (!counter) {
+                    counter = document.createElement('div');
+                    counter.className = 'word-count';
+                    e.target.parentNode.appendChild(counter);
+                }
+                counter.textContent = `${words.length} palavras`;
             }
-            
-            function startTimer() {
-                if (timerRunning) return;
-                timerRunning = true;
-                document.getElementById('startTimer').style.display = 'none';
-                document.getElementById('pauseTimer').style.display = 'flex';
+        });
+        
+        // Adicionar efeitos visuais aos botões de timer
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.timer-btn')) {
+                const btn = e.target.closest('.timer-btn');
                 
-                timerInterval = setInterval(() => {
-                    if (timerSeconds > 0) {
-                        timerSeconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        timerRunning = false;
-                        // Mostrar botão de conclusão
-                        document.getElementById('completeChallenge').style.display = 'flex';
-                    }
-                }, 1000);
+                // Efeito de clique
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btn.style.transform = '';
+                }, 200);
             }
-            
-            function pauseTimer() {
-                clearInterval(timerInterval);
-                timerRunning = false;
-                document.getElementById('startTimer').style.display = 'flex';
-                document.getElementById('pauseTimer').style.display = 'none';
-            }
-            
-            function resetTimer() {
-                clearInterval(timerInterval);
-                timerSeconds = 300;
-                timerRunning = false;
-                document.getElementById('startTimer').style.display = 'flex';
-                document.getElementById('pauseTimer').style.display = 'none';
-                updateTimerDisplay();
-            }
-            
-            // Event listeners para controles do timer
-            document.getElementById('startTimer').addEventListener('click', startTimer);
-            document.getElementById('pauseTimer').addEventListener('click', pauseTimer);
-            document.getElementById('resetTimer').addEventListener('click', resetTimer);
-            
-            // Contador de palavras do diário
-            const journalInput = document.getElementById('journalInput');
-            const wordCount = document.getElementById('wordCount');
-            
-            journalInput.addEventListener('input', function() {
-                const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
-                wordCount.textContent = words.length;
-            });
-            
-            // Controle do botão "Iniciar Desafio"
-            document.getElementById('startChallenge').addEventListener('click', function() {
-                this.style.display = 'none';
-                document.getElementById('completeChallenge').style.display = 'flex';
-                document.getElementById('skipChallenge').style.display = 'none';
-                startTimer();
-            });
-            
-            // Controle do botão "Concluir Desafio"
-            document.getElementById('completeChallenge').addEventListener('click', function() {
-                const activeState = document.getElementById('activeState');
-                const completionState = document.getElementById('completionState');
-                
-                // Salvar conteúdo do diário
-                const journalContent = journalInput.value.trim();
-                document.getElementById('savedJournal').textContent = 
-                    journalContent || "Você não registrou nenhum insight neste desafio.";
-                
-                // Transicionar para estado de conclusão
-                activeState.classList.remove('active');
-                completionState.classList.add('active');
-                
-                // Parar timer se estiver rodando
-                clearInterval(timerInterval);
-            });
-            
-            // Controle do botão "Próximo Desafio"
-            document.getElementById('nextChallenge').addEventListener('click', function() {
-                window.location.href = 'dashboard.html';
-            });
-            
-            // Controle do botão "Pular"
-            document.getElementById('skipChallenge').addEventListener('click', function() {
-                if (confirm("Você perderá o XP deste desafio. Tem certeza?")) {
-                    window.location.href = 'dashboard.html';
+        });
+        
+        // Adicionar animação de entrada para o conteúdo carregado
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === 1 && node.classList && node.classList.contains('challenge-card')) {
+                            // Adicionar animação de entrada
+                            node.style.animation = 'popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+                            
+                            // Determinar tipo de desafio para estilização específica
+                            const icon = node.querySelector('.icon-badge i');
+                            if (icon) {
+                                const iconClass = icon.className;
+                                if (iconClass.includes('fa-book-reader') || iconClass.includes('fa-book-open')) {
+                                    node.classList.add('challenge-reading');
+                                } else if (iconClass.includes('fa-pen-fancy')) {
+                                    node.classList.add('challenge-journaling');
+                                } else if (iconClass.includes('fa-spa')) {
+                                    node.classList.add('challenge-meditation');
+                                } else if (iconClass.includes('fa-hourglass-half')) {
+                                    node.classList.add('challenge-timer');
+                                } else if (iconClass.includes('fa-dumbbell')) {
+                                    node.classList.add('challenge-physical');
+                                }
+                            }
+                        }
+                    });
                 }
             });
-            
-            // Modal de Leitura (para desafios que têm leitura)
-            const readingSection = document.getElementById('readingSection');
-            const readingModal = document.getElementById('readingModal');
-            const closeReadingModal = document.getElementById('closeReadingModal');
-            
-            readingSection.addEventListener('click', function() {
-                // Simular conteúdo da leitura
-                document.getElementById('readingContent').innerHTML = `
-                    <h2>Neuroplasticidade: A Ciência da Mudança Cerebral</h2>
-                    <p>A neuroplasticidade é a capacidade do cérebro de se reorganizar formando novas conexões neurais ao longo da vida. Esta propriedade permite que os neurônios compensem lesões e doenças e ajustem suas atividades em resposta a novas situações ou mudanças em seu ambiente.</p>
-                    
-                    <h3>Como Funciona</h3>
-                    <p>Quando você aprende algo novo ou pratica uma habilidade repetidamente, seu cérebro fortalece as conexões entre os neurônios envolvidos. Este processo, conhecido como "fire together, wire together" (neurônios que disparam juntos, conectam-se juntos), é a base da aprendizagem e memória.</p>
-                    
-                    <blockquote>
-                        "O cérebro não é um órgão fixo e imutável, mas um sistema dinâmico que se remodela constantemente com base em nossas experiências."
-                    </blockquote>
-                    
-                    <h3>Aplicando na Prática</h3>
-                    <p>Desafios diários como meditação, leitura profunda e escrita reflexiva estimulam diretamente a neuroplasticidade, criando caminhos neurais mais fortes e eficientes.</p>
-                `;
-                
-                readingModal.classList.add('active');
-            });
-            
-            closeReadingModal.addEventListener('click', function() {
-                readingModal.classList.remove('active');
-            });
-            
-            // Fechar modal ao clicar fora
-            readingModal.addEventListener('click', function(e) {
-                if (e.target === readingModal) {
-                    readingModal.classList.remove('active');
-                }
-            });
-            
-            // Inicializar display do timer
-            updateTimerDisplay();
-        }
+        });
+        
+        // Observar mudanças no container do desafio
+        observer.observe(document.getElementById('challengeContent'), {
+            childList: true,
+            subtree: true
+        });
     </script>
 </body>
 </html>
