@@ -104,12 +104,13 @@
             opacity: 0;
         }
         
-        .booklet-card:nth-child(1) { animation-delay: 0.2s; }
-        .booklet-card:nth-child(2) { animation-delay: 0.3s; }
-        .booklet-card:nth-child(3) { animation-delay: 0.4s; }
-        .booklet-card:nth-child(4) { animation-delay: 0.5s; }
-        .booklet-card:nth-child(5) { animation-delay: 0.6s; }
-        .booklet-card:nth-child(6) { animation-delay: 0.7s; }
+        /* REMOVIDA a animação por nth-child - está causando confusão na ordem */
+        .booklet-card.fade-in-delay-0 { animation-delay: 0.1s; }
+        .booklet-card.fade-in-delay-1 { animation-delay: 0.2s; }
+        .booklet-card.fade-in-delay-2 { animation-delay: 0.3s; }
+        .booklet-card.fade-in-delay-3 { animation-delay: 0.4s; }
+        .booklet-card.fade-in-delay-4 { animation-delay: 0.5s; }
+        .booklet-card.fade-in-delay-5 { animation-delay: 0.6s; }
         
         .booklet-card::before {
             content: '';
@@ -442,7 +443,7 @@
                     'module_04': []
                 };
 
-                // Itera sobre módulos EM ORDEM
+                // Itera sobre módulos EM ORDEM (corrigido)
                 const sortedModules = modules.sort((a, b) => {
                     const order = {
                         'module_01': 1,
@@ -459,13 +460,13 @@
                     
                     if (!content || !content.days) continue;
 
-                    // CORREÇÃO 1: Iterar sobre dias EM ORDEM NUMÉRICA
-                    const sortedDays = Object.keys(content.days)
-                        .map(dayNum => parseInt(dayNum))
-                        .sort((a, b) => a - b)
-                        .map(dayNum => dayNum.toString());
+                    // CRÍTICO: Ordenar os dias numericamente antes de processar
+                    // Usando a chave original, mas ordenando por valor numérico
+                    const sortedDays = Object.keys(content.days).sort((a, b) => {
+                        return parseInt(a) - parseInt(b);
+                    });
 
-                    // Itera sobre dias
+                    // Itera sobre dias EM ORDEM NUMÉRICA
                     sortedDays.forEach(dayNum => {
                         const dayInt = parseInt(dayNum);
                         
@@ -486,6 +487,7 @@
                                     modId: mod.id,
                                     modTitle: mod.title,
                                     dayNum: dayNum,
+                                    dayInt: dayInt, // Adicionado para ordenação
                                     dayData: dayData
                                 };
                                 
@@ -509,11 +511,27 @@
                     let filteredBooklets = [];
                     
                     if (filter === 'all') {
-                        Object.values(bookletsByModule).forEach(modBooklets => {
-                            filteredBooklets.push(...modBooklets);
+                        // Coletar todos os livretos em ordem correta
+                        Object.keys(bookletsByModule).sort((a, b) => {
+                            const order = {
+                                'module_01': 1,
+                                'module_02': 2,
+                                'module_03': 3,
+                                'module_04': 4
+                            };
+                            return (order[a] || 999) - (order[b] || 999);
+                        }).forEach(modId => {
+                            // Ordenar os livretos dentro de cada módulo por dia
+                            const sortedBooklets = bookletsByModule[modId].sort((a, b) => {
+                                return a.dayInt - b.dayInt;
+                            });
+                            filteredBooklets.push(...sortedBooklets);
                         });
                     } else if (bookletsByModule[filter]) {
-                        filteredBooklets = bookletsByModule[filter];
+                        // Ordenar apenas os livretos do módulo filtrado
+                        filteredBooklets = bookletsByModule[filter].sort((a, b) => {
+                            return a.dayInt - b.dayInt;
+                        });
                     }
                     
                     if (filteredBooklets.length === 0) {
@@ -530,36 +548,18 @@
                         return;
                     }
                     
-                    // CORREÇÃO 2: Ordenação robusta por módulo e dia
-                    filteredBooklets.sort((a, b) => {
-                        // Definir ordem de módulos
-                        const moduleOrder = {
-                            'module_01': 1,
-                            'module_02': 2, 
-                            'module_03': 3,
-                            'module_04': 4
-                        };
-                        
-                        // Obter ordem numérica dos módulos
-                        const modOrderA = moduleOrder[a.modId] || 999;
-                        const modOrderB = moduleOrder[b.modId] || 999;
-                        
-                        // Primeiro ordena por módulo
-                        if (modOrderA !== modOrderB) {
-                            return modOrderA - modOrderB;
-                        }
-                        
-                        // Se mesmo módulo, ordena por dia (convertendo para número)
-                        const dayA = parseInt(a.dayNum);
-                        const dayB = parseInt(b.dayNum);
-                        
-                        return dayA - dayB;
-                    });
+                    // Debug: Verificar ordem
+                    console.log('Livretos ordenados:', filteredBooklets.map(b => ({
+                        módulo: b.modId,
+                        dia: b.dayNum,
+                        diaInt: b.dayInt
+                    })));
                     
                     // Renderizar cada livreto
                     filteredBooklets.forEach((booklet, index) => {
                         const html = `
-                            <div class="booklet-card" onclick="openLibraryBooklet('${booklet.modId}', '${booklet.dayNum}')">
+                            <div class="booklet-card fade-in-delay-${index % 6}" 
+                                 onclick="openLibraryBooklet('${booklet.modId}', '${booklet.dayNum}')">
                                 <div>
                                     <div class="booklet-day">Dia ${booklet.dayNum} • ${booklet.modTitle}</div>
                                     <h3 class="booklet-title">${booklet.dayData.booklet.title}</h3>
