@@ -159,3 +159,4 @@ window.logout = function() {
 
 // Inicia
 initDashboard();
+// 
