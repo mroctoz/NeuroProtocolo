@@ -17,8 +17,8 @@ class Database {
             const initialState = {
                 user: null,
                 progress: {
-                    currentDay: 1,
-                    unlockedDays: 1,
+                    currentDay: 1,      // O dia que o usuário está focado
+                    unlockedDays: 1,    // Até qual dia ele pode acessar
                     completedTasks: [], 
                     journalEntries: {},
                     xp: 0,
@@ -59,16 +59,16 @@ class Database {
     activateGodMode() {
         if (confirm("⚠️ MODO DESENVOLVEDOR:\nDesbloquear tudo?")) {
             this.state.progress.unlockedDays = 28;
+            this.state.progress.currentDay = 28;
             this.state.progress.level = 10;
             this.state.progress.xp += 5000;
-            // Popula stats para o gráfico não ficar vazio
             this.state.progress.stats = { awareness: 10, resilience: 8, social: 5, focus: 12 };
             this.saveState();
             window.location.reload();
         }
     }
 
-    // --- Data Fetching (CORRIGIDO) ---
+    // --- Data Fetching ---
 
     async getModules() {
         if (this.modulesCache) return this.modulesCache;
@@ -78,31 +78,27 @@ class Database {
             this.modulesCache = await res.json();
             return this.modulesCache;
         } catch (e) {
-            console.error("Erro crítico ao carregar modules.json:", e);
-            alert("Erro ao carregar estrutura. Verifique o console.");
+            console.error("Erro ao carregar modules.json:", e);
             return [];
         }
     }
 
-    // ... (Mantenha o código anterior até a parte de Data Fetching)
-
     async getDayContent(moduleId) {
         if (this.contentCache[moduleId]) return this.contentCache[moduleId];
         try {
-            const res = await fetch(`assets/data/content/${moduleId}.json`);
-            if (!res.ok) throw new Error("Arquivo de módulo não encontrado");
+            const path = `assets/data/content/${moduleId}.json`;
+            const res = await fetch(path);
+            if (!res.ok) throw new Error(`Arquivo não encontrado: ${moduleId}`);
             const data = await res.json();
             this.contentCache[moduleId] = data;
             return data;
         } catch (e) {
-            console.error(`Erro ao carregar ${moduleId}.json`, e);
+            console.error(`Erro ao carregar conteúdo de ${moduleId}:`, e);
             return null;
         }
     }
 
-    // NOVO MÉTODO: Busca o livreto denso específico
     async getBooklet(moduleId, dayId) {
-        // Formata o dia para ter 2 dígitos (ex: 1 -> d01)
         const dayFormatted = dayId.toString().padStart(2, '0');
         const path = `assets/data/booklets/${moduleId}/d${dayFormatted}.json`;
         
@@ -111,19 +107,15 @@ class Database {
             if (!res.ok) throw new Error(`Livreto não encontrado: ${path}`);
             return await res.json();
         } catch (e) {
-            console.error("Erro ao carregar livreto:", e);
-            // Fallback para caso o arquivo não exista ainda
             return {
                 title: "Conteúdo em Desenvolvimento",
                 read_time: "N/A",
-                content: "<p>O conteúdo profundo deste dia está sendo compilado pelos neurocientistas.</p>"
+                content: "<p>O conteúdo profundo deste dia está sendo compilado.</p>"
             };
         }
     }
 
-    // ... (Mantenha o restante do código)
-
-    // --- Logic ---
+    // --- Lógica de Usuário e Progresso ---
 
     registerUser(name) {
         this.state.user = { name, startDate: new Date().toISOString() };
@@ -131,6 +123,7 @@ class Database {
     }
 
     getUser() { return this.state.user; }
+    
     getUnlockStatus() { return this.state.progress; }
 
     isTaskCompleted(taskId) {
@@ -161,6 +154,21 @@ class Database {
     saveJournalEntry(taskId, text) {
         this.state.progress.journalEntries[taskId] = text;
         this.saveState();
+    }
+
+    // *** CORREÇÃO PRINCIPAL: O MÉTODO FALTANTE ***
+    unlockNextDay() {
+        const currentDay = this.state.progress.currentDay;
+        const unlockedDays = this.state.progress.unlockedDays;
+
+        // Se o usuário está completando o último dia desbloqueado, libera o próximo
+        if (currentDay === unlockedDays && unlockedDays < 28) {
+            this.state.progress.unlockedDays++;
+            this.state.progress.currentDay++; // Avança o foco automaticamente
+            this.saveState();
+            return true;
+        }
+        return false;
     }
 
     updateLevel() {
