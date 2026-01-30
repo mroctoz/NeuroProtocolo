@@ -2,7 +2,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const currentDay = parseInt(urlParams.get('day')) || 1;
 
-// Mapeamento CORRIGIDO de Dias para Arquivos
+// Mapeamento de Dias para Arquivos
 function getModuleIdForDay(day) {
     if (day <= 7) return 'module_01';
     if (day <= 14) return 'module_02';
@@ -23,14 +23,18 @@ const els = {
 };
 
 async function initProtocol() {
+    // Verifica se o DB está carregado
+    if (typeof db === 'undefined') {
+        console.error("Database não carregado.");
+        return;
+    }
+
     const moduleId = getModuleIdForDay(currentDay);
     
     // Busca dados com tratamento de erro
     const moduleData = await db.getDayContent(moduleId);
 
-    // Verificação robusta se os dados existem
     if (!moduleData || !moduleData.days || !moduleData.days[currentDay]) {
-        console.error("Dados não encontrados para o dia:", currentDay, "no módulo:", moduleId);
         alert(`Erro: Conteúdo do dia ${currentDay} não encontrado.`);
         window.location.href = 'dashboard.html';
         return;
@@ -39,18 +43,23 @@ async function initProtocol() {
     const dayData = moduleData.days[currentDay];
     
     // Renderiza
-    renderBooklet(dayData.booklet);
+    // Busca o livreto completo para exibir o resumo na tela
+    const fullBooklet = await db.getBooklet(moduleId, currentDay);
+    
+    renderBookletInfo(dayData, fullBooklet);
     renderTaskList(dayData.challenges);
     updateProgress(dayData.challenges);
 }
 
-function renderBooklet(booklet) {
-    if(!booklet) return; // Segurança
+function renderBookletInfo(dayData, fullBooklet) {
     els.dayNumber.innerText = currentDay;
-    els.readTime.innerText = booklet.read_time || "10 min";
-    els.bookletTitle.innerText = booklet.title;
-    els.bookletContent.innerHTML = booklet.content;
-    els.bookletSource.innerText = "NeuroProtocolo Base";
+    // Usa o tempo do livreto completo
+    els.readTime.innerText = fullBooklet.read_time || "10 min";
+    // Usa o título do resumo do dia
+    els.bookletTitle.innerText = dayData.title;
+    // Usa o resumo do dia para a introdução
+    els.bookletContent.innerHTML = `<p>${dayData.summary}</p>`; 
+    els.bookletSource.innerText = "NeuroProtocolo";
 }
 
 function renderTaskList(tasks) {
@@ -59,8 +68,6 @@ function renderTaskList(tasks) {
     tasks.forEach(task => {
         const isCompleted = db.isTaskCompleted(task.id);
         const statusClass = isCompleted ? 'completed' : '';
-        
-        // Se completa, não clica. Se incompleta, abre desafio.
         const action = isCompleted ? '' : `onclick="openChallenge('${task.id}')"`;
 
         html += `
@@ -90,14 +97,23 @@ function updateProgress(tasks) {
     const percent = (completed / total) * 100;
     els.miniBar.style.width = `${percent}%`;
 
+    // Mostra o botão se tudo estiver completo
     if (completed === total) {
         els.completeDayBtn.classList.remove('hidden');
     }
 }
 
-function finishDay() {
-    db.unlockNextDay(currentDay);
-    alert("Dia concluído! Neuroplasticidade consolidada.");
+// CORREÇÃO: Função de Finalizar Dia
+window.finishDay = function() {
+    // Tenta desbloquear o próximo dia
+    const unlocked = db.unlockNextDay();
+    
+    if (unlocked) {
+        alert("Parabéns! Neuroplasticidade consolidada. Próximo dia desbloqueado.");
+    } else {
+        alert("Dia concluído! (Você já havia desbloqueado os dias seguintes anteriormente).");
+    }
+    
     window.location.href = 'dashboard.html';
 }
 
